@@ -5,4 +5,9 @@
     <RootNamespace>RAM___RUC_Allocation_Manager</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\data\" />
+    <Folder Include="wwwroot\assets\" />
+  </ItemGroup>
+
 </Project>

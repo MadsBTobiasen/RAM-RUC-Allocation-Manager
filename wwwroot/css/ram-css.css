@@ -1,0 +1,16 @@
+﻿body {
+}
+
+header {
+    height: 5rem;
+}
+
+a span {
+    vertical-align: middle;
+}
+
+img.ram-icon-sm {
+    height:3rem;
+    width:3rem;
+}
+
