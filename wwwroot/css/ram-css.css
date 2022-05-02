@@ -1,8 +1,15 @@
-﻿body {
+﻿:root {
+    --ram-background: rgb(43, 42, 51);
+    --ram-gold: rgb(218,165,32);
+    --ram-white: rgb(255 255 255);
+}
+
+body {
+    background-color: var(--ram-background) !important;
 }
 
 header {
-    height: 5rem;
+    background-color: var(--ram-background) !important;
 }
 
 a span {
@@ -12,5 +19,28 @@ a span {
 img.ram-icon-sm {
     height:3rem;
     width:3rem;
+}
+
+/* Overwrites */
+.btn-primary {
+    color: var(--ram-white);
+    border-color: var(--ram-gold);
+    background-color: var(--ram-background);
+}
+
+.border, .border-top, .border-right, .border-left, .border-bottom {
+    border-color: var(--ram-gold) !important;
+}
+
+.text-white {
+    color: var(--ram-white);
+}
+
+.text-white-hover {
+    transition: all 0.5s ease;
+}
+
+.text-white-hover:hover {
+    color: rgb(218,165,32) !important;
 }
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RAM___RUC_Allocation_Manager.Services
 {
-    public class DbService : IDbService
+    public class DbService<T> where T : class
     {
     }
 }

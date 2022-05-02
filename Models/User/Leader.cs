@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace RAM___RUC_Allocation_Manager.Models
@@ -17,6 +18,10 @@ namespace RAM___RUC_Allocation_Manager.Models
         #endregion
 
         #region Methods
+        public override ClaimsPrincipal GetClaimsPrinciple()
+        {
+            return null;
+        }
 
         public override int GetHashCode()
         {
