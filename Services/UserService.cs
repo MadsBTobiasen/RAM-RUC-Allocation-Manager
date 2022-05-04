@@ -10,7 +10,7 @@ namespace RAM___RUC_Allocation_Manager.Services
     {
 
         #region Fields
-        //private DbService<User> dbService;
+        private DbService<User> dbService;
         #endregion
 
         #region Properties

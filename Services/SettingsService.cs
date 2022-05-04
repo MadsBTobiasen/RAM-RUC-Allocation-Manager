@@ -10,11 +10,11 @@ namespace RAM___RUC_Allocation_Manager.Services
     {
 
         #region Fields
-        private JSONFileService<Setting> jsonFileService;
+        private JSONFileService<BaseSettings> jsonFileService;
         #endregion
 
         #region Properties
-        public List<Setting> Settings { get; set; }
+        public BaseSettings Settings { get; set; }
         #endregion
 
         #region Methods
@@ -23,9 +23,14 @@ namespace RAM___RUC_Allocation_Manager.Services
 
         }
 
-        public void ApplySetting(Setting setting)
+        public void ApplySetting()
         {
 
+        }
+
+        public BaseSettings GetSettings()
+        {
+            return Settings;
         }
         #endregion
 

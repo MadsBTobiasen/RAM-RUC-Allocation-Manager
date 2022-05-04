@@ -21,8 +21,27 @@ img.ram-icon-sm {
     width:3rem;
 }
 
+a {
+    color: var(--ram-white);
+}
+
+a {
+    transition: all 0.5s ease;
+}
+
+a:hover {
+    color: var(--ram-gold);
+    text-decoration: none;
+}
+
 /* Overwrites */
 .btn-primary {
+    color: var(--ram-white);
+    border-color: var(--ram-gold);
+    background-color: var(--ram-background);
+}
+
+.btn-primary:hover {
     color: var(--ram-white);
     border-color: var(--ram-gold);
     background-color: var(--ram-background);

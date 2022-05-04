@@ -6,6 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Interface\" />
+    <Folder Include="Models\BaseSettings\" />
     <Folder Include="wwwroot\data\" />
     <Folder Include="wwwroot\assets\" />
   </ItemGroup>

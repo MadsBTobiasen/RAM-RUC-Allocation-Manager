@@ -14,10 +14,12 @@ namespace RAM___RUC_Allocation_Manager.Pages.EmployeeLandingPage
 
         #region Fields
         private UserService userService;
+        private SettingsService settingsService;
         #endregion
 
         #region Properties
         public Employee Employee { get; set; }
+        public BaseSettings BaseSettings { get; set; }
         #endregion
 
         public void OnGet()

@@ -5,16 +5,13 @@ using System.Threading.Tasks;
 
 namespace RAM___RUC_Allocation_Manager.Models
 {
-    public class Setting
+    public class Redemption
     {
 
         #region Properties
-        public string SettingName { get; set; }
-        public int SettingValue { get; set; }
-        #endregion
-
-        #region Methods
-
+        public Employee Employee { get; set; }
+        public Semester Semester { get; set; }
+        public int MinutesRedeemedForSemester { get; set; }
         #endregion
 
     }

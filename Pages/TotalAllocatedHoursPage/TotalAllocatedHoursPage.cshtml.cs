@@ -14,10 +14,12 @@ namespace RAM___RUC_Allocation_Manager.Pages.TotalAllocatedHoursPage
 
         #region Fields
         private UserService userService;
+        private SettingsService settingsService;
         #endregion
 
         #region Properties
         public Employee Employee { get; set; }
+        public BaseSettings BaseSettings { get; set; }
         #endregion
 
         #region Methods

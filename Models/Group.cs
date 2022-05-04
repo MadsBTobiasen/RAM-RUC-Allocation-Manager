@@ -10,8 +10,9 @@ namespace RAM___RUC_Allocation_Manager.Models
 
         #region Properties
         public int ID { get; set; }
-        public int AmountStudents { get; set; }
+        public int RUCID { get; set; }
         public bool IsMasterThesis { get; set; }
+        public Employee Supervisor { get; set; }
         public Employee InternalCensor { get; set; }
         #endregion
 

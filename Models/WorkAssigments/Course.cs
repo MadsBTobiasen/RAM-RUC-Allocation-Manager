@@ -1,40 +1,28 @@
-﻿using RAM___RUC_Allocation_Manager.Interface;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace RAM___RUC_Allocation_Manager.Models.WorkAssignments
+namespace RAM___RUC_Allocation_Manager.Models.WorkAssigments
 {
-    public class Course : IWorkAssignment
+    public class Course
     {
 
         #region Enumerations
-        public enum CourseTypes
+        public enum CourseType
         {
-            Standard = 0,
-            SAB = 1,
-            SIB = 2
+            SAB,
+            SIB,
+            Standard
         }
         #endregion
 
         #region Properties
-        public int ID { get; set; }
-        public string Name { get; set; }
         public Employee ResponsibleEmployee { get; set; }
         public int LectureAmount { get; set; }
-        public CourseTypes CourseType { get; set; }
-        public static int LectureMinuteLength { get; set; }
-        public static int StandardMinuteLength { get; set; }
-        public static int SABMinuteLength { get; set; }
-        public static int SIBMinuteLength { get; set; }
-        #endregion
-
-        #region Methods
-        public int CalculateMinutes(User user)
-        {
-            return 0;
-        }
+        public string Name { get; set; }
+        public int ID { get; set; }
+        public CourseType Type { get; set; }
         #endregion
 
     }

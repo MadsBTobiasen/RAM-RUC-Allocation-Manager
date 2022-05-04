@@ -1,4 +1,4 @@
-﻿using RAM___RUC_Allocation_Manager.Interface;
+﻿using RAM___RUC_Allocation_Manager.Models.WorkAssigments;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,16 +10,21 @@ namespace RAM___RUC_Allocation_Manager.Models
     public class Employee : User
     {
 
+        #region Enumeration
+        public enum EmployeeTitle
+        {
+            Professor,
+            AssociateProfessor,
+            AssistantProfessor
+        }
+        #endregion
+
         #region Properties
-        public int Savings { get; set; }
-        public int RedeemedMinutes { get; set; }
-        public int BalanceMinutes { get; set; }
-        public int BaseMinutes { get; set; }
-        public int PedagogicalQualificationMinutes { get; set; }
+        public EmployeeTitle Title { get; set; }
         public bool IsGroupLeader { get; set; }
-        public bool IsAssistantProfessor { get; set; }
-        public List<IWorkAssignment> Assignments { get; set; }
+        public List<EmployeeCourse> Courses { get; set; }
         public List<Programme> Programmes { get; set; }
+        public List<Redemption> Redemption { get; set; }
          #endregion
 
         #region Constructors
@@ -27,34 +32,49 @@ namespace RAM___RUC_Allocation_Manager.Models
         #endregion
 
         #region Methods
+        public int CalculateTotalAllocationMinutes()
+        {
+            return 0;
+        }
+
+        public int CalculateTotalCourseMinutes()
+        {
+            return 0;
+        }
+
+        public int CalculateTotalSupervisionMinutes()
+        {
+            return 0;
+        }
+
+        public int CalculateTotalExamMinutes()
+        {
+            return 0;
+        }
+
+        public int CalculateTotalMiscMinutes()
+        {
+            return 0;
+        }
+
+        public int CalculateSavings()
+        {
+            return 0;
+        }
+
+        public int CalculateMinuteBalance()
+        {
+            return 0;
+        }
+
+        public int CalculateRedeemedMinutes()
+        {
+            return 0;
+        }
+
         public override ClaimsPrincipal GetClaimsPrinciple()
         {
             return null;
-        }
-
-        public int GetTotalMinutes()
-        {
-            return 0;
-        }
-
-        public int GetTotalCourseMinutes()
-        {
-            return 0;
-        }
-
-        public int GetTotalSupervisionMinutes()
-        {
-            return 0;
-        }
-
-        public int GetTotalExamMinutes()
-        {
-            return 0;
-        }
-
-        public int GetTotalMiscMinutes()
-        {
-            return 0;
         }
 
         public override int GetHashCode()

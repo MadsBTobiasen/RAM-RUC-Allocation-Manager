@@ -10,7 +10,7 @@ namespace RAM___RUC_Allocation_Manager.Models
     {
 
         #region Properties
-
+        public List<Programme> Programme { get; set; }
         #endregion
 
         #region Constructors
