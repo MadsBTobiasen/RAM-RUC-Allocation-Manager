@@ -17,17 +17,46 @@ namespace RAM___RUC_Allocation_Manager.Services
         public BaseSettings Settings { get; set; }
         #endregion
 
+        #region Constructor
+        public SettingsService(JSONFileService<BaseSettings> json)
+        {
+
+            jsonFileService = json;
+            LoadSettings();
+
+            Console.WriteLine($"Found and loaded the settings file, with settings id: ({Settings.ID})");
+
+        }
+        #endregion
+
         #region Methods
-        public void LoadSettings()
+        /// <summary>
+        /// Method that retrieves the settings from the settings file, and loads it into the Settings-property.
+        /// </summary>
+        private void LoadSettings()
         {
+
+            Settings = jsonFileService.GetJsonObjects().SingleOrDefault();
 
         }
 
-        public void ApplySetting()
+        /// <summary>
+        /// Method that updates the setting-object, and saves the changes to the JSON file.
+        /// </summary>
+        /// <param name="updatedSettings"></param>
+        public void ApplySetting(BaseSettings updatedSettings)
         {
+
+            //Apply changes to settings
+            Settings = updatedSettings;
+            jsonFileService.SaveJsonObjects(new List<BaseSettings>() { Settings });
 
         }
 
+        /// <summary>
+        /// Method that returns the BaseSettings object.
+        /// </summary>
+        /// <returns>BaseSettings object.</returns>
         public BaseSettings GetSettings()
         {
             return Settings;

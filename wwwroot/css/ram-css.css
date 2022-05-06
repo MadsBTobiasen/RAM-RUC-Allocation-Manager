@@ -4,16 +4,8 @@
     --ram-white: rgb(255 255 255);
 }
 
-body {
-    background-color: var(--ram-background) !important;
-}
-
-header {
-    background-color: var(--ram-background) !important;
-}
-
-a span {
-    vertical-align: middle;
+.vertical-align-md {
+    vertical-align:middle;
 }
 
 img.ram-icon-sm {
@@ -21,45 +13,28 @@ img.ram-icon-sm {
     width:3rem;
 }
 
-a {
-    color: var(--ram-white);
+.mw-0 {
+    max-width: none !important;
 }
 
-a {
-    transition: all 0.5s ease;
+table.leader-landing-page {
+    width: 100%;
 }
 
-a:hover {
+table.employee-landing-page {
+    width: 100%;
+}
+
+table.allocated-hours-table td {
+    border-top: 0.5px solid var(--ram-gold);
+    border-bottom: 0.5px solid var(--ram-gold);
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+.text-ram-gold {
     color: var(--ram-gold);
-    text-decoration: none;
 }
 
-/* Overwrites */
-.btn-primary {
-    color: var(--ram-white);
-    border-color: var(--ram-gold);
-    background-color: var(--ram-background);
-}
 
-.btn-primary:hover {
-    color: var(--ram-white);
-    border-color: var(--ram-gold);
-    background-color: var(--ram-background);
-}
-
-.border, .border-top, .border-right, .border-left, .border-bottom {
-    border-color: var(--ram-gold) !important;
-}
-
-.text-white {
-    color: var(--ram-white);
-}
-
-.text-white-hover {
-    transition: all 0.5s ease;
-}
-
-.text-white-hover:hover {
-    color: rgb(218,165,32) !important;
-}
 
