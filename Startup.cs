@@ -14,8 +14,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using RAM___RUC_Allocation_Manager.Models;
-using RAM___RUC_Allocation_Manager.Services;
 
 namespace RAM___RUC_Allocation_Manager
 {

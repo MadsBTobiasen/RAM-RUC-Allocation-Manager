@@ -38,13 +38,17 @@ namespace RAM___RUC_Allocation_Manager.Pages.LoginPage
         public async Task<IActionResult> OnPostAsync()
         {
             List<User> users = userService.Users;
+            
             foreach (User user in users)
             {
-                if (EnteredUsername == user.Username)
+                //TODO: Change Name == Username, once database is running.
+                if (EnteredUsername.ToLower() == user.Name.ToLower())
                 {
-                    var passwordHasher = new PasswordHasher<string>();
-                    if (passwordHasher.VerifyHashedPassword(null, user.Password, EnteredPassword) ==
-                        PasswordVerificationResult.Success)
+                    //var passwordHasher = new PasswordHasher<string>();
+                    //if (passwordHasher.VerifyHashedPassword(null, user.Password, EnteredPassword) ==
+                    //    PasswordVerificationResult.Success)
+                    //{
+                    if(EnteredPassword.ToLower() == user.Password.ToLower())
                     {
                         var claims = new List<Claim>
                         {
@@ -55,7 +59,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.LoginPage
 
                         var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                         await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
-                        return RedirectToPage("/EmployeeLandingPage/EmployeeLandingPage");
+                        return RedirectToPage("/EmployeeLandingPage/EmployeeLandingPage/300");
                     }
 
                 }
