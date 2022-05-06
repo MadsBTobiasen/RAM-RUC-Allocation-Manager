@@ -87,7 +87,7 @@ namespace RAM___RUC_Allocation_Manager.Models
         }
         public override string ToString()
         {
-            return base.ToString();
+            return $"[Employee] ({ID}) {Name} {Password} {Email}";
         }
 
 

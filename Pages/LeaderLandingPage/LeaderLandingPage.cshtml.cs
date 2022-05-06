@@ -17,10 +17,50 @@ namespace RAM___RUC_Allocation_Manager.Pages.LeaderLandingPage
 
         #region Properties
         public Leader Leader { get; set; }
+
+        [BindProperty]
+        public Models.User User { get; set; }
+
+        [BindProperty]
+        public Models.Employee Employee { get; set; }
+
+        public bool IsLeader { get; set; }
         #endregion
 
-        public void OnGet()
+        public LeaderLandingPageModel(UserService userService)
         {
+            this.userService = userService;
+        }
+        
+        public IActionResult OnGet()
+        {
+            IsLeader = false;
+            return Page();
+        }
+
+        public IActionResult OnPostCreateUser()
+        {
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+
+            userService.CreateUser(User);
+            return RedirectToPage("/AddUserPage/AllUsers");
+        }
+
+        public void OnPostCheckType()
+        {
+            if (User.Type == User.UserType.Employee)
+            {
+                IsLeader = false;
+            }
+
+            else
+            {
+                IsLeader = true;
+            }
+            
         }
     }
 }

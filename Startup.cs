@@ -8,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using RAM___RUC_Allocation_Manager.Models;
+using RAM___RUC_Allocation_Manager.Services;
 
 namespace RAM___RUC_Allocation_Manager
 {
@@ -24,6 +26,9 @@ namespace RAM___RUC_Allocation_Manager
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
+            services.AddDbContext<RUCDBContext>();
+            services.AddSingleton<UserService, UserService>();
+            services.AddTransient<DbService<User>, DbService<User>>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

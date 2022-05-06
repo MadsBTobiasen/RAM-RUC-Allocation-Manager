@@ -10,18 +10,21 @@ namespace RAM___RUC_Allocation_Manager.Models
     {
 
         #region Properties
+
+
         public List<Programme> Programme { get; set; }
         #endregion
 
         #region Constructors
 
+       
         #endregion
 
         #region Methods
-        public override ClaimsPrincipal GetClaimsPrinciple()
-        {
-            return null;
-        }
+        //public override ClaimsPrincipal GetClaimsPrinciple()
+        //{
+        //    return null;
+        //}
 
         public override int GetHashCode()
         {
@@ -37,6 +40,5 @@ namespace RAM___RUC_Allocation_Manager.Models
         }
 
         #endregion
-
     }
 }
