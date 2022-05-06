@@ -2,19 +2,19 @@
 @model RAM___RUC_Allocation_Manager.Pages.LoginPage.LoginPageModel
 @{
 }
-<div class="container">
+<div class="container" style="display: flex; justify-content: center;">
     <div>
         @Model.ErrorMessage
     </div>
     <form method="post">
         <div class="form-group">
-            <label asp-for="EnteredUsername" class="col-form-label "></label>
+            <label asp-for="EnteredUsername" class="col-form-label" style="color:white"></label>
             <div>
                 <input asp-for="EnteredUsername" />
             </div>
         </div>
         <div class="form-group">
-            <label asp-for="EnteredPassword" class="col-form-label"></label>
+            <label asp-for="EnteredPassword" class="col-form-label" style="color:white"></label>
             <div>
                 <input asp-for="EnteredPassword" />
             </div>
