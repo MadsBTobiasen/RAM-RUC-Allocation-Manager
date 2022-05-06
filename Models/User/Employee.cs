@@ -26,6 +26,7 @@ namespace RAM___RUC_Allocation_Manager.Models
         public EmployeeTitle Title { get; set; }
         [Required]
         public bool IsGroupLeader { get; set; }
+
         [Required]
         public int Balance { get; set; }
         public virtual ICollection<EmployeeCourse> EmployeeCourses { get; set; }
@@ -33,56 +34,53 @@ namespace RAM___RUC_Allocation_Manager.Models
         public virtual ICollection<Redemption> Redemption { get; set; }
         public virtual ICollection<EmployeeHiringCommittee> EmployeeHiringCommittees { get; set; }
         public virtual ICollection<EmployeeCustomCommittee> EmployeeCustomCommittees { get; set; }
-         #endregion
 
         #region Constructors
-
         public Employee()
         {
             Type = UserType.Employee;
         }
-
         #endregion
 
         #region Methods
         public int CalculateTotalAllocationMinutes()
         {
-            return 0;
+            return new Random().Next(0, 20) * 30;
         }
 
         public int CalculateTotalCourseMinutes()
         {
-            return 0;
+            return new Random().Next(0, 20) * 30;
         }
 
         public int CalculateTotalSupervisionMinutes()
         {
-            return 0;
+            return new Random().Next(0, 20) * 30;
         }
 
         public int CalculateTotalExamMinutes()
         {
-            return 0;
+            return new Random().Next(0, 20) * 30;
         }
 
         public int CalculateTotalMiscMinutes()
         {
-            return 0;
+            return new Random().Next(0, 20) * 30;
         }
 
         public int CalculateSavings()
         {
-            return 0;
+            return new Random().Next(0, 20) * 30;
         }
 
         public int CalculateMinuteBalance()
         {
-            return 0;
+            return new Random().Next(0, 20) * 30;
         }
 
         public int CalculateRedeemedMinutes()
         {
-            return 0;
+            return new Random().Next(0, 20) * 30;
         }
 
         public override ClaimsPrincipal GetClaimsPrinciple()

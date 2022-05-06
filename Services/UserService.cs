@@ -24,7 +24,6 @@ namespace RAM___RUC_Allocation_Manager.Services
 
             //TODO: Retrieve Users from DB-Service.
             Users = MockData.MockUsers.GetUsers();
-            Console.WriteLine(Users.Count);
 
         }
         #endregion
