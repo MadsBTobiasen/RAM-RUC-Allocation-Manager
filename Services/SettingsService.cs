@@ -54,7 +54,7 @@ namespace RAM___RUC_Allocation_Manager.Services
         }
 
         /// <summary>
-        /// Method that returnss the BaseSettings object.
+        /// Method that returns the BaseSettings object.
         /// </summary>
         /// <returns>BaseSettings object.</returns>
         public BaseSettings GetSettings()
