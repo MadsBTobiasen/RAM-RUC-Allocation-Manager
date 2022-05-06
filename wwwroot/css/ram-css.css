@@ -26,7 +26,6 @@ img.ram-icon-sm {
 }
 
 a {
-    color: var(--ram-white);
     transition: all 0.5s ease;
 }
 
@@ -93,5 +92,9 @@ hr {
 
 .text-white-hover:hover {
     color: rgb(218,165,32) !important;
+}
+
+h1, h2, h3, h4, h5, h6, p, span, i, a, table  {
+    color: var(--ram-white);
 }
 

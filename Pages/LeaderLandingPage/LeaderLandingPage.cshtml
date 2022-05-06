@@ -11,12 +11,12 @@
     <div class="col-1"></div>
     <div class="col-10">
 
-        <h3 class="text-white">Alle Undervisere for dine studier</h3>
+        <h3 class="">Alle Undervisere for dine studier</h3>
 
         <form method="post" class="float-right pb-3" asp-page-handler="PaginatedResult">
             <button class="btn btn-primary text-white-hover" onclick="decrementOne('paginationProgrammeEmployees', '1')"><i class="fa-solid fa-arrow-left"></i></button>
             <input hidden="@true" id="paginationProgrammeEmployees" asp-for="PageIndexProgrammeEmployees" />
-            <span class="text-white h5 vertical-align-md mb-0">@(Model.PageIndexProgrammeEmployees+1) | @(Model.PageMaxProgrammeEmployees+1)</span>
+            <span class="h5 vertical-align-md mb-0">@(Model.PageIndexProgrammeEmployees+1) | @(Model.PageMaxProgrammeEmployees+1)</span>
             <button class="btn btn-primary text-white-hover" onclick="incrementOne('paginationProgrammeEmployees', '@Model.PageMaxProgrammeEmployees')"><i class="fa-solid fa-arrow-right"></i></button>
         </form>
 
@@ -59,12 +59,12 @@
     <div class="col-1"></div>
     <div class="col-10">
 
-        <h3 class="text-white">Alle Undervisere</h3>
+        <h3 class="">Alle Undervisere</h3>
 
         <form method="post" class="float-right pb-3" asp-page-handler="PaginatedResult">
             <button class="btn btn-primary text-white-hover" onclick="decrementOne('paginationAllEmployeesInput', '1')"><i class="fa-solid fa-arrow-left"></i></button>
             <input hidden="@true" id="paginationAllEmployeesInput" asp-for="PageIndexAllEmployees" />
-            <span class="text-white h5 vertical-align-md mb-0">@(Model.PageIndexAllEmployees+1) | @(Model.PageMaxAllEmployees+1)</span>
+            <span class="h5 vertical-align-md mb-0">@(Model.PageIndexAllEmployees+1) | @(Model.PageMaxAllEmployees+1)</span>
             <button class="btn btn-primary text-white-hover" onclick="incrementOne('paginationAllEmployeesInput', '@Model.PageMaxAllEmployees')"><i class="fa-solid fa-arrow-right"></i></button>
         </form>
 
