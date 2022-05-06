@@ -11,6 +11,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.LeaderLandingPage
 {
     public class LeaderLandingPageModel : PageModel
     {
+
         #region Fields
         private UserService userService;
         private PaginationService<User> paginationService;
@@ -18,10 +19,8 @@ namespace RAM___RUC_Allocation_Manager.Pages.LeaderLandingPage
 
         #region Properties
         public Leader Leader { get; set; }
-        [BindProperty]
-        public Models.User User { get; set; }
-        [BindProperty]
-        public Models.Employee Employee { get; set; }
+        [BindProperty] public User CreatedUser { get; set; }
+        [BindProperty] public Employee Employee { get; set; }
         public bool IsLeader { get; set; }
         #endregion
       
@@ -41,11 +40,11 @@ namespace RAM___RUC_Allocation_Manager.Pages.LeaderLandingPage
         public int MaxItemsProgrammeEmployees { get; set; }
         #endregion
 
-        #endregion
-
         #region Constructor
         public LeaderLandingPageModel(UserService us, PaginationService<User> ps)
         {
+
+            CreatedUser = new Employee();
 
             userService = us;
             paginationService = ps;
@@ -94,20 +93,35 @@ namespace RAM___RUC_Allocation_Manager.Pages.LeaderLandingPage
 
         }
 
-        public IActionResult OnPostCreateUser()
+        public IActionResult OnPostCreateUser(int id)
         {
+
+            Leader = (Leader)userService.GetUserByID(id);
+            ProgrammeEmployees = Leader.ProgrammeUsers;
+
+            PaginationAllEmployees();
+            PaginationProgrammeEmployees();
+
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            userService.CreateUser(User);
+            userService.CreateUser(CreatedUser);
             return RedirectToPage("/AddUserPage/AllUsers");
+
         }
 
-        public void OnPostCheckType()
+        public void OnPostCheckType(int id)
         {
-            if (User.Type == User.UserType.Employee)
+
+            Leader = (Leader)userService.GetUserByID(id);
+            ProgrammeEmployees = Leader.ProgrammeUsers;
+
+            PaginationAllEmployees();
+            PaginationProgrammeEmployees();
+
+            if (CreatedUser.Type == Models.User.UserType.Employee)
             {
                 IsLeader = false;
             }

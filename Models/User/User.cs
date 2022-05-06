@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RAM___RUC_Allocation_Manager.Models
 {
-    public abstract class User
+    public class User
     {
 
         #region Enumerations
@@ -41,7 +41,10 @@ namespace RAM___RUC_Allocation_Manager.Models
         #endregion
 
         #region Methods
-        public abstract ClaimsPrincipal GetClaimsPrinciple();
+        public virtual ClaimsPrincipal GetClaimsPrinciple()
+        {
+            throw new Exception("Method must be overriden.");
+        }
 
         public override int GetHashCode()
         {
