@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using RAM___RUC_Allocation_Manager.Models.DbConnections;
 
 namespace RAM___RUC_Allocation_Manager.Models
 {
@@ -10,10 +11,15 @@ namespace RAM___RUC_Allocation_Manager.Models
     {
 
         #region Properties
-        public List<Programme> Programme { get; set; }
+        public virtual ICollection<LeaderProgramme> LeaderProgrammes { get; set; }
         #endregion
 
         #region Constructors
+
+        public Leader()
+        {
+            Type = UserType.Leader;
+        }
 
         #endregion
 

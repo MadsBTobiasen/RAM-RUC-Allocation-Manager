@@ -1,9 +1,11 @@
 ﻿using RAM___RUC_Allocation_Manager.Models.WorkAssigments;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using RAM___RUC_Allocation_Manager.Models.DbConnections;
 
 namespace RAM___RUC_Allocation_Manager.Models
 {
@@ -20,14 +22,25 @@ namespace RAM___RUC_Allocation_Manager.Models
         #endregion
 
         #region Properties
+        [Required]
         public EmployeeTitle Title { get; set; }
+        [Required]
         public bool IsGroupLeader { get; set; }
-        public List<EmployeeCourse> Courses { get; set; }
-        public List<Programme> Programmes { get; set; }
-        public List<Redemption> Redemption { get; set; }
+        [Required]
+        public int Balance { get; set; }
+        public virtual ICollection<EmployeeCourse> EmployeeCourses { get; set; }
+        public virtual ICollection<EmployeeProgramme> EmployeeProgrammes { get; set; }
+        public virtual ICollection<Redemption> Redemption { get; set; }
+        public virtual ICollection<EmployeeHiringCommittee> EmployeeHiringCommittees { get; set; }
+        public virtual ICollection<EmployeeCustomCommittee> EmployeeCustomCommittees { get; set; }
          #endregion
 
         #region Constructors
+
+        public Employee()
+        {
+            Type = UserType.Employee;
+        }
 
         #endregion
 
@@ -87,7 +100,7 @@ namespace RAM___RUC_Allocation_Manager.Models
         }
         public override string ToString()
         {
-            return base.ToString();
+            return $"[Employee] ({Id}) {Name} {Password} {Email}";
         }
 
 
