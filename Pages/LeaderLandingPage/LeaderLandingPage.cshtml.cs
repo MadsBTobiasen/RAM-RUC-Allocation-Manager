@@ -18,7 +18,13 @@ namespace RAM___RUC_Allocation_Manager.Pages.LeaderLandingPage
 
         #region Properties
         public Leader Leader { get; set; }
-
+        [BindProperty]
+        public Models.User User { get; set; }
+        [BindProperty]
+        public Models.Employee Employee { get; set; }
+        public bool IsLeader { get; set; }
+        #endregion
+      
         #region All Employees
         public List<User> Employees { get; set; }
         public List<User> PaginatedEmployees { get; set; }
@@ -59,7 +65,9 @@ namespace RAM___RUC_Allocation_Manager.Pages.LeaderLandingPage
         /// </summary>
         public IActionResult OnGet(int id)
         {
-
+        
+            IsLeader = false;
+          
             Leader = (Leader)userService.GetUserByID(id);
             ProgrammeEmployees = Leader.ProgrammeUsers;
 
@@ -67,7 +75,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.LeaderLandingPage
             PaginationProgrammeEmployees();
 
             return Page();
-
+            
         }
 
         /// <summary>
@@ -84,6 +92,30 @@ namespace RAM___RUC_Allocation_Manager.Pages.LeaderLandingPage
 
             return Page();
 
+        }
+
+        public IActionResult OnPostCreateUser()
+        {
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+
+            userService.CreateUser(User);
+            return RedirectToPage("/AddUserPage/AllUsers");
+        }
+
+        public void OnPostCheckType()
+        {
+            if (User.Type == User.UserType.Employee)
+            {
+                IsLeader = false;
+            }
+
+            else
+            {
+                IsLeader = true;
+            }
         }
 
         #region Non-HTTP-RequestMethods

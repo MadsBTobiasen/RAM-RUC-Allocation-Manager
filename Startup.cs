@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using RAM___RUC_Allocation_Manager.Models;
+using RAM___RUC_Allocation_Manager.Services;
 
 namespace RAM___RUC_Allocation_Manager
 {
@@ -30,13 +31,14 @@ namespace RAM___RUC_Allocation_Manager
             services.AddRazorPages();
 
             services.AddDbContext<RamDbContext>();
+            services.AddTransient<DbService<User>, DbService<User>>();
           
             services.AddSingleton<JSONFileService<BaseSettings>, JSONFileService<BaseSettings>>();
             services.AddSingleton<UserService, UserService>();
             services.AddSingleton<SettingsService, SettingsService>();
 
             services.AddTransient<PaginationService<User>, PaginationService<User>>();
-
+          
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

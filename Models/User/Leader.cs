@@ -41,10 +41,10 @@ namespace RAM___RUC_Allocation_Manager.Models
         #endregion
 
         #region Methods
-        public override ClaimsPrincipal GetClaimsPrinciple()
-        {
-            return null;
-        }
+        //public override ClaimsPrincipal GetClaimsPrinciple()
+        //{
+        //    return null;
+        //}
 
         public override int GetHashCode()
         {
@@ -60,6 +60,5 @@ namespace RAM___RUC_Allocation_Manager.Models
         }
 
         #endregion
-
     }
 }
