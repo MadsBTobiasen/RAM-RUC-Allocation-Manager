@@ -4,18 +4,6 @@
     --ram-white: rgb(255 255 255);
 }
 
-body {
-    background-color: var(--ram-background) !important;
-}
-
-header {
-    background-color: var(--ram-background) !important;
-}
-
-a span {
-    vertical-align: middle;
-}
-
 .vertical-align-md {
     vertical-align:middle;
 }
@@ -25,26 +13,11 @@ img.ram-icon-sm {
     width:3rem;
 }
 
-a {
-    transition: all 0.5s ease;
-}
-
-a:hover {
-    color: var(--ram-gold);
-    text-decoration: none;
-}
-
 .mw-0 {
     max-width: none !important;
 }
 
-.row {
-    margin-right: 0 !important;
-    margin-left: 0 !important;
-}
-
 table.leader-landing-page {
-    /*background-color: blue;*/
     width: 100%;
 }
 
@@ -59,42 +32,9 @@ table.allocated-hours-table td {
     padding-bottom: 0.5rem;
 }
 
-/* Overwrites */
-
-hr {
-    border-top: 1px solid var(--ram-gold);
-    width:100%;
+.text-ram-gold {
+    color: var(--ram-gold);
 }
 
-.btn-primary {
-    color: var(--ram-white);
-    border-color: var(--ram-gold);
-    background-color: var(--ram-background);
-}
 
-.btn-primary:hover {
-    color: var(--ram-white);
-    border-color: var(--ram-gold);
-    background-color: var(--ram-background);
-}
-
-.border, .border-top, .border-right, .border-left, .border-bottom {
-    border-color: var(--ram-gold) !important;
-}
-
-.text-white {
-    color: var(--ram-white);
-}
-
-.text-white-hover {
-    transition: all 0.5s ease;
-}
-
-.text-white-hover:hover {
-    color: rgb(218,165,32) !important;
-}
-
-h1, h2, h3, h4, h5, h6, p, span, i, a, table  {
-    color: var(--ram-white);
-}
 

@@ -32,14 +32,20 @@ namespace RAM___RUC_Allocation_Manager.Pages.EmployeeLandingPage
         #endregion
 
         #region Methods
-        public void OnGet(int id)
+        public IActionResult OnGet(int id)
         {
 
             Employee = (Employee)userService.GetUserByID(id);
+            return Page();
 
         }
 
         #region Non-HTTP Requests
+        /// <summary>
+        /// Method that takes an integer of minutes, and converts it to a string, to be shown on the front end.
+        /// </summary>
+        /// <param name="minutes">Amount of minutes as an integer.</param>
+        /// <returns>String representing hours & minutes.</returns>
         public string ConvertMinutesToHours(int minutes)
         {
             TimeSpan time = TimeSpan.FromMinutes(minutes);

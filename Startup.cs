@@ -27,6 +27,7 @@ namespace RAM___RUC_Allocation_Manager
         {
 
             services.AddRazorPages();
+            services.AddSingleton<JSONFileService<BaseSettings>, JSONFileService<BaseSettings>>();
             services.AddSingleton<UserService, UserService>();
             services.AddSingleton<SettingsService, SettingsService>();
 

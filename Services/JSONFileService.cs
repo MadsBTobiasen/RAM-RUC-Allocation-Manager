@@ -22,11 +22,25 @@ namespace RAM___RUC_Allocation_Manager.Services
         #region Constructor
         public JSONFileService(IWebHostEnvironment webHostEnvironment)
         {
+
             WebHostEnvironment = webHostEnvironment;
+            //If the JSON file for this given JSONFileService dosen't exist. A new "empty"-object of the type T, is created, and stored.
+            if (!CheckJsonFileExists()) SaveJsonObjects(new List<T>() { (T)Activator.CreateInstance(typeof(T)) } );
+
         }
         #endregion
 
         #region Methods
+
+        /// <summary>
+        /// Method that checks if the json file exists for the type T. If not, a new JSON file is generated from a new instance of the class.
+        /// </summary>
+        /// <returns>True if exists, false if not.</returns>
+        private bool CheckJsonFileExists()
+        {
+            return File.Exists(JsonFileName);
+        }
+
         /// <summary>
         /// Method that gets all JSON-objects from the directory.
         /// </summary>
@@ -52,7 +66,7 @@ namespace RAM___RUC_Allocation_Manager.Services
                     SkipValidation = false,
                     Indented = true
                 });
-                JsonSerializer.Serialize<T[]>(jsonWriter, objects.ToArray());
+                JsonSerializer.Serialize(jsonWriter, objects.ToArray());
             }
         }
         #endregion
