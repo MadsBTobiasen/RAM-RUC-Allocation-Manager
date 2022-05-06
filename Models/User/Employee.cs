@@ -103,7 +103,6 @@ namespace RAM___RUC_Allocation_Manager.Models
             return $"[Employee] ({Id}) {Name} {Password} {Email}";
         }
 
-
         #endregion
 
     }

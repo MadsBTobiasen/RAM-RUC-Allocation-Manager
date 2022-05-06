@@ -31,8 +31,8 @@ namespace RAM___RUC_Allocation_Manager
         {
 
             services.AddRazorPages();
-            services.AddSingleton<UserService, UserService>();
-
+          
+            #region Cookie Atuhentication Setup
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request. 
@@ -45,6 +45,18 @@ namespace RAM___RUC_Allocation_Manager
                 cookieOptions.LoginPath = "/LoginPage/LoginPage";
             });
 
+            /*services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Administrator", policy =>
+                    policy.RequireClaim(ClaimTypes.Role, "admin"));
+            });*/
+          
+            services.AddMvc().AddRazorPagesOptions(options =>
+            {
+              
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+            #endregion
+              
             services.AddDbContext<RamDbContext>();
             services.AddTransient<DbService<User>, DbService<User>>();
           
