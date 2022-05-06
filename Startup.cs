@@ -9,7 +9,11 @@ using RAM___RUC_Allocation_Manager.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using RAM___RUC_Allocation_Manager.Models;
 using RAM___RUC_Allocation_Manager.Services;
 
@@ -29,7 +33,32 @@ namespace RAM___RUC_Allocation_Manager
         {
 
             services.AddRazorPages();
+          
+            #region Cookie Atuhentication Setup
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                // This lambda determines whether user consent for non-essential cookies is needed for a given request. 
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
 
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(cookieOptions =>
+            {
+                cookieOptions.LoginPath = "/LoginPage/LoginPage";
+            });
+
+            /*services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Administrator", policy =>
+                    policy.RequireClaim(ClaimTypes.Role, "admin"));
+            });*/
+          
+            services.AddMvc().AddRazorPagesOptions(options =>
+            {
+              
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+            #endregion
+              
             services.AddDbContext<RamDbContext>();
             services.AddTransient<DbService<User>, DbService<User>>();
           
@@ -59,7 +88,7 @@ namespace RAM___RUC_Allocation_Manager
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
