@@ -16,6 +16,10 @@ a span {
     vertical-align: middle;
 }
 
+.vertical-align-md {
+    vertical-align:middle;
+}
+
 img.ram-icon-sm {
     height:3rem;
     width:3rem;
@@ -23,9 +27,6 @@ img.ram-icon-sm {
 
 a {
     color: var(--ram-white);
-}
-
-a {
     transition: all 0.5s ease;
 }
 
@@ -34,7 +35,38 @@ a:hover {
     text-decoration: none;
 }
 
+.mw-0 {
+    max-width: none !important;
+}
+
+.row {
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+}
+
+table.leader-landing-page {
+    /*background-color: blue;*/
+    width: 100%;
+}
+
+table.employee-landing-page {
+    width: 100%;
+}
+
+table.allocated-hours-table td {
+    border-top: 0.5px solid var(--ram-gold);
+    border-bottom: 0.5px solid var(--ram-gold);
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
 /* Overwrites */
+
+hr {
+    border-top: 1px solid var(--ram-gold);
+    width:100%;
+}
+
 .btn-primary {
     color: var(--ram-white);
     border-color: var(--ram-gold);

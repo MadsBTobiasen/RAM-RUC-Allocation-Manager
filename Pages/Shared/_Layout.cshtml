@@ -4,13 +4,14 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - RAM - RUC Allocation Manager</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="~/css/ram-css.css" />
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow">
             <div class="container">
                 <a class="navbar-brand p-0 m-0" asp-area="" asp-page="/Index">
                     <img src="~/assets/ram-cut-icon.png" class="ram-icon-sm">
@@ -22,20 +23,22 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
+                        <li><a asp-route-id="10" asp-page="/LeaderLandingPage/LeaderLandingPage">Leader</a></li>
+                    </ul>
+                    <ul class="navbar-nav flex-grow-1">
+                        <li><a asp-route-id="300" asp-page="/EmployeeLandingPage/EmployeeLandingPage">Employee</a></li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-            <button class="btn btn-primary text-white-hover">
-                Lorem ipsum knapz
-            </button>
-            <p class="ram-text-color ram-outline-border-color border border-danger">
-                lorem ipsum lorimus
-            </p>
+    <div class="container mw-0 pt-3 pb-3">
+        <main role="main">
+            <div class="row">
+                <div class="col-1"></div>
+                <div class="col-10">@RenderBody()</div>
+                <div class="col-1"></div>
+            </div>
         </main>
     </div>
 

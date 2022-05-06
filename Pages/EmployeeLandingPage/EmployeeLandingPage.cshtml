@@ -1,4 +1,75 @@
-﻿@page
+﻿@page "{id:int}"
 @model RAM___RUC_Allocation_Manager.Pages.EmployeeLandingPage.EmployeeLandingPageModel
 @{
 }
+
+
+<h2 class="text-white pb-3">Velkommen @Model.Employee.Name</h2>
+
+<div class="row">
+
+    <div class="col-1"></div>
+    <div class="col-10">
+
+        <h3 class="text-white">Time fordeling</h3>
+
+        <table class="text-white employee-landing-page allocated-hours-table">
+
+            <tbody>
+
+                <tr>
+                    <td>Total Allokerede Timer:</td>
+                    <td>@Model.ConvertMinutesToHours(Model.Employee.CalculateTotalAllocationMinutes())</td>
+                    <td><a asp-route-id="@Model.Employee.ID" asp-page="/TotalAllocatedHoursPage/TotalAllocatedHoursPage"><i class="fa-solid fa-circle-info text-white text-white-hover"></i></a></td>
+                </tr>
+
+                <tr>
+                    <td>Total Kursus Timer:</td>
+                    <td>@Model.ConvertMinutesToHours(Model.Employee.CalculateTotalCourseMinutes())</td>
+                    <td><a asp-route-id="@Model.Employee.ID" asp-page="/TotalCourseHoursPage/TotalCourseHoursPage"><i class="fa-solid fa-circle-info text-white text-white-hover"></i></a></td>
+                </tr>
+
+                <tr>
+                    <td>Total Vejlednings Timer:</td>
+                    <td>@Model.ConvertMinutesToHours(Model.Employee.CalculateTotalSupervisionMinutes())</td>
+                    <td><a asp-route-id="@Model.Employee.ID" asp-page="/TotalSupervisionHoursPage/TotalSupervisionHoursPage"><i class="fa-solid fa-circle-info text-white text-white-hover"></i></a></td>
+                </tr>
+
+                <tr>
+                    <td>Total Eksaminer Timer:</td>
+                    <td>@Model.ConvertMinutesToHours(Model.Employee.CalculateTotalExamMinutes())</td>
+                    <td><a asp-route-id="@Model.Employee.ID" asp-page="/TotalExaminationHoursPage/TotalExaminationHoursPage"><i class="fa-solid fa-circle-info text-white text-white-hover"></i></a></td>
+                </tr>
+
+                <tr>
+                    <td>Total Øvrige Timer:</td>
+                    <td>@Model.ConvertMinutesToHours(Model.Employee.CalculateTotalMiscMinutes())</td>
+                    <td><a asp-route-id="@Model.Employee.ID" asp-page="/TotalMiscHoursPage/TotalMiscHoursPage"><i class="fa-solid fa-circle-info text-white text-white-hover"></i></a></td>
+                </tr>
+
+                <tr>
+                    <td>Total Opsparet Timer:</td>
+                    <td>@Model.ConvertMinutesToHours(Model.Employee.CalculateSavings())</td>
+                    <td><a asp-route-id="@Model.Employee.ID" asp-page="/TotalAllocatedHoursPage/TotalAllocatedHoursPage"><i class="fa-solid fa-circle-info text-white text-white-hover"></i></a></td>
+                </tr>
+
+                <tr>
+                    <td>Total Timebalance:</td>
+                    <td>@Model.ConvertMinutesToHours(Model.Employee.CalculateMinuteBalance())</td>
+                    <td><a asp-route-id="@Model.Employee.ID" asp-page="/TotalAllocatedHoursPage/TotalAllocatedHoursPage"><i class="fa-solid fa-circle-info text-white text-white-hover"></i></a></td>
+                </tr>
+
+                <tr>
+                    <td>Total Reedemed(Dansk) Idk man.. Timer:</td>
+                    <td>@Model.ConvertMinutesToHours(Model.Employee.CalculateRedeemedMinutes())</td>
+                    <td><a asp-route-id="@Model.Employee.ID" asp-page="/TotalAllocatedHoursPage/TotalAllocatedHoursPage"><i class="fa-solid fa-circle-info text-white text-white-hover"></i></a></td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+    <div class="col-1"></div>
+
+</div>

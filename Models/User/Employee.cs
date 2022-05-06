@@ -25,51 +25,54 @@ namespace RAM___RUC_Allocation_Manager.Models
         public List<EmployeeCourse> Courses { get; set; }
         public List<Programme> Programmes { get; set; }
         public List<Redemption> Redemption { get; set; }
-         #endregion
+        #endregion
 
         #region Constructors
-
+        public Employee()
+        {
+            Type = UserType.Employee;
+        }
         #endregion
 
         #region Methods
         public int CalculateTotalAllocationMinutes()
         {
-            return 0;
+            return new Random().Next(0, 20) * 30;
         }
 
         public int CalculateTotalCourseMinutes()
         {
-            return 0;
+            return new Random().Next(0, 20) * 30;
         }
 
         public int CalculateTotalSupervisionMinutes()
         {
-            return 0;
+            return new Random().Next(0, 20) * 30;
         }
 
         public int CalculateTotalExamMinutes()
         {
-            return 0;
+            return new Random().Next(0, 20) * 30;
         }
 
         public int CalculateTotalMiscMinutes()
         {
-            return 0;
+            return new Random().Next(0, 20) * 30;
         }
 
         public int CalculateSavings()
         {
-            return 0;
+            return new Random().Next(0, 20) * 30;
         }
 
         public int CalculateMinuteBalance()
         {
-            return 0;
+            return new Random().Next(0, 20) * 30;
         }
 
         public int CalculateRedeemedMinutes()
         {
-            return 0;
+            return new Random().Next(0, 20) * 30;
         }
 
         public override ClaimsPrincipal GetClaimsPrinciple()
@@ -87,7 +90,7 @@ namespace RAM___RUC_Allocation_Manager.Models
         }
         public override string ToString()
         {
-            return base.ToString();
+            return $"[Employee] ({ID}) {Name} {Password} {Email}";
         }
 
 
