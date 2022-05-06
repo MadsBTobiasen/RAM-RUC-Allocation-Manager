@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using RAM___RUC_Allocation_Manager.Models.DbConnections;
 
 namespace RAM___RUC_Allocation_Manager.Models
@@ -41,9 +42,48 @@ namespace RAM___RUC_Allocation_Manager.Models
         #endregion
 
         #region Methods
+        /// <summary>
+        /// Method that returns a ClaimsPrincipal to be used for authentication. Since this object is a leader, it's also plausible for the leader to be an "adminstrator".
+        /// </summary>
+        /// <returns>Claims Principal object.</returns>
         public override ClaimsPrincipal GetClaimsPrinciple()
         {
-            return null;
+
+            List<Claim> claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.NameIdentifier, Id.ToString()),
+                new Claim(ClaimTypes.Name, Username),
+                new Claim(ClaimTypes.GivenName, Name),
+                //new Claim(ClaimTypes.Email, Email),
+                new Claim(ClaimTypes.Role, Type.ToString())
+            };
+
+            /*
+             * If(somemagicsauce) claims.Add(ClaimTypes.Role, "it-adminstrator");
+            */
+            
+            return new ClaimsPrincipal(new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme));
+
+        }
+
+        /// <summary>
+        /// Method that checks if the Leader has the employee in one of it's courses.
+        /// </summary>
+        /// <param name="id">Employee id to check for.</param>
+        /// <returns>Returns true, if the Leader has the Employee in one of it's courses, and false if not.</returns>
+        public bool HasEmployeeInProgrammeById(int id)
+        {
+
+            foreach(User u in ProgrammeUsers)
+            {
+                if(u.Id == id)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+
         }
 
         public override int GetHashCode()

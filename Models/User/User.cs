@@ -15,7 +15,8 @@ namespace RAM___RUC_Allocation_Manager.Models
         public enum UserType
         {
             Employee,
-            Leader
+            Leader,
+            Adminstrator
         }
         #endregion
 
@@ -41,6 +42,10 @@ namespace RAM___RUC_Allocation_Manager.Models
         #endregion
 
         #region Methods
+        /// <summary>
+        /// Overridable function.
+        /// Throws an error as it HAS to be overriden by it's children.
+        /// </summary>
         public virtual ClaimsPrincipal GetClaimsPrinciple()
         {
             throw new Exception("Method must be overriden.");

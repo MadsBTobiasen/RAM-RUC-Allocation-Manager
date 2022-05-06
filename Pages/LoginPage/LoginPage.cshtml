@@ -2,25 +2,37 @@
 @model RAM___RUC_Allocation_Manager.Pages.LoginPage.LoginPageModel
 @{
 }
-<div class="container" style="display: flex; justify-content: center;">
-    <div>
-        <span>@Model.ErrorMessage</span>
+
+<div class="row">
+
+    <div class="col-1"></div>
+    <div class="col-10">
+        <div class="container" style="display: flex; justify-content: center;">
+
+            <form method="post" asp-page-handler="Login">
+                <img src="~/assets/ram-full-icon-bg.png" class="ram-icon-bg">
+
+                <div class="form-group">
+                    <p class="w-100 text-center text-danger">@Model.ErrorMessage</p>
+                </div>
+
+                <div class="form-group">
+                    <label class="w-100 text-center" asp-for="EnteredUsername">Brugernavn</label>
+                    <input class="w-100" asp-for="EnteredUsername" />
+                </div>
+
+                <div class="form-group">
+                    <label class="w-100 text-center" asp-for="EnteredPassword">Kodeord</label>
+                    <input class="w-100" asp-for="EnteredPassword" />
+                </div>
+
+                <div class="form-group w-100">
+                    <button class="btn btn-primary w-100">Log in</button>
+                </div>
+
+            </form>
+        </div>
     </div>
-    <form method="post">
-        <div class="form-group">
-            <label asp-for="EnteredUsername" class="col-form-label" style="color:white"></label>
-            <div>
-                <input asp-for="EnteredUsername" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="EnteredPassword" class="col-form-label" style="color:white"></label>
-            <div>
-                <input asp-for="EnteredPassword" />
-            </div>
-        </div>
-        <div class="form-group">
-            <button class="btn btn-outline-light">Log in</button>
-        </div>
-    </form>
+    <div class="col-1"></div>
+
 </div>

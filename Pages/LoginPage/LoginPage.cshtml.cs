@@ -17,6 +17,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.LoginPage
     {
 
         #region Fields
+        private PasswordHasher<string> hasher;
         private UserService userService;
         #endregion
 
@@ -24,42 +25,33 @@ namespace RAM___RUC_Allocation_Manager.Pages.LoginPage
         [BindProperty] public string EnteredUsername { get; set; }
         [BindProperty] public string EnteredPassword { get; set; }
         public string ErrorMessage { get; set; }
+        private List<User> Users { get; set; }
         #endregion
 
         #region Constructor
 
-        public LoginPageModel(UserService userService)
+        public LoginPageModel(UserService us)
         {
-            this.userService = userService;
+            hasher = new PasswordHasher<string>();
+            userService = us;
+            Users = userService.GetUsers();
         }
         #endregion
 
         #region Methods
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostLogin()
         {
-            List<User> users = userService.Users;
             
-            foreach (User user in users)
+            foreach (User user in Users)
             {
-                //TODO: Change Name == Username, once database is running.
-                if (EnteredUsername.ToLower() == user.Name.ToLower())
+
+                if (EnteredUsername.ToLower() == user.Username.ToLower())
                 {
-                    //var passwordHasher = new PasswordHasher<string>();
-                    //if (passwordHasher.VerifyHashedPassword(null, user.Password, EnteredPassword) ==
-                    //    PasswordVerificationResult.Success)
-                    //{
-                    if(EnteredPassword.ToLower() == user.Password.ToLower())
+             
+                    if(hasher.VerifyHashedPassword(null, user.Password, EnteredPassword) == PasswordVerificationResult.Success) 
                     {
-                        var claims = new List<Claim>
-                        {
-                            new Claim(ClaimTypes.Name, EnteredUsername)
-                        };
-
-                        if(user.Type == Models.User.UserType.Leader) claims.Add(new Claim(ClaimTypes.Role, "admin"));
-
-                        var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
-                        return RedirectToPage("/EmployeeLandingPage/EmployeeLandingPage/300");
+                        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, user.GetClaimsPrinciple());
+                        return Redirect("/Index");
                     }
 
                 }
@@ -67,6 +59,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.LoginPage
 
             ErrorMessage = "Invalid attempt";
             return Page();
+
         }
 
         public void OnGet() { }

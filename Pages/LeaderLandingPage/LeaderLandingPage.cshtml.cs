@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using RAM___RUC_Allocation_Manager.Models;
@@ -9,6 +11,7 @@ using RAM___RUC_Allocation_Manager.Services;
 
 namespace RAM___RUC_Allocation_Manager.Pages.LeaderLandingPage
 {
+    [Authorize(Roles = "Leader")]
     public class LeaderLandingPageModel : PageModel
     {
 
@@ -62,16 +65,12 @@ namespace RAM___RUC_Allocation_Manager.Pages.LeaderLandingPage
         /// <summary>
         /// Method that returns the Page.
         /// </summary>
-        public IActionResult OnGet(int id)
+        public IActionResult OnGet()
         {
         
             IsLeader = false;
-          
-            Leader = (Leader)userService.GetUserByID(id);
-            ProgrammeEmployees = Leader.ProgrammeUsers;
 
-            PaginationAllEmployees();
-            PaginationProgrammeEmployees();
+            Setup();
 
             return Page();
             
@@ -80,27 +79,19 @@ namespace RAM___RUC_Allocation_Manager.Pages.LeaderLandingPage
         /// <summary>
         /// Method that gets a paginated result of users, by setting up the PaginatationService & calling Paginate on it.
         /// </summary>
-        public IActionResult OnPostPaginatedResult(int id)
+        public IActionResult OnPostPaginatedResult()
         {
 
-            Leader = (Leader)userService.GetUserByID(id);
-            ProgrammeEmployees = Leader.ProgrammeUsers;
-
-            PaginationAllEmployees();
-            PaginationProgrammeEmployees();
+            Setup();
 
             return Page();
 
         }
 
-        public IActionResult OnPostCreateUser(int id)
+        public IActionResult OnPostCreateUser()
         {
 
-            Leader = (Leader)userService.GetUserByID(id);
-            ProgrammeEmployees = Leader.ProgrammeUsers;
-
-            PaginationAllEmployees();
-            PaginationProgrammeEmployees();
+            Setup();
 
             if (!ModelState.IsValid)
             {
@@ -112,14 +103,10 @@ namespace RAM___RUC_Allocation_Manager.Pages.LeaderLandingPage
 
         }
 
-        public void OnPostCheckType(int id)
+        public void OnPostCheckType()
         {
 
-            Leader = (Leader)userService.GetUserByID(id);
-            ProgrammeEmployees = Leader.ProgrammeUsers;
-
-            PaginationAllEmployees();
-            PaginationProgrammeEmployees();
+            Setup();
 
             if (CreatedUser.Type == Models.User.UserType.Employee)
             {
@@ -151,6 +138,20 @@ namespace RAM___RUC_Allocation_Manager.Pages.LeaderLandingPage
 
             PageIndexProgrammeEmployees = paginationService.PageIndex;
             MaxItemsProgrammeEmployees = paginationService.PageMax;
+        }
+
+        /// <summary>
+        /// Methods that must with each request.
+        /// </summary>
+        private void Setup()
+        {
+
+            Leader = (Leader)userService.GetUserByID(Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier)));
+            ProgrammeEmployees = Leader.ProgrammeUsers;
+
+            PaginationAllEmployees();
+            PaginationProgrammeEmployees();
+
         }
         #endregion
 

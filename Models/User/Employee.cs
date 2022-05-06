@@ -6,6 +6,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using RAM___RUC_Allocation_Manager.Models.DbConnections;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace RAM___RUC_Allocation_Manager.Models
 {
@@ -45,6 +46,25 @@ namespace RAM___RUC_Allocation_Manager.Models
         #endregion
 
         #region Methods
+
+        /// <summary>
+        /// Method that returns a ClaimsPrincipal to be used for authentication.
+        /// </summary>
+        /// <returns>Claims Principal object.</returns>
+        public override ClaimsPrincipal GetClaimsPrinciple()
+        {
+            List<Claim> claims = new List<Claim>()
+            {
+                new Claim(ClaimTypes.NameIdentifier, Id.ToString()),
+                new Claim(ClaimTypes.Name, Username),
+                new Claim(ClaimTypes.GivenName, Name),
+                //new Claim(ClaimTypes.Email, Email),
+                new Claim(ClaimTypes.Role, Type.ToString())
+            };
+
+            return new ClaimsPrincipal(new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme));
+        }
+
         public int CalculateTotalAllocationMinutes()
         {
             return new Random().Next(0, 20) * 30;
@@ -83,11 +103,6 @@ namespace RAM___RUC_Allocation_Manager.Models
         public int CalculateRedeemedMinutes()
         {
             return new Random().Next(0, 20) * 30;
-        }
-
-        public override ClaimsPrincipal GetClaimsPrinciple()
-        {
-            return null;
         }
 
         public override int GetHashCode()

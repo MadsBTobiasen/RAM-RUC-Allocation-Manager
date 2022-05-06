@@ -1,4 +1,4 @@
-﻿@page "{id:int}"
+﻿@page
 @using RAM___RUC_Allocation_Manager.Models
 @model RAM___RUC_Allocation_Manager.Pages.LeaderLandingPage.LeaderLandingPageModel
 @{
@@ -56,9 +56,9 @@
                         }
 
                         <div class="form-group">
-                                     <label asp-for="@Model.CreatedUser.Id" class="control-lable"></label>
-                                     <input asp-for="@Model.CreatedUser.Id" class="form-control" readonly/>
-                            </div>
+                            <label asp-for="@Model.CreatedUser.Id" class="control-lable"></label>
+                            <input asp-for="@Model.CreatedUser.Id" class="form-control" readonly/>
+                        </div>
 
                         <div class="form-group">
                             <label asp-for="@Model.CreatedUser.Name" class="control-lable"></label>
@@ -100,10 +100,10 @@
         <h3 class="">Alle Undervisere for dine studier</h3>
 
         <form method="post" class="float-right pb-3" asp-page-handler="PaginatedResult">
-            <button class="btn btn-primary text-white-hover" onclick="decrementOne('paginationProgrammeEmployees', '1')"><i class="fa-solid fa-arrow-left"></i></button>
+            <button class="btn btn-primary" onclick="decrementOne('paginationProgrammeEmployees', '1')"><i class="fa-solid fa-arrow-left"></i></button>
             <input hidden="@true" id="paginationProgrammeEmployees" asp-for="PageIndexProgrammeEmployees" />
             <span class="h5 vertical-align-md mb-0">@(Model.PageIndexProgrammeEmployees+1) | @(Model.PageMaxProgrammeEmployees+1)</span>
-            <button class="btn btn-primary text-white-hover" onclick="incrementOne('paginationProgrammeEmployees', '@Model.PageMaxProgrammeEmployees')"><i class="fa-solid fa-arrow-right"></i></button>
+            <button class="btn btn-primary" onclick="incrementOne('paginationProgrammeEmployees', '@Model.PageMaxProgrammeEmployees')"><i class="fa-solid fa-arrow-right"></i></button>
         </form>
 
         <table class="leader-landing-page table-dark table-striped">
@@ -128,7 +128,7 @@
                         <th style="width:10%" scope="row" class="text-center">@(i + (Model.MaxItemsProgrammeEmployees * Model.PageIndexProgrammeEmployees))</th>
                         <td class="text-left">@((Model.PaginatedProgrammeEmployees[i] as Models.Employee).Name)</td>
                         <td class="text-left">@((Model.PaginatedProgrammeEmployees[i] as Models.Employee).Title)</td>
-                        <td style="width:10%" class="text-center"><i class="fa-solid fa-circle-info"></i></td>
+                        <td style="width:10%" class="text-center"><a asp-route-id="@(Model.PaginatedProgrammeEmployees[i].Id)" asp-page="/EmployeeLandingPage/EmployeeLandingPage"><i class="fa-solid fa-circle-info"></i></a></td>
                         <td style="width:10%" class="text-center"><i class="fa-solid fa-pen"></i></td>
                     </tr>
                 }
@@ -148,10 +148,10 @@
         <h3 class="">Alle Undervisere</h3>
 
         <form method="post" class="float-right pb-3" asp-page-handler="PaginatedResult">
-            <button class="btn btn-primary text-white-hover" onclick="decrementOne('paginationAllEmployeesInput', '1')"><i class="fa-solid fa-arrow-left"></i></button>
+            <button class="btn btn-primary" onclick="decrementOne('paginationAllEmployeesInput', '1')"><i class="fa-solid fa-arrow-left"></i></button>
             <input hidden="@true" id="paginationAllEmployeesInput" asp-for="PageIndexAllEmployees" />
             <span class="h5 vertical-align-md mb-0">@(Model.PageIndexAllEmployees+1) | @(Model.PageMaxAllEmployees+1)</span>
-            <button class="btn btn-primary text-white-hover" onclick="incrementOne('paginationAllEmployeesInput', '@Model.PageMaxAllEmployees')"><i class="fa-solid fa-arrow-right"></i></button>
+            <button class="btn btn-primary" onclick="incrementOne('paginationAllEmployeesInput', '@Model.PageMaxAllEmployees')"><i class="fa-solid fa-arrow-right"></i></button>
         </form>
 
         <table class="leader-landing-page table-dark table-striped">
@@ -176,7 +176,7 @@
                         <th style="width:10%" scope="row" class="text-center">@(i + (Model.MaxItemsAllEmployees * Model.PageIndexAllEmployees))</th>
                         <td class="text-left">@((Model.PaginatedEmployees[i] as Models.Employee).Name)</td>
                         <td class="text-left">@((Model.PaginatedEmployees[i] as Models.Employee).Title)</td>
-                        <td style="width:10%" class="text-center"><i class="fa-solid fa-circle-info"></i></td>
+                        <td style="width:10%" class="text-center"><a asp-route-id="@(Model.PaginatedEmployees[i].Id)" asp-page="/EmployeeLandingPage/EmployeeLandingPage"><i class="fa-solid fa-circle-info"></i></a></td>
                         <td style="width:10%" class="text-center"><i class="fa-solid fa-pen"></i></td>
                     </tr>
                 }

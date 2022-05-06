@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using RAM___RUC_Allocation_Manager.Models;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ namespace RAM___RUC_Allocation_Manager.MockData
     public static class MockUsers
     {
 
+        private static PasswordHasher<string> hasher = new PasswordHasher<string>();
         private static List<User> users;
 
         public static List<User> GetUsers()
@@ -22,34 +24,36 @@ namespace RAM___RUC_Allocation_Manager.MockData
                 for(int i = 0; i < 25; i++)
                 {
 
-                    users.Add(new Leader() { Id = i + 10000, Name = $"Leader_{i}", Password = "lea" });
+                    users.Add(new Leader() { Id = i + 10000, Name = $"Leader_{i}", Username = $"Leader_{i}", Password = hasher.HashPassword(null, "lea") });
 
                 }
 
                 for (int i = 0; i < 100; i++)
                 {
 
-                    users.Add(new Employee() { Id = i + 20000, Name = $"Employee_{i}", Password = "emp" });
+                    users.Add(new Employee() { Id = i + 20000, Name = $"Employee_{i}", Username = $"Employee_{i}", Password = hasher.HashPassword(null, "emp") });
 
                 }
 
             }
 
-            users.Add(GetMockTestLeader());
-            users.Add(GetMockTestEmployee());
+            users.AddRange(GetMockTestLeader());
+            users.AddRange(GetMockTestEmployee());
           
-            return users;
+            //Below LINQ to ensure only unique Ids are returned.
+            return users.GroupBy(i => i.Id).Select(g => g.First()).ToList();
 
         }
 
-        private static User GetMockTestLeader()
+        private static List<User> GetMockTestLeader()
         {
 
             Leader leader = new Leader()
             {
                 Id = 10,
                 Name = "Leader1000",
-                Password = "Password",
+                Username = "Leader1000",
+                Password = hasher.HashPassword(null, "Password")
             };
 
             Programme programme1 = new Programme()
@@ -58,10 +62,10 @@ namespace RAM___RUC_Allocation_Manager.MockData
                 Name = "Test Studie 1",
                 Users = new List<User>()
             {
-                new Employee() { Id = 4400, Name = "Empl1", Password="emp", },
-                new Employee() { Id = 4401, Name = "Empl2", Password="emp", },
-                new Employee() { Id = 4402, Name = "Empl3", Password="emp", },
-                new Employee() { Id = 4403, Name = "Empl4", Password="emp", }
+                new Employee() { Id = 4400, Name = "Empl1", Username = "Empl1", Password = hasher.HashPassword(null, "emp") },
+                new Employee() { Id = 4401, Name = "Empl2", Username = "Empl2", Password = hasher.HashPassword(null, "emp") },
+                new Employee() { Id = 4402, Name = "Empl3", Username = "Empl3", Password = hasher.HashPassword(null, "emp") },
+                new Employee() { Id = 4403, Name = "Empl4", Username = "Empl4", Password = hasher.HashPassword(null, "emp") }
     }
             };
 
@@ -71,10 +75,10 @@ namespace RAM___RUC_Allocation_Manager.MockData
                 Name = "Test Studie 2",
                 Users = new List<User>()
             {
-                new Employee() { Id = 4400, Name = "Empl5", Password="emp" },
-                new Employee() { Id = 4401, Name = "Empl6", Password="emp" },
-                new Employee() { Id = 4402, Name = "Empl7", Password="emp" },
-                new Employee() { Id = 4403, Name = "Empl8", Password="emp" }
+                new Employee() { Id = 4400, Name = "Empl5", Username = "Empl5", Password = hasher.HashPassword(null, "emp") },
+                new Employee() { Id = 4401, Name = "Empl6", Username = "Empl6", Password = hasher.HashPassword(null, "emp") },
+                new Employee() { Id = 4402, Name = "Empl7", Username = "Empl7", Password = hasher.HashPassword(null, "emp") },
+                new Employee() { Id = 4403, Name = "Empl8", Username = "Empl8", Password = hasher.HashPassword(null, "emp") }
             }
             };
 
@@ -84,20 +88,27 @@ namespace RAM___RUC_Allocation_Manager.MockData
                 programme2
             };
 
-            return leader;
+            List<User> usersToAdd = new List<User>() { leader };
+
+            usersToAdd.AddRange(programme1.Users);
+            usersToAdd.AddRange(programme2.Users);
+
+            //Below LINQ to ensure only unique Ids are returned.
+            return usersToAdd.GroupBy(i => i.Id).Select(g => g.First()).ToList();
 
         }
-        private static User GetMockTestEmployee()
+        private static List<User> GetMockTestEmployee()
         {
 
             Employee employee = new Employee()
             {
                 Id = 300,
-                Name = "Employee_1000",
-                Password = "Password"
+                Name = "Employee1000",
+                Username = "Employee1000",
+                Password = hasher.HashPassword(null, "Password")
             };
 
-            return employee;
+            return new List<User>() { employee };
 
         }
 

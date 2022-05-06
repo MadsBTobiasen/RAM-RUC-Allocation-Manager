@@ -25,8 +25,23 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
 
-                        <li><a asp-route-id="10" asp-page="/LeaderLandingPage/LeaderLandingPage">Leader</a></li>
-                        <li><a asp-route-id="300" asp-page="/EmployeeLandingPage/EmployeeLandingPage">Employee</a></li>
+                        @if (Context.User.HasClaim(System.Security.Claims.ClaimTypes.Role, Models.User.UserType.Leader.ToString()))
+                        {
+                            <li><a asp-route-id="-1" asp-page="/LeaderLandingPage/LeaderLandingPage">Leader</a></li>
+                        }
+                        @if (Context.User.HasClaim(System.Security.Claims.ClaimTypes.Role, Models.User.UserType.Employee.ToString()))
+                        {
+                            <li><a asp-page="/EmployeeLandingPage/EmployeeLandingPage">Employee</a></li>
+                        }
+
+                        @if (!Context.User.Identity.IsAuthenticated)
+                        {
+                            <li><a asp-page="/LoginPage/LoginPage">Login</a></li>
+                        } else
+                        {
+                            <li><a asp-page="/LoginPage/LogoutPage">Logout</a></li>
+                        }
+                        
 
                     </ul>
                 </div>
