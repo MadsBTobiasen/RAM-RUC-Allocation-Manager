@@ -51,7 +51,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.LoginPage
                             new Claim(ClaimTypes.Name, EnteredUsername)
                         };
 
-                        if(EnteredUsername == "admin") claims.Add(new Claim(ClaimTypes.Role, "admin"));
+                        if(user.Type == Models.User.UserType.Leader) claims.Add(new Claim(ClaimTypes.Role, "admin"));
 
                         var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                         await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));

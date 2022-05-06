@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Hosting;
-using RAM___RUC_Allocation_Manager.Interface;
+using RAM___RUC_Allocation_Manager;
 using System;
 using System.Collections.Generic;
 using System.IO;

@@ -7,8 +7,12 @@ using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using RAM___RUC_Allocation_Manager.Services;
 
 namespace RAM___RUC_Allocation_Manager
 {
@@ -25,10 +29,28 @@ namespace RAM___RUC_Allocation_Manager
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
+            services.AddSingleton<UserService, UserService>();
 
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                // This lambda determines whether user consent for non-essential cookies is needed for a given request. 
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(cookieOptions =>
+            {
+                cookieOptions.LoginPath = "/LoginPage/LoginPage";
+            });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Administrator", policy =>
+                    policy.RequireClaim(ClaimTypes.Role, "admin"));
+            });
             services.AddMvc().AddRazorPagesOptions(options =>
             {
-                options.Conventions.AuthorizeFolder("/Pages");
+                options.Conventions.AuthorizeFolder("/EmployeeLandingPage");
             }).SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
         }
 
@@ -50,7 +72,7 @@ namespace RAM___RUC_Allocation_Manager
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
