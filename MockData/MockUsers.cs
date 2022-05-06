@@ -34,7 +34,7 @@ namespace RAM___RUC_Allocation_Manager.MockData
                 }
 
             }
-          
+
             users.Add(GetMockTestLeader());
             users.Add(GetMockTestEmployee());
           
@@ -62,7 +62,7 @@ namespace RAM___RUC_Allocation_Manager.MockData
                 new Employee() { Id = 4401, Name = "Empl2", Password="emp", },
                 new Employee() { Id = 4402, Name = "Empl3", Password="emp", },
                 new Employee() { Id = 4403, Name = "Empl4", Password="emp", }
-            }
+    }
             };
 
             Programme programme2 = new Programme()

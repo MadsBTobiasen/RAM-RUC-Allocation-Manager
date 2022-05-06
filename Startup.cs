@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using RAM___RUC_Allocation_Manager.Models;
 using RAM___RUC_Allocation_Manager.Services;
 
@@ -39,6 +40,11 @@ namespace RAM___RUC_Allocation_Manager
 
             services.AddTransient<PaginationService<User>, PaginationService<User>>();
           
+
+            services.AddMvc().AddRazorPagesOptions(options =>
+            {
+                options.Conventions.AuthorizeFolder("/Pages");
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
