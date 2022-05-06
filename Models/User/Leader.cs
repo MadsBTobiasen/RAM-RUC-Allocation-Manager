@@ -12,6 +12,8 @@ namespace RAM___RUC_Allocation_Manager.Models
 
         #region Properties
         public virtual ICollection<LeaderProgramme> LeaderProgrammes { get; set; }
+        //This is test list. Remove once DB is running.
+        public List<Programme> Programmes { get; set; }
          /// <summary>
         /// Returns a list of all the Users from the Users in Programme' list of Users.
         /// </summary>
@@ -54,7 +56,7 @@ namespace RAM___RUC_Allocation_Manager.Models
         }
         public override string ToString()
         {
-            return $"[Leader] ({ID}) {Name} {Password} {Email}";
+            return $"[Leader] ({Id}) {Name} {Password} {Email}";
         }
 
         #endregion

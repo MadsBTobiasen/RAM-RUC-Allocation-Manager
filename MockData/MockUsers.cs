@@ -22,14 +22,14 @@ namespace RAM___RUC_Allocation_Manager.MockData
                 for(int i = 0; i < 25; i++)
                 {
 
-                    users.Add(new Leader() { ID = i + 10000, Name = $"Leader_{i}", Password = "lea" });
+                    users.Add(new Leader() { Id = i + 10000, Name = $"Leader_{i}", Password = "lea" });
 
                 }
 
                 for (int i = 0; i < 100; i++)
                 {
 
-                    users.Add(new Employee() { ID = i + 20000, Name = $"Employee_{i}", Password = "emp" });
+                    users.Add(new Employee() { Id = i + 20000, Name = $"Employee_{i}", Password = "emp" });
 
                 }
 
@@ -47,34 +47,34 @@ namespace RAM___RUC_Allocation_Manager.MockData
 
             Leader leader = new Leader()
             {
-                ID = 10,
+                Id = 10,
                 Name = "Leader_1000",
                 Password = "Password",
             };
 
             Programme programme1 = new Programme()
             {
-                ID = 3000,
+                Id = 3000,
                 Name = "Test Studie 1",
                 Users = new List<User>()
             {
-                new Employee() { ID = 4400, Name = "Empl1", Password="emp", },
-                new Employee() { ID = 4401, Name = "Empl2", Password="emp", },
-                new Employee() { ID = 4402, Name = "Empl3", Password="emp", },
-                new Employee() { ID = 4403, Name = "Empl4", Password="emp", }
+                new Employee() { Id = 4400, Name = "Empl1", Password="emp", },
+                new Employee() { Id = 4401, Name = "Empl2", Password="emp", },
+                new Employee() { Id = 4402, Name = "Empl3", Password="emp", },
+                new Employee() { Id = 4403, Name = "Empl4", Password="emp", }
             }
             };
 
             Programme programme2 = new Programme()
             {
-                ID = 3001,
+                Id = 3001,
                 Name = "Test Studie 2",
                 Users = new List<User>()
             {
-                new Employee() { ID = 4400, Name = "Empl5", Password="emp" },
-                new Employee() { ID = 4401, Name = "Empl6", Password="emp" },
-                new Employee() { ID = 4402, Name = "Empl7", Password="emp" },
-                new Employee() { ID = 4403, Name = "Empl8", Password="emp" }
+                new Employee() { Id = 4400, Name = "Empl5", Password="emp" },
+                new Employee() { Id = 4401, Name = "Empl6", Password="emp" },
+                new Employee() { Id = 4402, Name = "Empl7", Password="emp" },
+                new Employee() { Id = 4403, Name = "Empl8", Password="emp" }
             }
             };
 
@@ -92,7 +92,7 @@ namespace RAM___RUC_Allocation_Manager.MockData
 
             Employee employee = new Employee()
             {
-                ID = 300,
+                Id = 300,
                 Name = "Employee_1000",
                 Password = "Password"
             };

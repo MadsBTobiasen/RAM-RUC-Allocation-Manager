@@ -35,6 +35,8 @@ namespace RAM___RUC_Allocation_Manager.Models
         public virtual ICollection<EmployeeHiringCommittee> EmployeeHiringCommittees { get; set; }
         public virtual ICollection<EmployeeCustomCommittee> EmployeeCustomCommittees { get; set; }
 
+        #endregion
+
         #region Constructors
         public Employee()
         {

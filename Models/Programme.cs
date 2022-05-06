@@ -18,6 +18,9 @@ namespace RAM___RUC_Allocation_Manager.Models
         public string Name { get; set; }
         public virtual ICollection<EmployeeProgramme> EmployeeProgrammes { get; set; }
         public virtual ICollection<LeaderProgramme> LeaderProgrammes { get; set; }
+
+        //This is test list. Remove after db go vroom
+        public List<User> Users { get; set; }
         #endregion
 
     }
