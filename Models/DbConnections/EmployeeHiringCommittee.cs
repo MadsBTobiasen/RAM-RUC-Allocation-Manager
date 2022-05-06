@@ -4,17 +4,17 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using RAM___RUC_Allocation_Manager.Models.WorkAssigments.Committee;
 
-namespace RAM___RUC_Allocation_Manager.Models.WorkAssigments.Committee
+namespace RAM___RUC_Allocation_Manager.Models.DbConnections
 {
-    public class PhdCommittee
+    public class EmployeeHiringCommittee
     {
-
-        #region Properties
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+        public int EmployeeId { get; set; }
         public Employee Employee { get; set; }
-        #endregion
-
+        public int HiringCommitteeId { get; set; }
+        public HiringCommittee HiringCommittee { get; set; }
     }
 }

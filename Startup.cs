@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using RAM___RUC_Allocation_Manager.Models;
+using RAM___RUC_Allocation_Manager.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +14,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using RAM___RUC_Allocation_Manager.Models;
 using RAM___RUC_Allocation_Manager.Services;
 
 namespace RAM___RUC_Allocation_Manager
@@ -28,9 +31,10 @@ namespace RAM___RUC_Allocation_Manager
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddRazorPages();
-            services.AddSingleton<UserService, UserService>();
 
+            services.AddRazorPages();
+          
+            #region Cookie Atuhentication Setup
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request. 
@@ -43,15 +47,27 @@ namespace RAM___RUC_Allocation_Manager
                 cookieOptions.LoginPath = "/LoginPage/LoginPage";
             });
 
-            services.AddAuthorization(options =>
+            /*services.AddAuthorization(options =>
             {
                 options.AddPolicy("Administrator", policy =>
                     policy.RequireClaim(ClaimTypes.Role, "admin"));
-            });
+            });*/
+          
             services.AddMvc().AddRazorPagesOptions(options =>
             {
-                options.Conventions.AuthorizeFolder("/EmployeeLandingPage");
+              
             }).SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+            #endregion
+              
+            services.AddDbContext<RamDbContext>();
+            services.AddTransient<DbService<User>, DbService<User>>();
+          
+            services.AddSingleton<JSONFileService<BaseSettings>, JSONFileService<BaseSettings>>();
+            services.AddSingleton<UserService, UserService>();
+            services.AddSingleton<SettingsService, SettingsService>();
+
+            services.AddTransient<PaginationService<User>, PaginationService<User>>();
+          
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

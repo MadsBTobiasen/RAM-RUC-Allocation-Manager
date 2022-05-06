@@ -7,12 +7,8 @@ namespace RAM___RUC_Allocation_Manager.Models
 {
     public class Semester
     {
-
-        #region Properties
-        public int ID { get; set; }
+        public int Id { get; set; }
         public DateTime StartDate { get; set; }
-        public DateTime EndTime { get; set; }
-        #endregion
-
+        public DateTime EndDate { get; set; }
     }
 }
