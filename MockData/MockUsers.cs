@@ -29,7 +29,7 @@ namespace RAM___RUC_Allocation_Manager.MockData
                 for (int i = 0; i < 100; i++)
                 {
 
-                    users.Add(new Employee() { ID = i + 1000, Name = $"Employee_{i}", Password = "emp" });
+                    users.Add(new Employee() { ID = i + 20000, Name = $"Employee_{i}", Password = "emp" });
 
                 }
 
