@@ -1,0 +1,33 @@
+[
+  {
+    "ID": 0,
+    "PedagogicalQualification": 0,
+    "BaseHoursForProfessor": 0,
+    "BaseHoursForAssociateProfessor": 0,
+    "BaseHoursForAssistantProfessor": 0,
+    "LessonHourValue": 0,
+    "SabLessonHourValue": 0,
+    "SibLessonHourValue": 0,
+    "HourPerPersonHiringCommittee": 0,
+    "HourPerPersonPromotionCommittee": 0,
+    "PhdCommitteeHourValue": 0,
+    "GroupFacilitationBaseHour": 0,
+    "GroupFacilitationHourDailyIncrement": 0,
+    "PhdEndEvalHourWorth": 0,
+    "PhdMainSupervisionHourWorth": 0,
+    "PhdSecondarySupervisionHourWorth": 0,
+    "PortfolioHourWorth": 0,
+    "SynopsisHourWorth": 0,
+    "SupervisionOfGroupHourOneMember": 0,
+    "SupervisionOfGroupHourTwoMember": 0,
+    "SupervisionOfGroupHourThreeMember": 0,
+    "SupervisionOfGroupHourFourMember": 0,
+    "SupervisionOfGroupHourFiveMember": 0,
+    "SupervisionOfGroupHourOneMemberMasters": 0,
+    "SupervisionOfGroupHourTwoMemberMasters": 0,
+    "SupervisionOfGroupHourThreeMemberMasters": 0,
+    "SupervisionOfGroupHourFourMemberMasters": 0,
+    "SupervisionOfGroupHourFiveMembersMasters": 0,
+    "SupervisionOfGroupHourSixMembersMasters": 0
+  }
+]

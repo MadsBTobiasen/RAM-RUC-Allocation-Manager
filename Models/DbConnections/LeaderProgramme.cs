@@ -5,16 +5,17 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace RAM___RUC_Allocation_Manager.Models.WorkAssigments.Committee
+namespace RAM___RUC_Allocation_Manager.Models.DbConnections
 {
-    public class PhdCommittee
+    public class LeaderProgramme
     {
-
-        #region Properties
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public Employee Employee { get; set; }
-        #endregion
+        public int ProgrammeId { get; set; }
 
+        public Programme Programme { get; set; }
+        public int LeaderId { get; set; }
+
+        public Leader Leader { get; set; }
     }
 }

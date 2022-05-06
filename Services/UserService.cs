@@ -24,7 +24,6 @@ namespace RAM___RUC_Allocation_Manager.Services
 
             //TODO: Retrieve Users from DB-Service.
             Users = MockData.MockUsers.GetUsers();
-            Console.WriteLine(Users.Count);
 
         }
         #endregion
@@ -56,7 +55,7 @@ namespace RAM___RUC_Allocation_Manager.Services
         /// <returns>Matched User.</returns>
         public User GetUserByID(int id)
         {
-            return (from user in Users where user.ID == id select user).SingleOrDefault();
+            return (from user in Users where user.Id == id select user).SingleOrDefault();
         }
 
         /// <summary>
@@ -82,7 +81,7 @@ namespace RAM___RUC_Allocation_Manager.Services
 
             foreach(User u in Users)
             {
-                if(u.ID == userToEdit.ID)
+                if(u.Id == userToEdit.Id)
                 {
 
                     Users.Remove(u);
@@ -109,7 +108,7 @@ namespace RAM___RUC_Allocation_Manager.Services
 
             foreach(User u in Users)
             {
-                if(u.ID == userToDelete.ID)
+                if(u.Id == userToDelete.Id)
                 {
 
                     Users.Remove(u);

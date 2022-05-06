@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using RAM___RUC_Allocation_Manager.Models;
+using RAM___RUC_Allocation_Manager.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,10 +27,18 @@ namespace RAM___RUC_Allocation_Manager
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
             services.AddRazorPages();
-            services.AddDbContext<RUCDBContext>();
-            services.AddSingleton<UserService, UserService>();
+
+            services.AddDbContext<RamDbContext>();
             services.AddTransient<DbService<User>, DbService<User>>();
+          
+            services.AddSingleton<JSONFileService<BaseSettings>, JSONFileService<BaseSettings>>();
+            services.AddSingleton<UserService, UserService>();
+            services.AddSingleton<SettingsService, SettingsService>();
+
+            services.AddTransient<PaginationService<User>, PaginationService<User>>();
+          
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
