@@ -48,7 +48,7 @@ namespace RAM___RUC_Allocation_Manager.MockData
             Leader leader = new Leader()
             {
                 Id = 10,
-                Name = "Leader_1000",
+                Name = "Leader1000",
                 Password = "Password",
             };
 
