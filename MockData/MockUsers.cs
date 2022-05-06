@@ -1,4 +1,4 @@
-﻿using RAM___RUC_Allocation_Manager.Models;
+using RAM___RUC_Allocation_Manager.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,8 +10,9 @@ namespace RAM___RUC_Allocation_Manager.Models
     {
 
         #region Properties
-        public int ID { get; set; }
-        public int RUCID { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+        public int RucId { get; set; }
         public bool IsMasterThesis { get; set; }
         public Employee Supervisor { get; set; }
         public Employee InternalCensor { get; set; }

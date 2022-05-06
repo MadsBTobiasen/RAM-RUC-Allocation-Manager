@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using RAM___RUC_Allocation_Manager.Models;
 
 namespace RAM___RUC_Allocation_Manager
 {
@@ -27,6 +28,9 @@ namespace RAM___RUC_Allocation_Manager
         {
 
             services.AddRazorPages();
+
+            services.AddDbContext<RamDbContext>();
+          
             services.AddSingleton<JSONFileService<BaseSettings>, JSONFileService<BaseSettings>>();
             services.AddSingleton<UserService, UserService>();
             services.AddSingleton<SettingsService, SettingsService>();
