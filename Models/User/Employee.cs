@@ -25,7 +25,7 @@ namespace RAM___RUC_Allocation_Manager.Models
         public List<EmployeeCourse> Courses { get; set; }
         public List<Programme> Programmes { get; set; }
         public List<Redemption> Redemption { get; set; }
-         #endregion
+        #endregion
 
         #region Constructors
 
@@ -87,7 +87,7 @@ namespace RAM___RUC_Allocation_Manager.Models
         }
         public override string ToString()
         {
-            return base.ToString();
+            return $"[Employee] ({ID}) {Name} {Password} {Email}";
         }
 
 
