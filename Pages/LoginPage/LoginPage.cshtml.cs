@@ -17,8 +17,8 @@ namespace RAM___RUC_Allocation_Manager.Pages.LoginPage
     {
 
         #region Fields
-        private PasswordHasher<string> hasher;
         private UserService userService;
+        private LoginService loginService;
         #endregion
 
         #region Properties
@@ -30,35 +30,28 @@ namespace RAM___RUC_Allocation_Manager.Pages.LoginPage
 
         #region Constructor
 
-        public LoginPageModel(UserService us)
+        public LoginPageModel(UserService us, LoginService ls)
         {
-            hasher = new PasswordHasher<string>();
             userService = us;
             Users = userService.GetUsers();
+
+            loginService = ls;
+
         }
         #endregion
 
         #region Methods
         public async Task<IActionResult> OnPostLogin()
         {
-            
-            foreach (User user in Users)
+
+            loginService.HttpContext = HttpContext;
+
+            if (await loginService.Login(EnteredUsername, EnteredPassword)) return Redirect("/Index");
+            else
             {
-
-                if (EnteredUsername.ToLower() == user.Username.ToLower())
-                {
-             
-                    if(hasher.VerifyHashedPassword(null, user.Password, EnteredPassword) == PasswordVerificationResult.Success) 
-                    {
-                        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, user.GetClaimsPrinciple());
-                        return Redirect("/Index");
-                    }
-
-                }
+                ErrorMessage = "Invalid attempt";
+                return Page();
             }
-
-            ErrorMessage = "Invalid attempt";
-            return Page();
 
         }
 

@@ -16,6 +16,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.EmployeeLandingPage
         #region Fields
         private UserService userService;
         private SettingsService settingsService;
+        private LoginService loginService;
         #endregion
 
         #region Properties
@@ -30,10 +31,11 @@ namespace RAM___RUC_Allocation_Manager.Pages.EmployeeLandingPage
         #endregion
 
         #region Constructor
-        public EmployeeLandingPageModel(UserService us, SettingsService ss)
+        public EmployeeLandingPageModel(UserService us, SettingsService ss, LoginService ls)
         {
             userService = us;
             settingsService = ss;
+            loginService = ls;
             BaseSettings = settingsService.GetSettings();
         }
         #endregion
@@ -47,8 +49,17 @@ namespace RAM___RUC_Allocation_Manager.Pages.EmployeeLandingPage
         public IActionResult OnGet(int id)
         {
 
-            if(!AssessUser(id)) return Redirect("/Index");
-            else return Page();
+            loginService.HttpContext = HttpContext;
+
+            if(!loginService.AssessUser(id, LoggedInUserId))
+            {
+                return Redirect("/Index");
+            } else
+            {
+                if (id == -1) id = LoggedInUserId;
+                Employee = (Employee)userService.GetUserByID(id);
+                return Page();
+            }
 
         }
 
@@ -65,58 +76,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.EmployeeLandingPage
         }
 
         #region Methods for Assessing Access 
-        //Since only Employees, or Leaders of those employees may access a respective employees landing page. Several Assesments will be made below.
-        /// <summary>
-        /// Method that assess if the current user accesssing the page, has the authorization to do so.
-        /// </summary>
-        /// <param name="id">Id passed through the browser.</param>
-        /// <returns>Bool if user has access, false if not.</returns>
-        private bool AssessUser(int id)
-        {
-            //If the passed id is -1. The id of the logged in user is used.
-            //The value of -1, is typically when the user pressess the landing page button in the header, gets redirected, or enters an id in the browser.
-            if (id == -1)
-            {
-                //Only allow the page to be shown, if the logged in user is an employee.
-                if (User.HasClaim(ClaimTypes.Role, Models.User.UserType.Employee.ToString()))
-                {
-                    id = LoggedInUserId;
-                    Employee = (Employee)userService.GetUserByID(id);
-                    return true;
-                }
 
-            }
-            else
-            //If a value that wasn't -1, was passed ,this indicates either a user trying to access a landing page through a link.
-            //Only if the logged in user, and the id matches, or if the id passed, has the logged in user as a leader.
-            {
-                if (id == LoggedInUserId && User.HasClaim(ClaimTypes.Role, Models.User.UserType.Employee.ToString()))
-                {
-                    //If there's a match with the id of the logged in user, and the id requested, and if the logged in user, is an employee, return true.
-                    id = LoggedInUserId;
-                    Employee = (Employee)userService.GetUserByID(id);
-                    return true;
-                }
-                else
-                {
-                    if (User.HasClaim(ClaimTypes.Role, Models.User.UserType.Leader.ToString()))
-                    {
-
-                        //Here we check if the Loggedin User has the Employee requested in one of it's programmes.
-                        Leader = (Leader)userService.GetUserByID(LoggedInUserId);
-                        if (Leader.HasEmployeeInProgrammeById(id))
-                        {
-                            Employee = (Employee)userService.GetUserByID(id);
-                            return true;
-                        }
-
-                    }
-                }
-            }
-
-            return false;
-
-        }
         #endregion
 
         #endregion

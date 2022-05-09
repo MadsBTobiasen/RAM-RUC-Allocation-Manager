@@ -63,6 +63,7 @@ namespace RAM___RUC_Allocation_Manager
             services.AddSingleton<JSONFileService<BaseSettings>, JSONFileService<BaseSettings>>();
             services.AddSingleton<UserService, UserService>();
             services.AddSingleton<SettingsService, SettingsService>();
+            services.AddSingleton<LoginService, LoginService>();
 
             services.AddTransient<PaginationService<User>, PaginationService<User>>();
           

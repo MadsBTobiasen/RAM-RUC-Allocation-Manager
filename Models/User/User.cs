@@ -64,6 +64,11 @@ namespace RAM___RUC_Allocation_Manager.Models
             return base.ToString();
         }
 
+        internal static bool HasClaim(object role, string v)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
 
     }
