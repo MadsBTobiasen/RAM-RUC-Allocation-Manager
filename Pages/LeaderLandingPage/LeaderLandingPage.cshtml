@@ -99,12 +99,25 @@
 
         <h3 class="">Alle Undervisere for dine studier</h3>
 
-        <form method="post" class="float-right pb-3" asp-page-handler="PaginatedResult">
-            <button class="btn btn-primary" onclick="decrementOne('paginationProgrammeEmployees', '1')"><i class="fa-solid fa-arrow-left"></i></button>
-            <input hidden="@true" id="paginationProgrammeEmployees" asp-for="PageIndexProgrammeEmployees" />
+        <div class="float-right pb-3">
+
+            <a class="btn btn-primary" asp-page="/LeaderLandingPage/LeaderLandingPage"
+                asp-route-PageIndexProgrammeEmployees="@(Model.PageIndexProgrammeEmployees - 1)"
+                asp-route-PageIndexAllEmployees="@(Model.PageIndexAllEmployees)"
+                asp-route-PageIndexAllLeaders="@(Model.PageIndexAllLeaders)">
+                <i class="fa-solid fa-arrow-left"></i>
+            </a>
+
             <span class="h5 vertical-align-md mb-0">@(Model.PageIndexProgrammeEmployees+1) | @(Model.PageMaxProgrammeEmployees+1)</span>
-            <button class="btn btn-primary" onclick="incrementOne('paginationProgrammeEmployees', '@Model.PageMaxProgrammeEmployees')"><i class="fa-solid fa-arrow-right"></i></button>
-        </form>
+
+            <a class="btn btn-primary" asp-page="/LeaderLandingPage/LeaderLandingPage"
+                asp-route-PageIndexProgrammeEmployees="@(Model.PageIndexProgrammeEmployees + 1)"
+                asp-route-PageIndexAllEmployees="@(Model.PageIndexAllEmployees)"
+                asp-route-PageIndexAllLeaders="@(Model.PageIndexAllLeaders)">
+                <i class="fa-solid fa-arrow-right"></i>
+            </a>
+
+        </div>
 
         <table class="leader-landing-page table-dark table-striped">
 
@@ -147,12 +160,25 @@
 
         <h3 class="">Alle Undervisere</h3>
 
-        <form method="post" class="float-right pb-3" asp-page-handler="PaginatedResult">
-            <button class="btn btn-primary" onclick="decrementOne('paginationAllEmployeesInput', '1')"><i class="fa-solid fa-arrow-left"></i></button>
-            <input hidden="@true" id="paginationAllEmployeesInput" asp-for="PageIndexAllEmployees" />
+        <div class="float-right pb-3">
+
+            <a class="btn btn-primary" asp-page="/LeaderLandingPage/LeaderLandingPage"
+                asp-route-PageIndexProgrammeEmployees="@(Model.PageIndexProgrammeEmployees)"
+                asp-route-PageIndexAllEmployees="@(Model.PageIndexAllEmployees - 1)"
+                asp-route-PageIndexAllLeaders="@(Model.PageIndexAllLeaders)">
+                <i class="fa-solid fa-arrow-left"></i>
+            </a>
+
             <span class="h5 vertical-align-md mb-0">@(Model.PageIndexAllEmployees+1) | @(Model.PageMaxAllEmployees+1)</span>
-            <button class="btn btn-primary" onclick="incrementOne('paginationAllEmployeesInput', '@Model.PageMaxAllEmployees')"><i class="fa-solid fa-arrow-right"></i></button>
-        </form>
+
+            <a class="btn btn-primary" asp-page="/LeaderLandingPage/LeaderLandingPage"
+                asp-route-PageIndexProgrammeEmployees="@(Model.PageIndexProgrammeEmployees)"
+                asp-route-PageIndexAllEmployees="@(Model.PageIndexAllEmployees + 1)"
+                asp-route-PageIndexAllLeaders="@(Model.PageIndexAllLeaders)">
+                <i class="fa-solid fa-arrow-right"></i>
+            </a>
+
+        </div>
 
         <table class="leader-landing-page table-dark table-striped">
 
@@ -190,4 +216,66 @@
 
     <hr />
 
-</div>
+    @if (HttpContext.User.IsInRole(Models.User.UserType.Adminstrator.ToString()))
+    {
+        <div class="col-1"></div>
+        <div class="col-10">
+
+            <h3 class="">Alle Ledere</h3>
+
+            <div class="float-right pb-3">
+
+                <a class="btn btn-primary" asp-page="/LeaderLandingPage/LeaderLandingPage"
+                   asp-route-PageIndexProgrammeEmployees="@(Model.PageIndexProgrammeEmployees)"
+                   asp-route-PageIndexAllEmployees="@(Model.PageIndexAllEmployees)"
+                   asp-route-PageIndexAllLeaders="@(Model.PageIndexAllLeaders - 1)">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </a>
+
+                <span class="h5 vertical-align-md mb-0">@(Model.PageIndexAllLeaders) | @(Model.PageMaxAllLeaders + 1)</span>
+
+                <a class="btn btn-primary" asp-page="/LeaderLandingPage/LeaderLandingPage"
+                   asp-route-PageIndexProgrammeEmployees="@(Model.PageIndexProgrammeEmployees)"
+                   asp-route-PageIndexAllEmployees="@(Model.PageIndexAllEmployees)"
+                   asp-route-PageIndexAllLeaders="@(Model.PageIndexAllLeaders + 1)">
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+
+            </div>
+
+            <table class="leader-landing-page table-dark table-striped">
+
+                <thead>
+
+                    <tr>
+
+                        <th style="width:10%" scope="col" class="text-center">#</th>
+                        <th scope="col" class="text-center">Navn</th>
+                        <th scope="col" class="text-center">Rolle</th>
+                        <th style="width:10%" scope="col" class="text-center">Redigér</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    @for (int i = 0; i < Model.PaginatedLeaders.Count; i++)
+                    {
+                        <tr style="height: 1rem;">
+                            <th style="width:10%" scope="row" class="text-center">@(i + (Model.MaxItemsAllLeaders * Model.PageIndexAllLeaders))</th>
+                            <td class="text-left">@((Model.PaginatedLeaders[i] as Models.Leader).Name)</td>
+                            <td class="text-left">Leader</td>
+                            <td style="width:10%" class="text-center"><i class="fa-solid fa-pen"></i></td>
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+        <div class="col-1"></div>
+        }
+
+        </div>

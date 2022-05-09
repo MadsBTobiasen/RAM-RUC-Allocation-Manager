@@ -21,26 +21,35 @@ namespace RAM___RUC_Allocation_Manager.Pages.LeaderLandingPage
         #endregion
 
         #region Properties
-        public Leader Leader { get; set; }
+        public Leader Leader => (Leader)userService.GetUserByID(Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier)));
         [BindProperty] public User CreatedUser { get; set; }
         [BindProperty] public Employee Employee { get; set; }
         public bool IsLeader { get; set; }
-        #endregion
       
         #region All Employees
-        public List<User> Employees { get; set; }
+        public List<User> Employees => userService.GetUsersByType(Models.User.UserType.Employee);
         public List<User> PaginatedEmployees { get; set; }
-        [BindProperty] public int PageIndexAllEmployees { get; set; }
+        [BindProperty(SupportsGet = true)] public int PageIndexAllEmployees { get; set; }
         public int PageMaxAllEmployees { get; set; }
         public int MaxItemsAllEmployees { get; set; }
         #endregion
 
         #region Programme Employees
-        public List<User> ProgrammeEmployees { get; set; }
+        public List<User> ProgrammeEmployees => Leader.ProgrammeUsers;
         public List<User> PaginatedProgrammeEmployees { get; set; }
-        [BindProperty] public int PageIndexProgrammeEmployees { get; set; }
+        [BindProperty(SupportsGet = true)] public int PageIndexProgrammeEmployees { get; set; }
         public int PageMaxProgrammeEmployees { get; set; }
         public int MaxItemsProgrammeEmployees { get; set; }
+        #endregion
+
+        #region All Leaders
+        public List<User> Leaders => userService.GetUsersByType(Models.User.UserType.Leader);
+        public List<User> PaginatedLeaders { get; set; }
+        [BindProperty(SupportsGet = true)] public int PageIndexAllLeaders { get; set; }
+        public int PageMaxAllLeaders { get; set; }
+        public int MaxItemsAllLeaders { get; set; }
+        #endregion
+
         #endregion
 
         #region Constructor
@@ -52,10 +61,9 @@ namespace RAM___RUC_Allocation_Manager.Pages.LeaderLandingPage
             userService = us;
             paginationService = ps;
 
-            MaxItemsAllEmployees = 25;
-            MaxItemsProgrammeEmployees = 25;
-
-            Employees = userService.GetUsersByType(Models.User.UserType.Employee);
+            MaxItemsAllEmployees = 10;
+            MaxItemsProgrammeEmployees = 10;
+            MaxItemsAllLeaders = 10;
 
         }
         #endregion
@@ -70,7 +78,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.LeaderLandingPage
         
             IsLeader = false;
 
-            Setup();
+            Pagination();
 
             return Page();
             
@@ -79,19 +87,20 @@ namespace RAM___RUC_Allocation_Manager.Pages.LeaderLandingPage
         /// <summary>
         /// Method that gets a paginated result of users, by setting up the PaginatationService & calling Paginate on it.
         /// </summary>
-        public IActionResult OnPostPaginatedResult()
+        public IActionResult OnGetPaginatedResult()
         {
 
-            Setup();
+            Pagination();
 
             return Page();
 
         }
 
+
         public IActionResult OnPostCreateUser()
         {
 
-            Setup();
+            Pagination();
 
             if (!ModelState.IsValid)
             {
@@ -106,7 +115,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.LeaderLandingPage
         public void OnPostCheckType()
         {
 
-            Setup();
+            Pagination();
 
             if (CreatedUser.Type == Models.User.UserType.Employee)
             {
@@ -131,26 +140,34 @@ namespace RAM___RUC_Allocation_Manager.Pages.LeaderLandingPage
             PageIndexAllEmployees = paginationService.PageIndex;
             PageMaxAllEmployees = paginationService.PageMax;
         }
+
         private void PaginationProgrammeEmployees()
         {
             paginationService.Setup(ProgrammeEmployees, MaxItemsProgrammeEmployees);
             PaginatedProgrammeEmployees = paginationService.Paginate(PageIndexProgrammeEmployees);
 
             PageIndexProgrammeEmployees = paginationService.PageIndex;
-            MaxItemsProgrammeEmployees = paginationService.PageMax;
+            PageMaxProgrammeEmployees = paginationService.PageMax;
+        }
+
+        private void PaginationAllLeaders()
+        {
+            paginationService.Setup(Leaders, MaxItemsAllLeaders);
+            PaginatedLeaders = paginationService.Paginate(PageIndexAllLeaders);
+
+            PageIndexAllLeaders = paginationService.PageIndex;
+            PageMaxAllLeaders = paginationService.PageMax;
         }
 
         /// <summary>
         /// Methods that must with each request.
         /// </summary>
-        private void Setup()
+        private void Pagination()
         {
-
-            Leader = (Leader)userService.GetUserByID(Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier)));
-            ProgrammeEmployees = Leader.ProgrammeUsers;
 
             PaginationAllEmployees();
             PaginationProgrammeEmployees();
+            PaginationAllLeaders();
 
         }
         #endregion

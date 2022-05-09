@@ -97,7 +97,7 @@ namespace RAM___RUC_Allocation_Manager.MockData
             for (int i = 0; i < itterations; i++)
             {
 
-                output.Add(new Employee() { Id = idStart + i, Name = $"{namePrefix+i}", Password = hasher.HashPassword(null, "emp") });
+                output.Add(new Employee() { Id = idStart + i, Username = $"{namePrefix + i}", Name = $"{namePrefix+i}", Password = hasher.HashPassword(null, "emp") });
 
             }
 
@@ -112,7 +112,7 @@ namespace RAM___RUC_Allocation_Manager.MockData
             for (int i = 0; i < itterations; i++)
             {
 
-                output.Add(new Leader() { Id = idStart + i, Name = $"{namePrefix + i}", Password = hasher.HashPassword(null, "lea") });
+                output.Add(new Leader() { Id = idStart + i, Username = $"{namePrefix + i}", Name = $"{namePrefix + i}", Password = hasher.HashPassword(null, "lea") });
 
             }
 

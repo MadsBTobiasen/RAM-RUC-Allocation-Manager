@@ -58,10 +58,9 @@ namespace RAM___RUC_Allocation_Manager.Models
                 new Claim(ClaimTypes.Role, Type.ToString())
             };
 
-            /*
-             * If(somemagicsauce) claims.Add(ClaimTypes.Role, "it-adminstrator");
-            */
-            
+            //Become adminstrator.
+            if (true) claims.Add(new Claim(ClaimTypes.Role, UserType.Adminstrator.ToString()));
+
             return new ClaimsPrincipal(new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme));
 
         }
