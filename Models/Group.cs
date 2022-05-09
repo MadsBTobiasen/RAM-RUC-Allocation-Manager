@@ -16,6 +16,7 @@ namespace RAM___RUC_Allocation_Manager.Models
         public bool IsMasterThesis { get; set; }
         public Employee Supervisor { get; set; }
         public Employee InternalCensor { get; set; }
+        public int MemberAmount { get; set; }
         #endregion
 
         #region Methods
