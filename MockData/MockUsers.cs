@@ -21,19 +21,8 @@ namespace RAM___RUC_Allocation_Manager.MockData
 
                 users = new List<User>();
 
-                for(int i = 0; i < 25; i++)
-                {
-
-                    users.Add(new Leader() { Id = i + 10000, Name = $"Leader_{i}", Username = $"Leader_{i}", Password = hasher.HashPassword(null, "lea") });
-
-                }
-
-                for (int i = 0; i < 100; i++)
-                {
-
-                    users.Add(new Employee() { Id = i + 20000, Name = $"Employee_{i}", Username = $"Employee_{i}", Password = hasher.HashPassword(null, "emp") });
-
-                }
+                users.AddRange(AddLeaders(25, 1000, "Lea"));
+                users.AddRange(AddEmployees(100, 1000, "Emp"));
 
             }
 
@@ -60,26 +49,14 @@ namespace RAM___RUC_Allocation_Manager.MockData
             {
                 Id = 3000,
                 Name = "Test Studie 1",
-                Users = new List<User>()
-            {
-                new Employee() { Id = 4400, Name = "Empl1", Username = "Empl1", Password = hasher.HashPassword(null, "emp") },
-                new Employee() { Id = 4401, Name = "Empl2", Username = "Empl2", Password = hasher.HashPassword(null, "emp") },
-                new Employee() { Id = 4402, Name = "Empl3", Username = "Empl3", Password = hasher.HashPassword(null, "emp") },
-                new Employee() { Id = 4403, Name = "Empl4", Username = "Empl4", Password = hasher.HashPassword(null, "emp") }
-    }
+                Users = AddEmployees(50, 10000, "pro1_emp_")
             };
 
             Programme programme2 = new Programme()
             {
                 Id = 3001,
                 Name = "Test Studie 2",
-                Users = new List<User>()
-            {
-                new Employee() { Id = 4400, Name = "Empl5", Username = "Empl5", Password = hasher.HashPassword(null, "emp") },
-                new Employee() { Id = 4401, Name = "Empl6", Username = "Empl6", Password = hasher.HashPassword(null, "emp") },
-                new Employee() { Id = 4402, Name = "Empl7", Username = "Empl7", Password = hasher.HashPassword(null, "emp") },
-                new Employee() { Id = 4403, Name = "Empl8", Username = "Empl8", Password = hasher.HashPassword(null, "emp") }
-            }
+                Users = AddEmployees(50, 20000, "pro2_emp_")
             };
 
             leader.Programmes = new List<Programme>
@@ -109,6 +86,37 @@ namespace RAM___RUC_Allocation_Manager.MockData
             };
 
             return new List<User>() { employee };
+
+        }
+
+        private static List<User> AddEmployees(int itterations, int idStart, string namePrefix)
+        {
+
+            List<User> output = new List<User>();
+
+            for (int i = 0; i < itterations; i++)
+            {
+
+                output.Add(new Employee() { Id = idStart + i, Name = $"{namePrefix+i}", Password = hasher.HashPassword(null, "emp") });
+
+            }
+
+            return output;
+
+        }
+        private static List<User> AddLeaders(int itterations, int idStart, string namePrefix)
+        {
+
+            List<User> output = new List<User>();
+
+            for (int i = 0; i < itterations; i++)
+            {
+
+                output.Add(new Leader() { Id = idStart + i, Name = $"{namePrefix + i}", Password = hasher.HashPassword(null, "lea") });
+
+            }
+
+            return output;
 
         }
 
