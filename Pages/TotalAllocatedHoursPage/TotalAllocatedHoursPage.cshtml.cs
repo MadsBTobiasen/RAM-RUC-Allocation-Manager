@@ -25,6 +25,13 @@ namespace RAM___RUC_Allocation_Manager.Pages.TotalAllocatedHoursPage
         public Employee Employee { get; set; }
         public BaseSettings BaseSettings { get; set; }
         public int EmployeeBaseMinutes { get; set; }
+        public int LoggedInUserId
+        {
+            get
+            {
+                return Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            }
+        }
         #endregion
 
         #region Constructor
@@ -42,8 +49,14 @@ namespace RAM___RUC_Allocation_Manager.Pages.TotalAllocatedHoursPage
         #region Methods
         public IActionResult OnGet(int id)
         {
+            loginService.HttpContext = HttpContext;
+            if (!loginService.AssessUser(id, LoggedInUserId))
+            {
+                return Redirect("/Index");
+            }
 
-            Employee = (Employee)userService.GetUserByID(id);
+            if (id == -1) id = LoggedInUserId;
+                Employee = (Employee)userService.GetUserByID(id);
             switch (Employee.Title)
             {
                 case Employee.EmployeeTitle.AssistantProfessor:

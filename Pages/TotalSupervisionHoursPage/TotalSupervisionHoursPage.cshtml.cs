@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -14,6 +15,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.TotalSupervisionHoursPage
         #region Fields
         private UserService userService;
         private SettingsService settingsService;
+        private LoginService loginService;
         #endregion
 
         #region Properties
@@ -22,15 +24,38 @@ namespace RAM___RUC_Allocation_Manager.Pages.TotalSupervisionHoursPage
         public string GroupFacilitationHours { get; set; }
         public string PhdSupervisionHours { get; set; }
         public string AssistantProfessorSupervison { get; set; }
+        public int LoggedInUserId
+        {
+            get
+            {
+                return Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            }
+        }
         #endregion
 
         #region Constructor
 
-        public TotalSupervisionHoursPageModel(UserService userService, SettingsService settingsService)
+        public TotalSupervisionHoursPageModel(UserService userService, SettingsService settingsService, LoginService loginService)
         {
             this.userService = userService;
             this.settingsService = settingsService;
+            this.loginService = loginService;
             BaseSettings = settingsService.GetSettings();
+        }
+
+        #endregion
+
+        #region Methods
+        public IActionResult OnGet(int id)
+        {
+            loginService.HttpContext = HttpContext;
+            if (!loginService.AssessUser(id, LoggedInUserId))
+            {
+                return Redirect("/Index");
+            }
+
+            if (id == -1) id = LoggedInUserId;
+            Employee = (Employee)userService.GetUserByID(id);
             GroupFacilitationHours = ConvertMinutesToHours(Employee.GroupFacilitationTasks.Count() * BaseSettings.GroupFacilitationBaseHour);
             PhdSupervisionHours = ConvertMinutesToHours(
                 (Employee.Phds.Where(phd => phd.MainSupervisor.Id == Employee.Id).Select(phd => phd).Count() *
@@ -39,15 +64,6 @@ namespace RAM___RUC_Allocation_Manager.Pages.TotalSupervisionHoursPage
                  BaseSettings.PhdSecondarySupervisionHourWorth));
             AssistantProfessorSupervison = ConvertMinutesToHours(Employee.AssistantProfessorSupervisions.Count() *
                                                                  BaseSettings.AssistantProfessorSupervisonMinuteValue);
-        }
-
-        #endregion
-
-        #region Methods
-        public IActionResult OnGet(int id)
-        {
-
-            Employee = (Employee)userService.GetUserByID(id);
             return Page();
 
         }

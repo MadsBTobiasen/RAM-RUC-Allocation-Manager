@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -16,6 +17,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.TotalCourseHoursPage
         #region Fields
         private UserService userService;
         private SettingsService settingsService;
+        private LoginService loginService;
         #endregion
 
         #region Properties
@@ -23,14 +25,22 @@ namespace RAM___RUC_Allocation_Manager.Pages.TotalCourseHoursPage
         public BaseSettings BaseSettings { get; set; }
         public string CoordinationHours;
         public string TeachingHours;
+        public int LoggedInUserId
+        {
+            get
+            {
+                return Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            }
+        }
         #endregion
 
         #region Constructor
 
-        public TotalCourseHoursPageModel(UserService userService, SettingsService settingsService)
+        public TotalCourseHoursPageModel(UserService userService, SettingsService settingsService, LoginService loginService)
         {
             this.userService = userService;
             this.settingsService = settingsService;
+            this.loginService = loginService;
             BaseSettings = settingsService.GetSettings();
         }
 
@@ -39,7 +49,13 @@ namespace RAM___RUC_Allocation_Manager.Pages.TotalCourseHoursPage
         #region Methods
         public IActionResult OnGet(int id)
         {
+            loginService.HttpContext = HttpContext;
+            if (!loginService.AssessUser(id, LoggedInUserId))
+            {
+                return Redirect("/Index");
+            }
 
+            if (id == -1) id = LoggedInUserId;
             Employee = (Employee)userService.GetUserByID(id);
             CoordinationHours =
                 ConvertMinutesToHours(Employee.CoordinatorOfCourses.Count() *
