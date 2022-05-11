@@ -9,6 +9,7 @@ using System.Security.AccessControl;
 using System.Security.Claims;
 using System.Threading.Channels;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using RAM___RUC_Allocation_Manager.Models.DbConnections;
 using RAM___RUC_Allocation_Manager.Models.WorkAssigments.Committee;
 using RAM___RUC_Allocation_Manager.Services;
@@ -51,20 +52,21 @@ namespace RAM___RUC_Allocation_Manager.Models
         #endregion
 
         #region Navigation properties
-        public virtual ICollection<EmployeeCourse> EmployeeCourses { get; set; }
-        public virtual ICollection<Course> CoordinatorOfCourses { get; set; }
-        public virtual ICollection<Group> Groups { get; set; }
-        public virtual ICollection<GroupFacilitationTask> GroupFacilitationTasks { get; set; }
-        public virtual ICollection<Phd> Phds { get; set; }
-        public virtual ICollection<AssistantProfessorSupervision> AssistantProfessorSupervisions { get; set; }
-        public virtual ICollection<Portfolio> Portfolios { get; set; }
-        public virtual ICollection<Synopsis> Synopses { get; set; }
-        public virtual ICollection<EmployeeProgramme> EmployeeProgrammes { get; set; }
-        public virtual ICollection<Redemption> Redemptions { get; set; }
-        public virtual ICollection<PromotionCommittee> PromotionCommittees { get; set; }
-        public virtual ICollection<PhdCommittee> PhdCommittees { get; set; }
-        public virtual ICollection<EmployeeHiringCommittee> EmployeeHiringCommittees { get; set; }
-        public virtual ICollection<EmployeeCustomCommittee> EmployeeCustomCommittees { get; set; }
+
+        public virtual ICollection<EmployeeCourse> EmployeeCourses { get; set; } = new List<EmployeeCourse>();
+        public virtual ICollection<Course> CoordinatorOfCourses { get; set; } = new List<Course>();
+        public virtual ICollection<Group> Groups { get; set; } = new List<Group>();
+        public virtual ICollection<GroupFacilitationTask> GroupFacilitationTasks { get; set; } = new List<GroupFacilitationTask>();
+        public virtual ICollection<Phd> Phds { get; set; } = new List<Phd>();
+        public virtual ICollection<AssistantProfessorSupervision> AssistantProfessorSupervisions { get; set; } = new List<AssistantProfessorSupervision>();
+        public virtual ICollection<Portfolio> Portfolios { get; set; } = new List<Portfolio>();
+        public virtual ICollection<Synopsis> Synopses { get; set; } = new List<Synopsis>();
+        public virtual ICollection<EmployeeProgramme> EmployeeProgrammes { get; set; } = new List<EmployeeProgramme>();
+        public virtual ICollection<Redemption> Redemptions { get; set; } = new List<Redemption>();
+        public virtual ICollection<PromotionCommittee> PromotionCommittees { get; set; } = new List<PromotionCommittee>();
+        public virtual ICollection<PhdCommittee> PhdCommittees { get; set; } = new List<PhdCommittee>();
+        public virtual ICollection<EmployeeHiringCommittee> EmployeeHiringCommittees { get; set; } = new List<EmployeeHiringCommittee>();
+        public virtual ICollection<EmployeeCustomCommittee> EmployeeCustomCommittees { get; set; } = new List<EmployeeCustomCommittee>();
         #endregion
 
         #region Constructors
@@ -92,7 +94,7 @@ namespace RAM___RUC_Allocation_Manager.Models
         public int CalculateTotalCourseMinutes(BaseSettings baseSettings)
         {
             int totalMinutes = 0;
-            totalMinutes += CoordinatorOfCourses.Count() * baseSettings.CoordinatorOfCourseMinuteValue;
+            totalMinutes += CoordinatorOfCourses.Count * baseSettings.CoordinatorOfCourseMinuteValue;
 
             foreach (EmployeeCourse ec in EmployeeCourses)
             {
@@ -254,7 +256,16 @@ namespace RAM___RUC_Allocation_Manager.Models
 
         public override ClaimsPrincipal GetClaimsPrinciple()
         {
-            return null;
+            List<Claim> claims = new List<Claim>()
+            {
+                new Claim(ClaimTypes.NameIdentifier, Id.ToString()),
+                new Claim(ClaimTypes.Name, Username),
+                new Claim(ClaimTypes.GivenName, Name),
+                //new Claim(ClaimTypes.Email, Email),
+                new Claim(ClaimTypes.Role, Type.ToString())
+            };
+
+            return new ClaimsPrincipal(new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme));
         }
 
         public override int GetHashCode()
