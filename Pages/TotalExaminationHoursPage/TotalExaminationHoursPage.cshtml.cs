@@ -11,6 +11,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.TotalExaminationHoursPage
 {
     public class TotalExaminationHoursPageModel : PageModel
     {
+
         #region Fields
         private UserService userService;
         private SettingsService settingsService;
@@ -19,12 +20,53 @@ namespace RAM___RUC_Allocation_Manager.Pages.TotalExaminationHoursPage
         #region Properties
         public Employee Employee { get; set; }
         public BaseSettings BaseSettings { get; set; }
+        public int TotalWrittenAssignmentAssessments { get; set; }
+        public int TotalWrittenAssignmentsAssessmentsMinutes { get; set; }
+        public int TotalSynopsisMinutes { get; set; }
+        public int TotalPorfolioMinutes { get; set; }
+        public string TotalProjectAssesmentHours { get; set; }
+        #endregion
+
+        #region Constructor
+
+        public TotalExaminationHoursPageModel(UserService userService, SettingsService settingsService)
+        {
+            this.userService = userService;
+            this.settingsService = settingsService;
+            BaseSettings = settingsService.GetSettings();
+        }
+
         #endregion
 
         #region Methods
-        public void OnGet()
+        public IActionResult OnGet(int id)
         {
+
+            Employee = (Employee)userService.GetUserByID(id);
+            TotalWrittenAssignmentAssessments = Employee.Portfolios.Count() + Employee.Synopses.Count();
+            TotalSynopsisMinutes = Employee.Synopses.Count() * BaseSettings.SynopsisHourWorth;
+            TotalPorfolioMinutes = Employee.Portfolios.Count() * BaseSettings.PortfolioHourWorth;
+            TotalWrittenAssignmentsAssessmentsMinutes = TotalPorfolioMinutes + TotalSynopsisMinutes;
+            TotalProjectAssesmentHours = ConvertMinutesToHours(
+                Employee.Groups.Where(g => g.InternalCensor.Id == Employee.Id).Select(g => g).Count() *
+                BaseSettings.InternalCensorMinuteValue);
+            return Page();
+
         }
+        #region Non-HTTP Requests
+        /// <summary>
+        /// Method that takes an integer of minutes, and converts it to a string, to be shown on the front end.
+        /// </summary>
+        /// <param name="minutes">Amount of minutes as an integer.</param>
+        /// <returns>String representing hours & minutes.</returns>
+        public string ConvertMinutesToHours(int minutes)
+        {
+            TimeSpan time = TimeSpan.FromMinutes(minutes);
+            return string.Format("{0:00}:{1:00}", (int)time.TotalHours, time.Minutes);
+        }
+
+        #endregion
+
         #endregion
     }
 }

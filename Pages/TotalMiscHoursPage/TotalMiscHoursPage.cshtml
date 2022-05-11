@@ -2,3 +2,72 @@
 @model RAM___RUC_Allocation_Manager.Pages.TotalMiscHoursPage.TotalMiscHoursPageModel
 @{
 }
+<h2 class="pb-3">Detaljer for totale øvrige timer</h2>
+
+<div class="row">
+
+    <div class="col-1"></div>
+    <div class="col-10">
+
+        <h3 class="">Time fordeling</h3>
+
+        <table class="employee-landing-page allocated-hours-table">
+
+            <tbody>
+
+                <tr>
+                    <td>Slutevaluering af PhD:</td>
+                    <td>@Model.Employee.Phds.Count() PhD'er</td>
+                </tr>
+                <tr>
+                    <td>Bedømmelsesudvalg:</td>
+                    <td>@Model.TotalCommittees udvalg</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>Ansættelsesudvalg</td>
+                    <td>@Model.Employee.EmployeeHiringCommittees.Count()</td>
+                    <td>@Model.ConvertMinutesToHours(Model.TotalHiringCommitteeMinutes)</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>Forfremmelsesudvalg</td>
+                    <td>@Model.Employee.PromotionCommittees.Count()</td>
+                    <td>@Model.ConvertMinutesToHours(Model.TotalPromotionCommitteeMinutes)</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>PhD bedømmelsesudvalg</td>
+                    <td>@Model.Employee.PhdCommittees.Count()</td>
+                    <td>@Model.ConvertMinutesToHours(Model.TotalPhdCommitteeMinutes)</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>Andre udvalg</td>
+                    <td>@Model.Employee.EmployeeCustomCommittees.Count()</td>
+                    <td>@Model.ConvertMinutesToHours(Model.TotalCustomCommitteeMinutes)</td>
+                </tr>
+                <tr>
+                    <td>Pædagogisk kvalificering:</td>
+                    <td>@Model.ConvertMinutesToHours(Model.BaseSettings.PedagogicalQualification)</td>
+                </tr>
+                <tr>
+                    <td>Gruppeleder:</td>
+                    @if (Model.Employee.IsGroupLeader)
+                    {
+                        <td>@Model.ConvertMinutesToHours(Model.BaseSettings.GroupLeaderMinuteValue)</td>
+                    }
+                    else
+                    {
+                        <td>0</td>
+                    }
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+    <div class="col-1"></div>
+
+</div>

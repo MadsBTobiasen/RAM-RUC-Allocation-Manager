@@ -1,4 +1,64 @@
 ﻿@page "{id:int}"
+@using RAM___RUC_Allocation_Manager.Models
 @model RAM___RUC_Allocation_Manager.Pages.TotalExaminationHoursPage.TotalExaminationHoursPageModel
 @{
 }
+<h2 class="pb-3">Detaljer for totale eksamenstimer</h2>
+
+<div class="row">
+
+    <div class="col-1"></div>
+    <div class="col-10">
+
+        <h3 class="">Time fordeling</h3>
+
+        <table class="employee-landing-page allocated-hours-table">
+
+            <tbody>
+
+                <tr>
+                    <td>Bedømmelse af skriftlige opgaver:</td>
+                    <td>@Model.TotalWrittenAssignmentAssessments</td>
+                    <td>@Model.ConvertMinutesToHours(Model.TotalWrittenAssignmentsAssessmentsMinutes)</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>Portfolier</td>
+                    <td>@Model.Employee.Portfolios.Count()</td>
+                    <td>@Model.ConvertMinutesToHours(Model.TotalPorfolioMinutes)</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>Synopser</td>
+                    <td>@Model.Employee.Synopses.Count()</td>
+                    <td>@Model.ConvertMinutesToHours(Model.TotalSynopsisMinutes)</td>
+                </tr>
+                <tr>
+                    <td>Intern censor:</td>
+                    <td>@Model.TotalProjectAssesmentHours</td>
+                </tr>
+                @foreach (Group g in Model.Employee.Groups.Where(g => g.InternalCensor.Id == Model.Employee.Id).Select(g => g))
+                {
+                    <tr>
+                        <td></td>
+                        <td>@g.RucId</td>
+                        <td>@g.MemberAmount</td>
+                        @if (g.IsMasterThesis)
+                        {
+                            <td>Kandidat</td>
+                        }
+                        else
+                        {
+                            <td></td>
+                        }
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+    <div class="col-1"></div>
+
+</div>

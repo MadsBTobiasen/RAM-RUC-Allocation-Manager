@@ -2,10 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
 using System.Linq;
 using System.Security.AccessControl;
 using System.Security.Claims;
+using System.Threading.Channels;
 using System.Threading.Tasks;
 using RAM___RUC_Allocation_Manager.Models.DbConnections;
 using RAM___RUC_Allocation_Manager.Models.WorkAssigments.Committee;
@@ -23,10 +25,16 @@ namespace RAM___RUC_Allocation_Manager.Models
             AssociateProfessor,
             AssistantProfessor
         }
-        #endregion
 
-        #region Fields
-        private SettingsService settingsService;
+        public enum EmployeeSavings
+        {
+            ZeroPercent,
+            TwentyPercent,
+            FortyPercent,
+            SixtyPercent,
+            EightyPercent,
+            HundredPercent
+        }
         #endregion
 
         #region Properties
@@ -37,6 +45,9 @@ namespace RAM___RUC_Allocation_Manager.Models
 
         [Required]
         public int Balance { get; set; }
+        [Required]
+        public EmployeeSavings Savings { get; set; }
+
         #endregion
 
         #region Navigation properties
@@ -49,7 +60,7 @@ namespace RAM___RUC_Allocation_Manager.Models
         public virtual ICollection<Portfolio> Portfolios { get; set; }
         public virtual ICollection<Synopsis> Synopses { get; set; }
         public virtual ICollection<EmployeeProgramme> EmployeeProgrammes { get; set; }
-        public virtual ICollection<Redemption> Redemption { get; set; }
+        public virtual ICollection<Redemption> Redemptions { get; set; }
         public virtual ICollection<PromotionCommittee> PromotionCommittees { get; set; }
         public virtual ICollection<PhdCommittee> PhdCommittees { get; set; }
         public virtual ICollection<EmployeeHiringCommittee> EmployeeHiringCommittees { get; set; }
@@ -57,12 +68,7 @@ namespace RAM___RUC_Allocation_Manager.Models
         #endregion
 
         #region Constructors
-        public Employee(SettingsService settingsService)
-        {
-            this.settingsService = settingsService;
-            Type = UserType.Employee;
-        }
-
+        
         public Employee()
         {
             Type = UserType.Employee;
@@ -74,32 +80,32 @@ namespace RAM___RUC_Allocation_Manager.Models
         /// Calculates total work assignment minutes for an employee
         /// </summary>
         /// <returns>int</returns>
-        public int CalculateTotalAllocationMinutes()
+        public int CalculateTotalAllocationMinutes(BaseSettings baseSettings)
         {
-            return CalculateTotalCourseMinutes() + CalculateTotalSupervisionMinutes() + CalculateTotalExamMinutes() +
-                   CalculateTotalMiscMinutes();
+            return CalculateTotalCourseMinutes(baseSettings) + CalculateTotalSupervisionMinutes(baseSettings) + CalculateTotalExamMinutes(baseSettings) +
+                   CalculateTotalMiscMinutes(baseSettings);
         }
         /// <summary>
         /// Calculates total minutes for work assignments related to Courses for an employee
         /// </summary>
         /// <returns>int</returns>
-        public int CalculateTotalCourseMinutes()
+        public int CalculateTotalCourseMinutes(BaseSettings baseSettings)
         {
             int totalMinutes = 0;
-            totalMinutes += CoordinatorOfCourses.Count() * settingsService.GetSettings().CoordinatorOfCourseMinuteValue;
+            totalMinutes += CoordinatorOfCourses.Count() * baseSettings.CoordinatorOfCourseMinuteValue;
 
             foreach (EmployeeCourse ec in EmployeeCourses)
             {
                 switch (ec.Course.Type)
                 {
                     case Course.CourseType.SAB:
-                        totalMinutes += ec.Course.LectureAmount * settingsService.GetSettings().SabLessonHourValue;
+                        totalMinutes += ec.Course.LectureAmount * baseSettings.SabLessonHourValue;
                         break;
                     case Course.CourseType.SIB:
-                        totalMinutes += ec.Course.LectureAmount * settingsService.GetSettings().SibLessonHourValue;
+                        totalMinutes += ec.Course.LectureAmount * baseSettings.SibLessonHourValue;
                         break;
                     case Course.CourseType.Standard:
-                        totalMinutes += ec.Course.LectureAmount * settingsService.GetSettings().LessonHourValue;
+                        totalMinutes += ec.Course.LectureAmount * baseSettings.LessonHourValue;
                         break;
                 }
             }
@@ -110,7 +116,7 @@ namespace RAM___RUC_Allocation_Manager.Models
         /// Calculates total minutes for work assignments related to supervisions for an employee
         /// </summary>
         /// <returns>int</returns>
-        public int CalculateTotalSupervisionMinutes()
+        public int CalculateTotalSupervisionMinutes(BaseSettings baseSettings)
         {
             int totalMinutes = 0;
             var groupSupervisionsResult = Groups.Where(g => g.Supervisor.Id == Id).Select(g => new {g.IsMasterThesis, g.MemberAmount});
@@ -121,22 +127,22 @@ namespace RAM___RUC_Allocation_Manager.Models
                     switch (anon.MemberAmount)
                     {
                         case 1:
-                            totalMinutes += settingsService.GetSettings().SupervisionOfGroupHourOneMemberMasters;
+                            totalMinutes += baseSettings.SupervisionOfGroupHourOneMemberMasters;
                             break;
                         case 2:
-                            totalMinutes += settingsService.GetSettings().SupervisionOfGroupHourTwoMemberMasters;
+                            totalMinutes += baseSettings.SupervisionOfGroupHourTwoMemberMasters;
                             break;
                         case 3:
-                            totalMinutes += settingsService.GetSettings().SupervisionOfGroupHourThreeMemberMasters;
+                            totalMinutes += baseSettings.SupervisionOfGroupHourThreeMemberMasters;
                             break;
                         case 4:
-                            totalMinutes += settingsService.GetSettings().SupervisionOfGroupHourFourMemberMasters;
+                            totalMinutes += baseSettings.SupervisionOfGroupHourFourMemberMasters;
                             break;
                         case 5:
-                            totalMinutes += settingsService.GetSettings().SupervisionOfGroupHourFiveMembersMasters;
+                            totalMinutes += baseSettings.SupervisionOfGroupHourFiveMembersMasters;
                             break;
                         case 6:
-                            totalMinutes += settingsService.GetSettings().SupervisionOfGroupHourSixMembersMasters;
+                            totalMinutes += baseSettings.SupervisionOfGroupHourSixMembersMasters;
                             break;
                     }
                 }
@@ -145,22 +151,22 @@ namespace RAM___RUC_Allocation_Manager.Models
                     switch (anon.MemberAmount)
                     {
                         case 1:
-                            totalMinutes += settingsService.GetSettings().SupervisionOfGroupHourOneMember;
+                            totalMinutes += baseSettings.SupervisionOfGroupHourOneMember;
                             break;
                         case 2:
-                            totalMinutes += settingsService.GetSettings().SupervisionOfGroupHourTwoMember;
+                            totalMinutes += baseSettings.SupervisionOfGroupHourTwoMember;
                             break;
                         case 3:
-                            totalMinutes += settingsService.GetSettings().SupervisionOfGroupHourThreeMember;
+                            totalMinutes += baseSettings.SupervisionOfGroupHourThreeMember;
                             break;
                         case 4:
-                            totalMinutes += settingsService.GetSettings().SupervisionOfGroupHourFourMember;
+                            totalMinutes += baseSettings.SupervisionOfGroupHourFourMember;
                             break;
                         case 5:
-                            totalMinutes += settingsService.GetSettings().SupervisionOfGroupHourFiveMember;
+                            totalMinutes += baseSettings.SupervisionOfGroupHourFiveMember;
                             break;
                         case 6:
-                            totalMinutes += settingsService.GetSettings().SupervisionOfGroupHourSixMember;
+                            totalMinutes += baseSettings.SupervisionOfGroupHourSixMember;
                             break;
                     }
                 }
@@ -168,18 +174,18 @@ namespace RAM___RUC_Allocation_Manager.Models
 
             foreach (GroupFacilitationTask gft in GroupFacilitationTasks)
             {
-                totalMinutes += settingsService.GetSettings().GroupFacilitationBaseHour +
-                                settingsService.GetSettings().GroupFacilitationHourDailyIncrement * gft.DaysSpan;
+                totalMinutes += baseSettings.GroupFacilitationBaseHour +
+                                baseSettings.GroupFacilitationHourDailyIncrement * gft.DaysSpan;
             }
 
             totalMinutes += Phds.Where(phd => phd.MainSupervisor.Id == Id).Select(phd => phd).Count() *
-                            settingsService.GetSettings().PhdMainSupervisionHourWorth;
+                            baseSettings.PhdMainSupervisionHourWorth;
 
             totalMinutes += Phds.Where(phd => phd.SecondarySupervisor.Id == Id).Select(phd => phd).Count() *
-                            settingsService.GetSettings().PhdSecondarySupervisionHourWorth;
+                            baseSettings.PhdSecondarySupervisionHourWorth;
 
             totalMinutes += AssistantProfessorSupervisions.Count *
-                            settingsService.GetSettings().AssistantProfessorSupervisonMinuteValue;
+                            baseSettings.AssistantProfessorSupervisonMinuteValue;
 
 
             return totalMinutes;
@@ -188,33 +194,33 @@ namespace RAM___RUC_Allocation_Manager.Models
         /// Calculates total minutes for work assignments related to exams for an employee
         /// </summary>
         /// <returns>int</returns>
-        public int CalculateTotalExamMinutes()
+        public int CalculateTotalExamMinutes(BaseSettings baseSettings)
         {
             int totalMinutes = 0;
-            totalMinutes += Portfolios.Count * settingsService.GetSettings().PortfolioHourWorth;
-            totalMinutes += Synopses.Count * settingsService.GetSettings().SynopsisHourWorth;
-            totalMinutes += Groups.Where(g => g.InternalCensor.Id == Id).Select(g => g).Count() * settingsService.GetSettings().InternalCensorMinuteValue;
+            totalMinutes += Portfolios.Count * baseSettings.PortfolioHourWorth;
+            totalMinutes += Synopses.Count * baseSettings.SynopsisHourWorth;
+            totalMinutes += Groups.Where(g => g.InternalCensor.Id == Id).Select(g => g).Count() * baseSettings.InternalCensorMinuteValue;
             return totalMinutes;
         }
         /// <summary>
         /// Calculates total minutes for work assignment related to misc tasks for an employee
         /// </summary>
         /// <returns>int</returns>
-        public int CalculateTotalMiscMinutes()
+        public int CalculateTotalMiscMinutes(BaseSettings baseSettings)
         {
             int totalMinutes = 0;
-            totalMinutes += PhdCommittees.Count * settingsService.GetSettings().PhdCommitteeHourValue;
+            totalMinutes += PhdCommittees.Count * baseSettings.PhdCommitteeHourValue;
 
             totalMinutes += EmployeeHiringCommittees.Select(ehc =>
-                ehc.HiringCommittee.PeopleToBeAssessed * settingsService.GetSettings().HourPerPersonHiringCommittee).Sum();
+                ehc.HiringCommittee.PeopleToBeAssessed * baseSettings.HourPerPersonHiringCommittee).Sum();
 
             totalMinutes += PromotionCommittees.Select(pc =>
-                pc.PeopleToBeAssessed * settingsService.GetSettings().HourPerPersonPromotionCommittee).Sum();
+                pc.PeopleToBeAssessed * baseSettings.HourPerPersonPromotionCommittee).Sum();
             totalMinutes += EmployeeCustomCommittees.Select(ecc => ecc.CustomCommittee.MinuteWorth).Sum();
             totalMinutes += Phds.Where(phd => phd.EndEvaluator.Id == Id).Select(phd => phd).Count() *
-                            settingsService.GetSettings().PhdEndEvalHourWorth;
-            totalMinutes += settingsService.GetSettings().PedagogicalQualification;
-            if (IsGroupLeader) totalMinutes += settingsService.GetSettings().GroupLeaderMinuteValue;
+                            baseSettings.PhdEndEvalHourWorth;
+            totalMinutes += baseSettings.PedagogicalQualification;
+            if (IsGroupLeader) totalMinutes += baseSettings.GroupLeaderMinuteValue;
             return totalMinutes;
         }
 
@@ -223,14 +229,27 @@ namespace RAM___RUC_Allocation_Manager.Models
             return new Random().Next(0, 20) * 30;
         }
 
-        public int CalculateMinuteBalance()
+        public int CalculateNewMinuteBalance(BaseSettings baseSettings)
         {
-            return new Random().Next(0, 20) * 30;
+            switch (Title)
+            {
+                case EmployeeTitle.AssistantProfessor:
+                    return baseSettings.BaseHoursForAssistantProfessor - CalculateTotalAllocationMinutes(baseSettings) -
+                        Balance;
+                case EmployeeTitle.AssociateProfessor:
+                    return baseSettings.BaseHoursForAssistantProfessor - CalculateTotalAllocationMinutes(baseSettings) -
+                           Balance;
+                case EmployeeTitle.Professor:
+                    return baseSettings.BaseHoursForAssistantProfessor - CalculateTotalAllocationMinutes(baseSettings) -
+                           Balance;
+            }
+
+            throw new Exception("How did you get here?");
         }
 
         public int CalculateRedeemedMinutes()
         {
-            return new Random().Next(0, 20) * 30;
+            return Redemptions.Where(r => r.StartDate < DateTime.Now && r.EndDate > DateTime.Now).Select(r => r.RedeemedMinutes).Sum();
         }
 
         public override ClaimsPrincipal GetClaimsPrinciple()

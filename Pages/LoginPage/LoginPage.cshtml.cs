@@ -38,7 +38,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.LoginPage
         public async Task<IActionResult> OnPostAsync()
         {
             List<User> users = userService.Users;
-            
+
             foreach (User user in users)
             {
                 //TODO: Change Name == Username, once database is running.
@@ -48,14 +48,14 @@ namespace RAM___RUC_Allocation_Manager.Pages.LoginPage
                     //if (passwordHasher.VerifyHashedPassword(null, user.Password, EnteredPassword) ==
                     //    PasswordVerificationResult.Success)
                     //{
-                    if(EnteredPassword.ToLower() == user.Password.ToLower())
+                    if (EnteredPassword.ToLower() == user.Password.ToLower())
                     {
                         var claims = new List<Claim>
                         {
                             new Claim(ClaimTypes.Name, EnteredUsername)
                         };
 
-                        if(user.Type == Models.User.UserType.Leader) claims.Add(new Claim(ClaimTypes.Role, "admin"));
+                        if (user.Type == Models.User.UserType.Leader) claims.Add(new Claim(ClaimTypes.Role, "admin"));
 
                         var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                         await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));

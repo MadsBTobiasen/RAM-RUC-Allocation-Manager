@@ -19,12 +19,52 @@ namespace RAM___RUC_Allocation_Manager.Pages.TotalSupervisionHoursPage
         #region Properties
         public Employee Employee { get; set; }
         public BaseSettings BaseSettings { get; set; }
+        public string GroupFacilitationHours { get; set; }
+        public string PhdSupervisionHours { get; set; }
+        public string AssistantProfessorSupervison { get; set; }
+        #endregion
+
+        #region Constructor
+
+        public TotalSupervisionHoursPageModel(UserService userService, SettingsService settingsService)
+        {
+            this.userService = userService;
+            this.settingsService = settingsService;
+            BaseSettings = settingsService.GetSettings();
+            GroupFacilitationHours = ConvertMinutesToHours(Employee.GroupFacilitationTasks.Count() * BaseSettings.GroupFacilitationBaseHour);
+            PhdSupervisionHours = ConvertMinutesToHours(
+                (Employee.Phds.Where(phd => phd.MainSupervisor.Id == Employee.Id).Select(phd => phd).Count() *
+                 BaseSettings.PhdMainSupervisionHourWorth) +
+                (Employee.Phds.Where(phd => phd.SecondarySupervisor.Id == Employee.Id).Select(phd => phd).Count() *
+                 BaseSettings.PhdSecondarySupervisionHourWorth));
+            AssistantProfessorSupervison = ConvertMinutesToHours(Employee.AssistantProfessorSupervisions.Count() *
+                                                                 BaseSettings.AssistantProfessorSupervisonMinuteValue);
+        }
+
         #endregion
 
         #region Methods
-        public void OnGet()
+        public IActionResult OnGet(int id)
         {
+
+            Employee = (Employee)userService.GetUserByID(id);
+            return Page();
+
         }
+        #region Non-HTTP Requests
+        /// <summary>
+        /// Method that takes an integer of minutes, and converts it to a string, to be shown on the front end.
+        /// </summary>
+        /// <param name="minutes">Amount of minutes as an integer.</param>
+        /// <returns>String representing hours & minutes.</returns>
+        public string ConvertMinutesToHours(int minutes)
+        {
+            TimeSpan time = TimeSpan.FromMinutes(minutes);
+            return string.Format("{0:00}:{1:00}", (int)time.TotalHours, time.Minutes);
+        }
+
+        #endregion
+
         #endregion
     }
 }

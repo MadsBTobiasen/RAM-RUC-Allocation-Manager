@@ -1,4 +1,60 @@
 ﻿@page "{id:int}"
+@using RAM___RUC_Allocation_Manager.Models
 @model RAM___RUC_Allocation_Manager.Pages.TotalSupervisionHoursPage.TotalSupervisionHoursPageModel
 @{
 }
+<h2 class="pb-3">Detaljer for totale vejledningstimer</h2>
+
+<div class="row">
+
+    <div class="col-1"></div>
+    <div class="col-10">
+
+        <h3 class="">Time fordeling</h3>
+
+        <table class="employee-landing-page allocated-hours-table">
+
+            <tbody>
+
+                <tr>
+                    <td>Total mængde grupper:</td>
+                    <td>@Model.Employee.Groups.Where(g => g.Supervisor.Id == Model.Employee.Id).Select(g => g).Count()</td>
+                </tr>
+                @foreach (Group g in Model.Employee.Groups.Where(g => g.Supervisor.Id == Model.Employee.Id).Select(g => g))
+                {
+                    <tr>
+                        <td></td>
+                        <td>@g.RucId</td>
+                        <td>@g.MemberAmount</td>
+                        @if (g.IsMasterThesis)
+                        {
+                            <td>Kandidat opgave</td>
+                        }
+                        else
+                        {
+                            <td></td>
+                        }
+                    </tr>
+                }
+
+                <tr>
+                    <td>Gruppedannelsesfaciliteringstimer</td>
+                    <td>@Model.GroupFacilitationHours</td>
+                </tr>
+                <tr>
+                    <td>PhD vejledning:</td>
+                    <td>@Model.PhdSupervisionHours</td>
+                </tr>
+                <tr>
+                    <td>Adjunktvejledning:</td>
+                    <td>@Model.AssistantProfessorSupervison</td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+    <div class="col-1"></div>
+
+</div>
