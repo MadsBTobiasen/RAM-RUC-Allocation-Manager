@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using RAM___RUC_Allocation_Manager.Models;
+using RAM___RUC_Allocation_Manager.Models.DbConnections;
 using RAM___RUC_Allocation_Manager.Services;
 
 namespace RAM___RUC_Allocation_Manager.Pages.TotalSupervisionHoursPage
@@ -58,9 +59,9 @@ namespace RAM___RUC_Allocation_Manager.Pages.TotalSupervisionHoursPage
             Employee = (Employee)userService.GetUserByID(id);
             GroupFacilitationHours = ConvertMinutesToHours(Employee.GroupFacilitationTasks.Count() * BaseSettings.GroupFacilitationBaseHour);
             PhdSupervisionHours = ConvertMinutesToHours(
-                (Employee.Phds.Where(phd => phd.MainSupervisor.Id == Employee.Id).Select(phd => phd).Count() *
+                (Employee.PhdsTasks.Where(phd => phd.RoleOfEmployee == PhdTasks.EmployeeRole.MainSupervisor).Select(phd => phd).Count() *
                  BaseSettings.PhdMainSupervisionHourWorth) +
-                (Employee.Phds.Where(phd => phd.SecondarySupervisor.Id == Employee.Id).Select(phd => phd).Count() *
+                (Employee.PhdsTasks.Where(phd => phd.RoleOfEmployee == PhdTasks.EmployeeRole.SecondarySupervisor).Select(phd => phd).Count() *
                  BaseSettings.PhdSecondarySupervisionHourWorth));
             AssistantProfessorSupervison = ConvertMinutesToHours(Employee.AssistantProfessorSupervisions.Count() *
                                                                  BaseSettings.AssistantProfessorSupervisonMinuteValue);

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Security.Claims;
@@ -14,6 +15,8 @@ namespace RAM___RUC_Allocation_Manager.Models
 
         #region Properties
         public virtual ICollection<LeaderProgramme> LeaderProgrammes { get; set; }
+
+        [Required]public bool IsAdmin { get; set; }
         //This is test list. Remove once DB is running.
         public List<Programme> Programmes { get; set; }
          /// <summary>

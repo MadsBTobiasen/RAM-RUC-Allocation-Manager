@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using RAM___RUC_Allocation_Manager.Models;
+using RAM___RUC_Allocation_Manager.Models.DbConnections;
 using RAM___RUC_Allocation_Manager.Services;
 
 namespace RAM___RUC_Allocation_Manager.Pages.TotalExaminationHoursPage
@@ -64,7 +65,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.TotalExaminationHoursPage
             TotalPorfolioMinutes = Employee.Portfolios.Count() * BaseSettings.PortfolioHourWorth;
             TotalWrittenAssignmentsAssessmentsMinutes = TotalPorfolioMinutes + TotalSynopsisMinutes;
             TotalProjectAssesmentHours = ConvertMinutesToHours(
-                Employee.Groups.Where(g => g.InternalCensor.Id == Employee.Id).Select(g => g).Count() *
+                Employee.EmployeeGroups.Where(eg => eg.RoleOfEmployee == EmployeeGroup.EmployeeRole.InternalCensor).Select(g => g).Count() *
                 BaseSettings.InternalCensorMinuteValue);
             return Page();
 

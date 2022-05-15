@@ -1,4 +1,5 @@
 ﻿@page "{id:int}"
+@using RAM___RUC_Allocation_Manager.Models.DbConnections
 @model RAM___RUC_Allocation_Manager.Pages.TotalMiscHoursPage.TotalMiscHoursPageModel
 @{
 }
@@ -17,7 +18,7 @@
 
                 <tr>
                     <td>Slutevaluering af PhD:</td>
-                    <td>@Model.Employee.Phds.Count() PhD'er</td>
+                    <td>@Model.Employee.PhdsTasks.Where(phd => phd.RoleOfEmployee == PhdTasks.EmployeeRole.EndEvaluator).Count() PhD'er</td>
                 </tr>
                 <tr>
                     <td>Bedømmelsesudvalg:</td>

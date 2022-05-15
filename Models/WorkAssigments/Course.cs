@@ -20,7 +20,7 @@ namespace RAM___RUC_Allocation_Manager.Models.WorkAssigments
         #endregion
 
         #region Properties
-        public int EmployeeId { get; set; }
+        public int? EmployeeId { get; set; }
         public Employee ResponsibleEmployee { get; set; }
         [Required]
         public int LectureAmount { get; set; }

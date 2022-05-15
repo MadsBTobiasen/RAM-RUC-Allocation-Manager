@@ -13,7 +13,6 @@ namespace RAM___RUC_Allocation_Manager.Models.WorkAssigments
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public Employee Supervisor { get; set; }
-        public Employee AssistantProfessor { get; set; }
         #endregion
 
     }

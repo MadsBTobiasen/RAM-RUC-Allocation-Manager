@@ -1,5 +1,6 @@
 ﻿@page "{id:int}"
 @using RAM___RUC_Allocation_Manager.Models
+@using RAM___RUC_Allocation_Manager.Models.DbConnections
 @model RAM___RUC_Allocation_Manager.Pages.TotalSupervisionHoursPage.TotalSupervisionHoursPageModel
 @{
 }
@@ -18,15 +19,15 @@
 
                 <tr>
                     <td>Total mængde grupper:</td>
-                    <td>@Model.Employee.Groups.Where(g => g.Supervisor.Id == Model.Employee.Id).Select(g => g).Count()</td>
+                    <td>@Model.Employee.EmployeeGroups.Where(eg => eg.RoleOfEmployee == EmployeeGroup.EmployeeRole.Supervisor).Select(eg => eg).Count()</td>
                 </tr>
-                @foreach (Group g in Model.Employee.Groups.Where(g => g.Supervisor.Id == Model.Employee.Id).Select(g => g))
+                @foreach (EmployeeGroup eg in Model.Employee.EmployeeGroups.Where(eg => eg.RoleOfEmployee == EmployeeGroup.EmployeeRole.Supervisor).Select(eg => eg))
                 {
                     <tr>
                         <td></td>
-                        <td>@g.RucId</td>
-                        <td>@g.MemberAmount</td>
-                        @if (g.IsMasterThesis)
+                        <td>@eg.Group.RucId</td>
+                        <td>@eg.Group.MemberAmount</td>
+                        @if (eg.Group.IsMasterThesis)
                         {
                             <td>Kandidat opgave</td>
                         }

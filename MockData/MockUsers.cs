@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using RAM___RUC_Allocation_Manager.Models.DbConnections;
 
 namespace RAM___RUC_Allocation_Manager.MockData
 {
@@ -85,13 +86,18 @@ namespace RAM___RUC_Allocation_Manager.MockData
                 Password = hasher.HashPassword(null, "Password")
             };
             Group Group = new Group();
+            EmployeeGroup employeeGroupOne = new EmployeeGroup()
+                {Employee = employee, Group = Group, RoleOfEmployee = EmployeeGroup.EmployeeRole.Supervisor};
+            EmployeeGroup employeeGroupTwo = new EmployeeGroup()
+                { Employee = employee, Group = Group, RoleOfEmployee = EmployeeGroup.EmployeeRole.Supervisor };
             Group.Id = 1;
             Group.RucId = 1;
-            Group.InternalCensor = employee;
+            Group.EmployeeGroups.Add(employeeGroupOne);
             Group.IsMasterThesis = true;
             Group.MemberAmount = 4;
-            Group.Supervisor = employee;
-            employee.Groups.Add(Group);
+            Group.EmployeeGroups.Add(employeeGroupTwo);
+            employee.EmployeeGroups.Add(employeeGroupOne);
+            employee.EmployeeGroups.Add(employeeGroupTwo);
             return new List<User>() { employee };
 
         }

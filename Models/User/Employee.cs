@@ -55,15 +55,15 @@ namespace RAM___RUC_Allocation_Manager.Models
 
         public virtual ICollection<EmployeeCourse> EmployeeCourses { get; set; } = new List<EmployeeCourse>();
         public virtual ICollection<Course> CoordinatorOfCourses { get; set; } = new List<Course>();
-        public virtual ICollection<Group> Groups { get; set; } = new List<Group>();
+        public virtual ICollection<EmployeeGroup> EmployeeGroups { get; set; } = new List<EmployeeGroup>();
         public virtual ICollection<GroupFacilitationTask> GroupFacilitationTasks { get; set; } = new List<GroupFacilitationTask>();
-        public virtual ICollection<Phd> Phds { get; set; } = new List<Phd>();
+        public virtual ICollection<PhdTasks> PhdsTasks { get; set; } = new List<PhdTasks>();
         public virtual ICollection<AssistantProfessorSupervision> AssistantProfessorSupervisions { get; set; } = new List<AssistantProfessorSupervision>();
         public virtual ICollection<Portfolio> Portfolios { get; set; } = new List<Portfolio>();
         public virtual ICollection<Synopsis> Synopses { get; set; } = new List<Synopsis>();
         public virtual ICollection<EmployeeProgramme> EmployeeProgrammes { get; set; } = new List<EmployeeProgramme>();
         public virtual ICollection<Redemption> Redemptions { get; set; } = new List<Redemption>();
-        public virtual ICollection<PromotionCommittee> PromotionCommittees { get; set; } = new List<PromotionCommittee>();
+        public virtual ICollection<PromotionCommitteeTask> PromotionCommittees { get; set; } = new List<PromotionCommitteeTask>();
         public virtual ICollection<PhdCommittee> PhdCommittees { get; set; } = new List<PhdCommittee>();
         public virtual ICollection<EmployeeHiringCommittee> EmployeeHiringCommittees { get; set; } = new List<EmployeeHiringCommittee>();
         public virtual ICollection<EmployeeCustomCommittee> EmployeeCustomCommittees { get; set; } = new List<EmployeeCustomCommittee>();
@@ -121,7 +121,7 @@ namespace RAM___RUC_Allocation_Manager.Models
         public int CalculateTotalSupervisionMinutes(BaseSettings baseSettings)
         {
             int totalMinutes = 0;
-            var groupSupervisionsResult = Groups.Where(g => g.Supervisor.Id == Id).Select(g => new {g.IsMasterThesis, g.MemberAmount});
+            var groupSupervisionsResult = EmployeeGroups.Where(eg => eg.RoleOfEmployee == EmployeeGroup.EmployeeRole.Supervisor).Select(eg => new {eg.Group.IsMasterThesis, eg.Group.MemberAmount});
             foreach (var anon in groupSupervisionsResult)
             {
                 if (anon.IsMasterThesis)
@@ -180,10 +180,10 @@ namespace RAM___RUC_Allocation_Manager.Models
                                 baseSettings.GroupFacilitationHourDailyIncrement * gft.DaysSpan;
             }
 
-            totalMinutes += Phds.Where(phd => phd.MainSupervisor.Id == Id).Select(phd => phd).Count() *
+            totalMinutes += PhdsTasks.Where(phdt => phdt.RoleOfEmployee == PhdTasks.EmployeeRole.MainSupervisor).Select(phdt => phdt).Count() *
                             baseSettings.PhdMainSupervisionHourWorth;
 
-            totalMinutes += Phds.Where(phd => phd.SecondarySupervisor.Id == Id).Select(phd => phd).Count() *
+            totalMinutes += PhdsTasks.Where(phdt => phdt.RoleOfEmployee == PhdTasks.EmployeeRole.SecondarySupervisor).Select(phdt => phdt).Count() *
                             baseSettings.PhdSecondarySupervisionHourWorth;
 
             totalMinutes += AssistantProfessorSupervisions.Count *
@@ -201,7 +201,7 @@ namespace RAM___RUC_Allocation_Manager.Models
             int totalMinutes = 0;
             totalMinutes += Portfolios.Count * baseSettings.PortfolioHourWorth;
             totalMinutes += Synopses.Count * baseSettings.SynopsisHourWorth;
-            totalMinutes += Groups.Where(g => g.InternalCensor.Id == Id).Select(g => g).Count() * baseSettings.InternalCensorMinuteValue;
+            totalMinutes += EmployeeGroups.Where(eg => eg.RoleOfEmployee == EmployeeGroup.EmployeeRole.InternalCensor).Select(eg => eg).Count() * baseSettings.InternalCensorMinuteValue;
             return totalMinutes;
         }
         /// <summary>
@@ -219,7 +219,7 @@ namespace RAM___RUC_Allocation_Manager.Models
             totalMinutes += PromotionCommittees.Select(pc =>
                 pc.PeopleToBeAssessed * baseSettings.HourPerPersonPromotionCommittee).Sum();
             totalMinutes += EmployeeCustomCommittees.Select(ecc => ecc.CustomCommittee.MinuteWorth).Sum();
-            totalMinutes += Phds.Where(phd => phd.EndEvaluator.Id == Id).Select(phd => phd).Count() *
+            totalMinutes += PhdsTasks.Where(phdt => phdt.RoleOfEmployee == PhdTasks.EmployeeRole.EndEvaluator).Select(phdt => phdt).Count() *
                             baseSettings.PhdEndEvalHourWorth;
             totalMinutes += baseSettings.PedagogicalQualification;
             if (IsGroupLeader) totalMinutes += baseSettings.GroupLeaderMinuteValue;
