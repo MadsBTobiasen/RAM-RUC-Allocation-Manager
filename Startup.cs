@@ -65,8 +65,9 @@ namespace RAM___RUC_Allocation_Manager
             services.AddSingleton<SettingsService, SettingsService>();
             services.AddSingleton<LoginService, LoginService>();
 
-            services.AddTransient<PaginationService<User>, PaginationService<User>>();
-          
+            services.AddTransient<PaginationService<Leader>, PaginationService<Leader>>();
+            services.AddTransient<PaginationService<Employee>, PaginationService<Employee>>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

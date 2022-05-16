@@ -94,164 +94,86 @@
 
 <div class="row">
 
-    <div class="col-1"></div>
-    <div class="col-10">
+    <form method="post" class="w-100" id="professorsAndLeadersForm" asp-page-handler="PaginatedResult">
 
-        <h3 class="">Alle Undervisere for dine studier</h3>
-
-        <div class="float-right pb-3">
-
-            <a class="btn btn-primary" asp-page="/LeaderLandingPage/LeaderLandingPage"
-                asp-route-PageIndexProgrammeEmployees="@(Model.PageIndexProgrammeEmployees - 1)"
-                asp-route-PageIndexAllEmployees="@(Model.PageIndexAllEmployees)"
-                asp-route-PageIndexAllLeaders="@(Model.PageIndexAllLeaders)">
-                <i class="fa-solid fa-arrow-left"></i>
-            </a>
-
-            <span class="h5 vertical-align-md mb-0">@(Model.PageIndexProgrammeEmployees+1) | @(Model.PageMaxProgrammeEmployees+1)</span>
-
-            <a class="btn btn-primary" asp-page="/LeaderLandingPage/LeaderLandingPage"
-                asp-route-PageIndexProgrammeEmployees="@(Model.PageIndexProgrammeEmployees + 1)"
-                asp-route-PageIndexAllEmployees="@(Model.PageIndexAllEmployees)"
-                asp-route-PageIndexAllLeaders="@(Model.PageIndexAllLeaders)">
-                <i class="fa-solid fa-arrow-right"></i>
-            </a>
-
-        </div>
-
-        <table class="leader-landing-page table-dark table-striped">
-
-            <thead>
-
-                <tr>
-                    <th style="width:10%" scope="col" class="text-center">#</th>
-                    <th scope="col" class="text-center">Navn</th>
-                    <th scope="col" class="text-center">Titel</th>
-                    <th style="width:10%" scope="col" class="text-center">Se</th>
-                    <th style="width:10%" scope="col" class="text-center">Redigér</th>
-                </tr>
-
-            </thead>
-
-            <tbody>
-
-                @for (int i = 0; i < Model.PaginatedProgrammeEmployees.Count; i++)
-                {
-                    <tr style="height: 1rem;">
-                        <th style="width:10%" scope="row" class="text-center">@(i + (Model.MaxItemsProgrammeEmployees * Model.PageIndexProgrammeEmployees))</th>
-                        <td class="text-left">@((Model.PaginatedProgrammeEmployees[i] as Models.Employee).Name)</td>
-                        <td class="text-left">@((Model.PaginatedProgrammeEmployees[i] as Models.Employee).Title)</td>
-                        <td style="width:10%" class="text-center"><a asp-route-id="@(Model.PaginatedProgrammeEmployees[i].Id)" asp-page="/EmployeeLandingPage/EmployeeLandingPage"><i class="fa-solid fa-circle-info"></i></a></td>
-                        <td style="width:10%" class="text-center"><i class="fa-solid fa-pen"></i></td>
-                    </tr>
-                }
-
-            </tbody>
-
-        </table>
-
-    </div>
-    <div class="col-1"></div>
-
-    <hr />
-
-    <div class="col-1"></div>
-    <div class="col-10">
-
-        <h3 class="">Alle Undervisere</h3>
-
-        <div class="float-right pb-3">
-
-            <a class="btn btn-primary" asp-page="/LeaderLandingPage/LeaderLandingPage"
-                asp-route-PageIndexProgrammeEmployees="@(Model.PageIndexProgrammeEmployees)"
-                asp-route-PageIndexAllEmployees="@(Model.PageIndexAllEmployees - 1)"
-                asp-route-PageIndexAllLeaders="@(Model.PageIndexAllLeaders)">
-                <i class="fa-solid fa-arrow-left"></i>
-            </a>
-
-            <span class="h5 vertical-align-md mb-0">@(Model.PageIndexAllEmployees+1) | @(Model.PageMaxAllEmployees+1)</span>
-
-            <a class="btn btn-primary" asp-page="/LeaderLandingPage/LeaderLandingPage"
-                asp-route-PageIndexProgrammeEmployees="@(Model.PageIndexProgrammeEmployees)"
-                asp-route-PageIndexAllEmployees="@(Model.PageIndexAllEmployees + 1)"
-                asp-route-PageIndexAllLeaders="@(Model.PageIndexAllLeaders)">
-                <i class="fa-solid fa-arrow-right"></i>
-            </a>
-
-        </div>
-
-        <table class="leader-landing-page table-dark table-striped">
-
-            <thead>
-
-                <tr>
-                    <th style="width:10%" scope="col" class="text-center">#</th>
-                    <th scope="col" class="text-center">Navn</th>
-                    <th scope="col" class="text-center">Titel</th>
-                    <th style="width:10%" scope="col" class="text-center">Se</th>
-                    <th style="width:10%" scope="col" class="text-center">Redigér</th>
-                </tr>
-
-            </thead>
-
-            <tbody>
-
-                @for (int i = 0; i < Model.PaginatedEmployees.Count; i++)
-                {
-                    <tr style="height: 1rem;">
-                        <th style="width:10%" scope="row" class="text-center">@(i + (Model.MaxItemsAllEmployees * Model.PageIndexAllEmployees))</th>
-                        <td class="text-left">@((Model.PaginatedEmployees[i] as Models.Employee).Name)</td>
-                        <td class="text-left">@((Model.PaginatedEmployees[i] as Models.Employee).Title)</td>
-                        <td style="width:10%" class="text-center"><a asp-route-id="@(Model.PaginatedEmployees[i].Id)" asp-page="/EmployeeLandingPage/EmployeeLandingPage"><i class="fa-solid fa-circle-info"></i></a></td>
-                        <td style="width:10%" class="text-center"><i class="fa-solid fa-pen"></i></td>
-                    </tr>
-                }
-
-            </tbody>
-
-        </table>
-
-    </div>
-    <div class="col-1"></div>
-
-    <hr />
-
-    @if (HttpContext.User.IsInRole(Models.User.UserType.Adminstrator.ToString()))
-    {
         <div class="col-1"></div>
         <div class="col-10">
 
-            <h3 class="">Alle Ledere</h3>
+            <h3 class="">Alle Undervisere for dine studier</h3>
+            
 
-            <div class="float-right pb-3">
+            <div class="pagination-search-container pb-3">
 
-                <a class="btn btn-primary" asp-page="/LeaderLandingPage/LeaderLandingPage"
-                   asp-route-PageIndexProgrammeEmployees="@(Model.PageIndexProgrammeEmployees)"
-                   asp-route-PageIndexAllEmployees="@(Model.PageIndexAllEmployees)"
-                   asp-route-PageIndexAllLeaders="@(Model.PageIndexAllLeaders - 1)">
-                    <i class="fa-solid fa-arrow-left"></i>
-                </a>
+                <div class="float-left pb-3">
 
-                <span class="h5 vertical-align-md mb-0">@(Model.PageIndexAllLeaders) | @(Model.PageMaxAllLeaders + 1)</span>
+                    <div class="input-group mr-1">
 
-                <a class="btn btn-primary" asp-page="/LeaderLandingPage/LeaderLandingPage"
-                   asp-route-PageIndexProgrammeEmployees="@(Model.PageIndexProgrammeEmployees)"
-                   asp-route-PageIndexAllEmployees="@(Model.PageIndexAllEmployees)"
-                   asp-route-PageIndexAllLeaders="@(Model.PageIndexAllLeaders + 1)">
-                    <i class="fa-solid fa-arrow-right"></i>
-                </a>
+                        <input type="hidden" id="progEmpSearchASP" asp-for="@Model.ProgrammeEmployeesSearchString" value="@Model.ProgrammeEmployeesSearchString" />
+                        <input type="text" class="form-control" id="progEmpSearchHTML" value="@Model.ProgrammeEmployeesSearchString" />
+
+                        <button type="button" class="btn btn-outline-primary ml-1" onclick="copyValueAndSubmitForm('progEmpSearchHTML', 'progEmpSearchASP', 'professorsAndLeadersForm')">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <div class="float-right">
+
+                    <input type="hidden" id="progEmpPageIndex" asp-for="@Model.PageIndexProgrammeEmployees" value="@Model.PageIndexProgrammeEmployees" />
+
+                    <button type="button" class="btn btn-primary" onclick="decrementOneAndSubmitForm('progEmpPageIndex', 'professorsAndLeadersForm')">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+
+                    <span class="h5 vertical-align-md mb-0">@(Model.PageIndexProgrammeEmployees+1) | @(Model.PageMaxProgrammeEmployees+1)</span>
+
+                    <button type="button" class="btn btn-primary" onclick="incrementOneAndSubmitForm('progEmpPageIndex', 'professorsAndLeadersForm', '@(Model.PageMaxProgrammeEmployees)')">
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+
+                </div>
 
             </div>
+
+            <input type="hidden" id="progEmpSortingOption" asp-for="@Model.ProgrammeEmployeesSortingOption" value="@(Model.ProgrammeEmployeesSortingOption)" />
 
             <table class="leader-landing-page table-dark table-striped">
 
                 <thead>
 
                     <tr>
-
                         <th style="width:10%" scope="col" class="text-center">#</th>
-                        <th scope="col" class="text-center">Navn</th>
-                        <th scope="col" class="text-center">Rolle</th>
+                        <th scope="col" class="text-center">
+                            Navn
+                            <span>
+                                <button type="button" class="btn btn-link" title="Sort by Name Ascending" 
+                                        onclick="setValueAndSubmitForm('progEmpSortingOption', 'professorsAndLeadersForm', '@(Models.Employee.SortingOptions.NameASC)')">
+                                    <i class="fa fa-angle-up"></i>
+                                </button>
+
+                                <button type="button" class="btn btn-link" title="Sort by Name Descending"
+                                        onclick="setValueAndSubmitForm('progEmpSortingOption', 'professorsAndLeadersForm', '@(Models.Employee.SortingOptions.NameDESC)')">
+                                    <i class="fa fa-angle-down"></i>
+                                </button>
+                            </span>
+                        </th>
+                        <th scope="col" class="text-center">
+                            Titel
+                            <span>
+                                <button type="button" class="btn btn-link" title="Sort by Name Ascending"
+                                        onclick="setValueAndSubmitForm('progEmpSortingOption', 'professorsAndLeadersForm', '@(Models.Employee.SortingOptions.TitleASC)')">
+                                    <i class="fa fa-angle-up"></i>
+                                </button>
+
+                                <button type="button" class="btn btn-link" title="Sort by Name Descending"
+                                        onclick="setValueAndSubmitForm('progEmpSortingOption', 'professorsAndLeadersForm', '@(Models.Employee.SortingOptions.TitleDESC)')">
+                                    <i class="fa fa-angle-down"></i>
+                                </button>
+                            </span>
+                        </th>
+                        <th style="width:10%" scope="col" class="text-center">Se</th>
                         <th style="width:10%" scope="col" class="text-center">Redigér</th>
 
                     </tr>
@@ -260,12 +182,13 @@
 
                 <tbody>
 
-                    @for (int i = 0; i < Model.PaginatedLeaders.Count; i++)
+                    @for (int i = 0; i < Model.PaginatedProgrammeEmployees.Count; i++)
                     {
                         <tr style="height: 1rem;">
-                            <th style="width:10%" scope="row" class="text-center">@(i + (Model.MaxItemsAllLeaders * Model.PageIndexAllLeaders))</th>
-                            <td class="text-left">@((Model.PaginatedLeaders[i] as Models.Leader).Name)</td>
-                            <td class="text-left">Leader</td>
+                            <th style="width:10%" scope="row" class="text-center">@(i + 1 + (Model.MaxItemsProgrammeEmployees * Model.PageIndexProgrammeEmployees))</th>
+                            <td class="text-left">@((Model.PaginatedProgrammeEmployees[i] as Models.Employee).Name)</td>
+                            <td class="text-left">@((Model.PaginatedProgrammeEmployees[i] as Models.Employee).Title)</td>
+                            <td style="width:10%" class="text-center"><a asp-route-id="@(Model.PaginatedProgrammeEmployees[i].Id)" asp-page="/EmployeeLandingPage/EmployeeLandingPage"><i class="fa-solid fa-circle-info"></i></a></td>
                             <td style="width:10%" class="text-center"><i class="fa-solid fa-pen"></i></td>
                         </tr>
                     }
@@ -276,6 +199,205 @@
 
         </div>
         <div class="col-1"></div>
-        }
+
+        <hr />
+
+        <div class="col-1"></div>
+        <div class="col-10">
+
+            <h3 class="">Alle Undervisere</h3>
+
+            <div class="pagination-search-container pb-3">
+
+                <div class="float-left pb-3">
+
+                    <div class="input-group mr-1">
+
+                        <input type="hidden" id="allEmpSearchASP" asp-for="@Model.AllEmployeesSearchString" value="@Model.AllEmployeesSearchString" />
+                        <input type="text" class="form-control" id="allEmpSearchHTML" value="@Model.AllEmployeesSearchString" />
+
+                        <button type="button" class="btn btn-outline-primary ml-1" onclick="copyValueAndSubmitForm('allEmpSearchHTML', 'allEmpSearchASP', 'professorsAndLeadersForm')">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <div class="float-right pb-3">
+
+                    <input type="hidden" id="allEmpPageIndex" asp-for="@Model.PageIndexAllEmployees" value="@Model.PageIndexAllEmployees" />
+
+                    <button type="button" class="btn btn-primary" onclick="decrementOneAndSubmitForm('allEmpPageIndex', 'professorsAndLeadersForm')">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+
+                    <span class="h5 vertical-align-md mb-0">@(Model.PageIndexAllEmployees+1) | @(Model.PageMaxAllEmployees+1)</span>
+
+                    <button type="button" class="btn btn-primary" onclick="incrementOneAndSubmitForm('allEmpPageIndex', 'professorsAndLeadersForm', '@(Model.PageMaxAllEmployees)')">
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+
+                </div>
+
+            </div>
+
+            <input type="hidden" id="allEmpSortingOption" asp-for="@Model.AllEmployeesSortingOption" value="@(Model.AllEmployeesSortingOption)" />
+
+            <table class="leader-landing-page table-dark table-striped">
+
+                <thead>
+
+                    <tr>
+                        <th style="width:10%" scope="col" class="text-center">#</th>
+                        <th scope="col" class="text-center">
+                            Navn
+                            <span>
+                                <button type="button" class="btn btn-link" title="Sort by Name Ascending"
+                                        onclick="setValueAndSubmitForm('allEmpSortingOption', 'professorsAndLeadersForm', '@(Models.Employee.SortingOptions.NameASC)')">
+                                    <i class="fa fa-angle-up"></i>
+                                </button>
+
+                                <button type="button" class="btn btn-link" title="Sort by Name Descending"
+                                        onclick="setValueAndSubmitForm('allEmpSortingOption', 'professorsAndLeadersForm', '@(Models.Employee.SortingOptions.NameDESC)')">
+                                    <i class="fa fa-angle-down"></i>
+                                </button>
+                            </span>
+                        </th>
+                        <th scope="col" class="text-center">
+                            Titel
+                            <span>
+                                <button type="button" class="btn btn-link" title="Sort by Name Ascending"
+                                        onclick="setValueAndSubmitForm('allEmpSortingOption', 'professorsAndLeadersForm', '@(Models.Employee.SortingOptions.TitleASC)')">
+                                    <i class="fa fa-angle-up"></i>
+                                </button>
+
+                                <button type="button" class="btn btn-link" title="Sort by Name Descending"
+                                        onclick="setValueAndSubmitForm('allEmpSortingOption', 'professorsAndLeadersForm', '@(Models.Employee.SortingOptions.TitleDESC)')">
+                                    <i class="fa fa-angle-down"></i>
+                                </button>
+                            </span>
+                        </th>
+                        <th style="width:10%" scope="col" class="text-center">Se</th>
+                        <th style="width:10%" scope="col" class="text-center">Redigér</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    @for (int i = 0; i < Model.PaginatedEmployees.Count; i++)
+                    {
+                        <tr style="height: 1rem;">
+                            <th style="width:10%" scope="row" class="text-center">@(i + 1 + (Model.MaxItemsAllEmployees * Model.PageIndexAllEmployees))</th>
+                            <td class="text-left">@((Model.PaginatedEmployees[i] as Models.Employee).Name)</td>
+                            <td class="text-left">@((Model.PaginatedEmployees[i] as Models.Employee).Title)</td>
+                            <td style="width:10%" class="text-center"><a asp-route-id="@(Model.PaginatedEmployees[i].Id)" asp-page="/EmployeeLandingPage/EmployeeLandingPage"><i class="fa-solid fa-circle-info"></i></a></td>
+                            <td style="width:10%" class="text-center"><i class="fa-solid fa-pen"></i></td>
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
 
         </div>
+        <div class="col-1"></div>
+
+        <hr />
+
+        @if (HttpContext.User.IsInRole(Models.User.UserType.Adminstrator.ToString()))
+        {
+            <div class="col-1"></div>
+            <div class="col-10">
+
+                <h3 class="">Alle Ledere</h3>
+
+                <div class="pagination-search-container pb-3">
+
+                    <div class="float-left pb-3">
+
+                        <div class="input-group mr-1">
+
+                            <input type="hidden" id="allLeadsSearchASP" asp-for="@Model.AllLeadersSearchString" value="@Model.AllLeadersSearchString" />
+                            <input type="text" class="form-control" id="allLeadsSearchHTML" value="@Model.AllLeadersSearchString" />
+
+                            <button type="button" class="btn btn-outline-primary ml-1" onclick="copyValueAndSubmitForm('allLeadsSearchHTML', 'allLeadsSearchASP', 'professorsAndLeadersForm')">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <div class="float-right pb-3">
+
+                        <input type="hidden" id="allLeadsPageIndex" asp-for="@Model.PageIndexAllLeaders" value="@Model.PageIndexAllLeaders" />
+
+                        <button type="button" class="btn btn-primary" onclick="decrementOneAndSubmitForm('allLeadsPageIndex', 'professorsAndLeadersForm')">
+                            <i class="fa-solid fa-arrow-left"></i>
+                        </button>
+
+                        <span class="h5 vertical-align-md mb-0">@(Model.PageIndexAllLeaders + 1) | @(Model.PageMaxAllLeaders + 1)</span>
+
+                        <button type="button" class="btn btn-primary" onclick="incrementOneAndSubmitForm('allLeadsPageIndex', 'professorsAndLeadersForm', '@(Model.PageMaxAllLeaders)')">
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <input type="hidden" id="allLeadsSortingOption" asp-for="@Model.AllLeadersSortingOption" value="@(Model.AllLeadersSortingOption)" />
+
+                <table class="leader-landing-page table-dark table-striped">
+
+                    <thead>
+
+                        <tr>
+
+                            <th style="width:10%" scope="col" class="text-center">#</th>
+                            <th scope="col" class="text-center">
+                                Navn
+                                <span>
+                                    <button type="button" class="btn btn-link" title="Sort by Name Ascending"
+                                            onclick="setValueAndSubmitForm('allLeadsSortingOption', 'professorsAndLeadersForm', '@(Models.Leader.SortingOptions.NameASC)')">
+                                        <i class="fa fa-angle-up"></i>
+                                    </button>
+
+                                    <button type="button" class="btn btn-link" title="Sort by Name Descending"
+                                            onclick="setValueAndSubmitForm('allLeadsSortingOption', 'professorsAndLeadersForm', '@(Models.Leader.SortingOptions.NameDESC)')">
+                                        <i class="fa fa-angle-down"></i>
+                                    </button>
+                                </span>
+                            </th>
+                            <th scope="col" class="text-center">Rolle</th>
+                            <th style="width:10%" scope="col" class="text-center">Redigér</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        @for (int i = 0; i < Model.PaginatedLeaders.Count; i++)
+                        {
+                            <tr style="height: 1rem;">
+                                <th style="width:10%" scope="row" class="text-center">@(i + 1 + (Model.MaxItemsAllLeaders * Model.PageIndexAllLeaders))</th>
+                                <td class="text-left">@((Model.PaginatedLeaders[i] as Models.Leader).Name)</td>
+                                <td class="text-left">Leader</td>
+                                <td style="width:10%" class="text-center"><i class="fa-solid fa-pen"></i></td>
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+            <div class="col-1"></div>
+        }
+
+    </form>
+
+ </div>

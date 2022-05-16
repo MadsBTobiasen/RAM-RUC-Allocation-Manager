@@ -20,6 +20,14 @@ namespace RAM___RUC_Allocation_Manager.Models
             AssociateProfessor,
             AssistantProfessor
         }
+
+        public enum SortingOptions
+        {
+            NameASC,
+            NameDESC,
+            TitleASC,
+            TitleDESC
+        }
         #endregion
 
         #region Properties

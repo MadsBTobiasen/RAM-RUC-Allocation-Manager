@@ -33,15 +33,19 @@
                         {
                             <li><a asp-page="/EmployeeLandingPage/EmployeeLandingPage">Employee</a></li>
                         }
-
+                        @if (Context.User.HasClaim(System.Security.Claims.ClaimTypes.Role, Models.User.UserType.Adminstrator.ToString()))
+                        {
+                            <li><a asp-page="/SettingsPage/SettingsPage">Indstillinger</a></li>
+                        }
                         @if (!Context.User.Identity.IsAuthenticated)
                         {
                             <li><a asp-page="/LoginPage/LoginPage">Login</a></li>
-                        } else
+                        }
+                        else
                         {
                             <li><a asp-page="/LoginPage/LogoutPage">Logout</a></li>
                         }
-                        
+
 
                     </ul>
                 </div>
