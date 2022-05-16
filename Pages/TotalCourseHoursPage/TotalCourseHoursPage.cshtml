@@ -1,4 +1,51 @@
 ﻿@page "{id:int}"
+@using RAM___RUC_Allocation_Manager.Models.WorkAssigments
 @model RAM___RUC_Allocation_Manager.Pages.TotalCourseHoursPage.TotalCourseHoursPageModel
 @{
 }
+<h2 class="pb-3">Detaljer for totale kursustimer</h2>
+
+<div class="row">
+
+    <div class="col-1"></div>
+    <div class="col-10">
+
+        <h3 class="">Time fordeling</h3>
+
+        <table class="employee-landing-page allocated-hours-table">
+
+            <tbody>
+
+            <tr>
+                <td>Kursusansvar:</td>
+                <td>@Model.CoordinationHours</td>
+            </tr>
+            @foreach (Course course in Model.Employee.CoordinatorOfCourses)
+            {
+                <tr>
+                    <td></td>
+                    <td>@course.Name</td>
+                </tr>
+            }
+
+            <tr>
+                <td>Kursusundervisning</td>
+                <td>@Model.TeachingHours</td>
+            </tr>
+            @foreach (EmployeeCourse ep in Model.Employee.EmployeeCourses)
+            {
+                <tr>
+                    <td></td>
+                    <td>@ep.Course.Name</td>
+                    <td>@Model.ConvertMinutesToHours(Model.GetRelativeLectureAmountMinutes(ep.RelativeLectureAmount))</td>
+                </tr>
+            }
+
+            </tbody>
+
+        </table>
+
+    </div>
+    <div class="col-1"></div>
+
+</div>

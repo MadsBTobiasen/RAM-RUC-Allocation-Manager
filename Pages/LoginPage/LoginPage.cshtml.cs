@@ -18,7 +18,8 @@ namespace RAM___RUC_Allocation_Manager.Pages.LoginPage
 
         #region Fields
         private UserService userService;
-        #endregion
+        private LoginService loginService;
+            #endregion
 
         #region Properties
         [BindProperty] public string EnteredUsername { get; set; }
@@ -28,45 +29,24 @@ namespace RAM___RUC_Allocation_Manager.Pages.LoginPage
 
         #region Constructor
 
-        public LoginPageModel(UserService userService)
+        public LoginPageModel(UserService userService, LoginService loginService)
         {
             this.userService = userService;
+            this.loginService = loginService;
         }
         #endregion
 
         #region Methods
         public async Task<IActionResult> OnPostAsync()
         {
-            List<User> users = userService.Users;
-            
-            foreach (User user in users)
+            loginService.HttpContext = HttpContext;
+
+            if (await loginService.Login(EnteredUsername, EnteredPassword)) return Redirect("/Index");
+            else
             {
-                //TODO: Change Name == Username, once database is running.
-                if (EnteredUsername.ToLower() == user.Name.ToLower())
-                {
-                    //var passwordHasher = new PasswordHasher<string>();
-                    //if (passwordHasher.VerifyHashedPassword(null, user.Password, EnteredPassword) ==
-                    //    PasswordVerificationResult.Success)
-                    //{
-                    if(EnteredPassword.ToLower() == user.Password.ToLower())
-                    {
-                        var claims = new List<Claim>
-                        {
-                            new Claim(ClaimTypes.Name, EnteredUsername)
-                        };
-
-                        if(user.Type == Models.User.UserType.Leader) claims.Add(new Claim(ClaimTypes.Role, "admin"));
-
-                        var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
-                        return RedirectToPage("/EmployeeLandingPage/EmployeeLandingPage/300");
-                    }
-
-                }
+                ErrorMessage = "Invalid attempt";
+                return Page();
             }
-
-            ErrorMessage = "Invalid attempt";
-            return Page();
         }
 
         public void OnGet() { }

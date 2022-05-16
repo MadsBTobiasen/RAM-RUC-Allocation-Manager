@@ -9,8 +9,6 @@ namespace RAM___RUC_Allocation_Manager.Models.DbConnections
 {
     public class EmployeeProgramme
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
         public int EmployeeId { get; set; }
 
         public Employee Employee { get; set; }

@@ -13,7 +13,7 @@ namespace RAM___RUC_Allocation_Manager.Services
     {
         public async Task<IEnumerable<T>> GetObjectsAsync()
         {
-            using (var context = new RUCDBContext())
+            using (var context = new RamDbContext())
             {
                 return await context.Set<T>().AsNoTracking().ToListAsync();
             }
@@ -21,7 +21,7 @@ namespace RAM___RUC_Allocation_Manager.Services
 
         public async Task AddObjectAsync(T obj)
         {
-            using (var context = new RUCDBContext())
+            using (var context = new RamDbContext())
             {
                 context.Set<T>().Add(obj);
                 await context.SaveChangesAsync();
@@ -30,7 +30,7 @@ namespace RAM___RUC_Allocation_Manager.Services
 
         public async Task DeleteObjectAsync(T obj)
         {
-            using (var context = new RUCDBContext())
+            using (var context = new RamDbContext())
             {
                 context.Set<T>().Remove(obj);
                 await context.SaveChangesAsync();
@@ -39,7 +39,7 @@ namespace RAM___RUC_Allocation_Manager.Services
 
         public async Task UpdateObjectAsync(T obj)
         {
-            using (var context = new RUCDBContext())
+            using (var context = new RamDbContext())
             {
                 context.Set<T>().Update(obj);
                 await context.SaveChangesAsync();
@@ -48,7 +48,7 @@ namespace RAM___RUC_Allocation_Manager.Services
 
         public async Task<T> GetObjectByIdAsync(int id)
         {
-            using (var context = new RUCDBContext())
+            using (var context = new RamDbContext())
             {
                 return await context.Set<T>().FindAsync(id);
             }

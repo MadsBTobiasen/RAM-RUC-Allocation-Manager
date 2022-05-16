@@ -27,7 +27,6 @@ namespace RAM___RUC_Allocation_Manager.Pages.EmployeeLandingPage
         {
             userService = us;
             settingsService = ss;
-            BaseSettings = settingsService.GetSettings();
         }
         #endregion
 
@@ -36,6 +35,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.EmployeeLandingPage
         {
 
             Employee = (Employee)userService.GetUserByID(id);
+            BaseSettings = settingsService.GetSettings();
             return Page();
 
         }

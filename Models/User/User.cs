@@ -15,7 +15,8 @@ namespace RAM___RUC_Allocation_Manager.Models
         public enum UserType
         {
             Employee,
-            Leader
+            Leader,
+            Administrator
         }
         #endregion
 
