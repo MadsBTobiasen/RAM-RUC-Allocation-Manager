@@ -2,3 +2,27 @@
 @model RAM___RUC_Allocation_Manager.Pages.SettingsPage.SettingsPageModel
 @{
 }
+<h2>Settings Page</h2>
+<div class="container" style="display: flex; justify-content: left;">
+    <div>
+    </div>
+    <form method="post">
+        <div class="form-group">
+            <label asp-for="ProgrammeName" class="col-form-label" style="color:white"></label>
+            <div>
+                <input asp-for="ProgrammeName" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Leader" class="col-form-label" style="color:white"></label>
+            <div>
+                <input asp-for="Leader" />
+            </div>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-outline-light">Create Programme</button>
+            <a asp-page="/LeaderLandingPage/LeaderLandingPage"><button class="btn btn-outline-light">Back</button></a>
+        </div>
+        
+    </form>
+</div>
