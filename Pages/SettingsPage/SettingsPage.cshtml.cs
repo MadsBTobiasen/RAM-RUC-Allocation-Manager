@@ -22,6 +22,11 @@ namespace RAM___RUC_Allocation_Manager.Pages.SettingsPage
 
         public DbService<LeaderProgramme> dbService { get; set; }
 
+        public SettingsPageModel(DbService<LeaderProgramme> dbservice)
+        {
+            dbService = dbservice;
+        }
+
         public IActionResult OnPostCreateProgramme()
         {
             NewProgramme = new Programme();
