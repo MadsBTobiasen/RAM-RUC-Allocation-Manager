@@ -33,7 +33,6 @@ namespace RAM___RUC_Allocation_Manager.MockData
             return users.GroupBy(i => i.Id).Select(g => g.First()).ToList();
 
         }
-
         private static List<User> GetMockTestLeader()
         {
 
@@ -88,7 +87,6 @@ namespace RAM___RUC_Allocation_Manager.MockData
             return new List<User>() { employee };
 
         }
-
         private static List<User> AddEmployees(int itterations, int idStart, string namePrefix)
         {
 
