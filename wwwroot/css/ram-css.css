@@ -51,3 +51,12 @@ table.allocated-hours-table td {
     color: var(--ram-gold);
 }
 
+section {
+    position: absolute;
+    transform: translateY(-3.5rem);
+}
+
+section.top {
+    position: fixed;
+    transform: translateY(0rem);
+}

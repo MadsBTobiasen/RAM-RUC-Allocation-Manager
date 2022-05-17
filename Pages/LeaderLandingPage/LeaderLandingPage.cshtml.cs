@@ -15,6 +15,16 @@ namespace RAM___RUC_Allocation_Manager.Pages.LeaderLandingPage
     public class LeaderLandingPageModel : PageModel
     {
 
+        #region Enumerations
+        public enum PageSections
+        {
+            None,
+            ProgrammeEmployees,
+            AllEmployees,
+            AllLeaders
+        }
+        #endregion
+
         #region Fields
         private UserService userService;
 
@@ -31,6 +41,11 @@ namespace RAM___RUC_Allocation_Manager.Pages.LeaderLandingPage
         [BindProperty] public User CreatedUser { get; set; }
         [BindProperty] public Employee Employee { get; set; }
         public bool IsLeader { get; set; }
+
+        /// <summary>
+        /// This property is used, to indicate which section of the page, the request should lead to.
+        /// </summary>
+        [BindProperty] public PageSections PageSection { get; set; } = PageSections.None;
 
         #region Search Options
         [BindProperty] public string AllEmployeesSearchString { get; set; }
@@ -125,11 +140,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.LeaderLandingPage
         
             IsLeader = false;
 
-            Searching();
-            Sorting();
-            Pagination();
-
-            return Page();
+            return PageWithSortingSearchingAndPagination();
             
         }
 
@@ -139,24 +150,18 @@ namespace RAM___RUC_Allocation_Manager.Pages.LeaderLandingPage
         public IActionResult OnPostPaginatedResult()
         {
 
-            Searching();
-            Sorting();
-            Pagination();
+            Console.WriteLine("PageSection: " + PageSection);
 
-            return Page();
+            return PageWithSortingSearchingAndPagination();
 
         }
 
         public IActionResult OnPostCreateUser()
         {
 
-            Searching();
-            Sorting();
-            Pagination();
-
             if (!ModelState.IsValid)
             {
-                return Page();
+                return PageWithSortingSearchingAndPagination();
             }
 
             userService.CreateUser(CreatedUser);
@@ -164,12 +169,8 @@ namespace RAM___RUC_Allocation_Manager.Pages.LeaderLandingPage
 
         }
 
-        public void OnPostCheckType()
+        public IActionResult OnPostCheckType()
         {
-
-            Searching();
-            Sorting();
-            Pagination();
 
             if (CreatedUser.Type == Models.User.UserType.Employee)
             {
@@ -180,6 +181,25 @@ namespace RAM___RUC_Allocation_Manager.Pages.LeaderLandingPage
             {
                 IsLeader = true;
             }
+
+            return PageWithSortingSearchingAndPagination();
+
+        }
+
+        public IActionResult PageWithSortingSearchingAndPagination()
+        {
+
+            Searching();
+            Sorting();
+            Pagination();
+
+            foreach(object o in RouteData.DataTokens)
+            {
+                Console.WriteLine("output: " + o);
+            }
+
+            return Page();
+
         }
 
         #region Searching Methods
@@ -188,10 +208,6 @@ namespace RAM___RUC_Allocation_Manager.Pages.LeaderLandingPage
         /// </summary>
         private void Searching()
         {
-
-            Console.WriteLine("empssearch: " + AllEmployeesSearchString);
-            Console.WriteLine("empssearch2: " + ProgrammeEmployeesSearchString);
-            Console.WriteLine("leadsearch: " + AllLeadersSearchString);
 
             if (string.IsNullOrEmpty(AllEmployeesSearchString)) AllEmployeesSearchString = "";
             if (string.IsNullOrEmpty(ProgrammeEmployeesSearchString)) ProgrammeEmployeesSearchString = "";
