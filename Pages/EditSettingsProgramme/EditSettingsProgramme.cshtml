@@ -1,0 +1,17 @@
+﻿@page
+@model RAM___RUC_Allocation_Manager.Pages.EditSettingsProgramme.EditSettingsProgrammeModel
+@{
+}
+<h2>Edit Programme</h2>
+<table class="leader-landing-page table-dark table-striped">
+    <tr>
+        <th>Programmes</th>
+    </tr>
+    @foreach (var p in Model.LeaderProgrammes)
+    {
+        <tr>
+            <td><a asp-page="/EditSettingsProgramme/EditSettingsProgramme2" asp-route-id="@p.Id">@p.Programme.Name</a></td>
+        </tr>
+    }
+    
+</table>

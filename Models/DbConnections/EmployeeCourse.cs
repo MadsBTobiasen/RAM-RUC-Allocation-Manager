@@ -12,10 +12,10 @@ namespace RAM___RUC_Allocation_Manager.Models.WorkAssigments
     {
 
         #region Properties
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
-        public int? EmployeeId { get; set; }
+        [Required]
+        public int EmployeeId { get; set; }
         public Employee Employee { get; set; }
+        [Required]
         public int CourseId { get; set; }
         public Course Course { get; set; }
         [Required]

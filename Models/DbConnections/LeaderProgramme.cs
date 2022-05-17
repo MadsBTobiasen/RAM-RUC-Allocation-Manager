@@ -9,8 +9,6 @@ namespace RAM___RUC_Allocation_Manager.Models.DbConnections
 {
     public class LeaderProgramme
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
         public int ProgrammeId { get; set; }
 
         public Programme Programme { get; set; }

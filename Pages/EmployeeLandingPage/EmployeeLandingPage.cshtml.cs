@@ -33,10 +33,12 @@ namespace RAM___RUC_Allocation_Manager.Pages.EmployeeLandingPage
         #region Constructor
         public EmployeeLandingPageModel(UserService us, SettingsService ss, LoginService ls)
         {
+        
             userService = us;
             settingsService = ss;
             loginService = ls;
             BaseSettings = settingsService.GetSettings();
+
         }
         #endregion
 
@@ -58,6 +60,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.EmployeeLandingPage
             {
                 if (id == -1) id = LoggedInUserId;
                 Employee = (Employee)userService.GetUserByID(id);
+                BaseSettings = settingsService.GetSettings();
                 return Page();
             }
 

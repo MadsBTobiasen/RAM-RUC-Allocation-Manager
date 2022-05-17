@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -21,6 +23,8 @@ namespace RAM___RUC_Allocation_Manager.Models
 
         #region Properties
         public virtual ICollection<LeaderProgramme> LeaderProgrammes { get; set; }
+
+        [Required]public bool IsAdmin { get; set; }
         //This is test list. Remove once DB is running.
         public List<Programme> Programmes { get; set; }
          /// <summary>
@@ -93,6 +97,16 @@ namespace RAM___RUC_Allocation_Manager.Models
 
         }
 
+        //Missing from my version but is needed for LoginService... Attempt to recreate but can be deleted in merge - Falke
+        public bool HasEmployeeInProgrammeById(Employee user)
+        {
+            foreach (int userId in user.EmployeeProgrammes.Select(ep => ep.Programme.Id))
+            {
+                if (LeaderProgrammes.Select(lp => lp.Programme.Id).Contains(userId)) return true;
+            }
+
+            return false;
+        }
         public override int GetHashCode()
         {
             return base.GetHashCode();

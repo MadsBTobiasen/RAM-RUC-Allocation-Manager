@@ -105,6 +105,7 @@ namespace RAM___RUC_Allocation_Manager.Services
 
                         //Here we check if the Loggedin User has the Employee requested in one of it's programmes.
                         Leader leader = (Leader)userService.GetUserByID(loggedInUserId);
+
                         if (leader.HasEmployeeInProgrammeById(id))
                         {
                             return true;

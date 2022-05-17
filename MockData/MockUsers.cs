@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using RAM___RUC_Allocation_Manager.Models.DbConnections;
 
 namespace RAM___RUC_Allocation_Manager.MockData
 {
@@ -16,7 +17,7 @@ namespace RAM___RUC_Allocation_Manager.MockData
         public static List<User> GetUsers()
         {
 
-            if(users == null || users.Count == 0)
+            if (users == null || users.Count == 0)
             {
 
                 users = new List<User>();
@@ -28,11 +29,12 @@ namespace RAM___RUC_Allocation_Manager.MockData
 
             users.AddRange(GetMockTestLeader());
             users.AddRange(GetMockTestEmployee());
-          
+
             //Below LINQ to ensure only unique Ids are returned.
             return users.GroupBy(i => i.Id).Select(g => g.First()).ToList();
 
         }
+
         private static List<User> GetMockTestLeader()
         {
 
@@ -83,6 +85,49 @@ namespace RAM___RUC_Allocation_Manager.MockData
                 Username = "Employee1000",
                 Password = hasher.HashPassword(null, "Password")
             };
+            Group Group = new Group();
+            EmployeeGroup employeeGroupOne = new EmployeeGroup()
+                {Employee = employee, Group = Group, RoleOfEmployee = EmployeeGroup.EmployeeRole.Supervisor};
+            EmployeeGroup employeeGroupTwo = new EmployeeGroup()
+                { Employee = employee, Group = Group, RoleOfEmployee = EmployeeGroup.EmployeeRole.Supervisor };
+            Group.Id = 1;
+            Group.RucId = 1;
+            Group.EmployeeGroups.Add(employeeGroupOne);
+            Group.IsMasterThesis = true;
+            Group.MemberAmount = 4;
+            Group.EmployeeGroups.Add(employeeGroupTwo);
+            employee.EmployeeGroups.Add(employeeGroupOne);
+            employee.EmployeeGroups.Add(employeeGroupTwo);
+            return new List<User>() { employee };
+
+        }
+
+        private static List<User> AddEmployees(int itterations, int idStart, string namePrefix)
+        {
+
+            List<User> output = new List<User>();
+
+            for (int i = 0; i < itterations; i++)
+            {
+
+                output.Add(new Employee() { Id = idStart + i, Username = $"{namePrefix + i}", Name = $"{namePrefix + i}", Password = hasher.HashPassword(null, "emp") });
+
+            }
+
+            return output;
+
+        }
+        private static List<User> AddLeaders(int itterations, int idStart, string namePrefix)
+        {
+
+            List<User> output = new List<User>();
+
+            for (int i = 0; i < itterations; i++)
+            {
+
+                output.Add(new Leader() { Id = idStart + i, Username = $"{namePrefix + i}", Name = $"{namePrefix + i}", Password = hasher.HashPassword(null, "lea") });
+
+            }
 
             return new List<User>() { employee };
 
@@ -113,7 +158,7 @@ namespace RAM___RUC_Allocation_Manager.MockData
                 output.Add(new Leader() { Id = idStart + i, Username = $"{namePrefix + i}", Name = $"{namePrefix + i}", Password = hasher.HashPassword(null, "lea") });
 
             }
-
+          
             return output;
 
         }

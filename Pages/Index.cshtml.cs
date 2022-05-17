@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using RAM___RUC_Allocation_Manager.Services;
 
 namespace RAM___RUC_Allocation_Manager.Pages
 {
@@ -30,7 +31,7 @@ namespace RAM___RUC_Allocation_Manager.Pages
         /// </summary>
         public IActionResult OnGet()
         {
-
+        
             if(User.Identity.IsAuthenticated)
             {
                 //Authenticated

@@ -10,7 +10,7 @@ using RAM___RUC_Allocation_Manager.Models;
 namespace RAM___RUC_Allocation_Manager.Migrations
 {
     [DbContext(typeof(RamDbContext))]
-    [Migration("20220505234117_RAM___RUC_Allocation_Manager")]
+    [Migration("20220515194416_RAM___RUC_Allocation_Manager")]
     partial class RAM___RUC_Allocation_Manager
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,45 +23,49 @@ namespace RAM___RUC_Allocation_Manager.Migrations
 
             modelBuilder.Entity("RAM___RUC_Allocation_Manager.Models.DbConnections.EmployeeCustomCommittee", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
                     b.Property<int>("CustomCommitteeId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("EmployeeId")
                         .HasColumnType("int");
 
                     b.Property<int>("EmpployeeId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.Property<int?>("EmployeeId")
+                        .HasColumnType("int");
 
-                    b.HasIndex("CustomCommitteeId");
+                    b.HasKey("CustomCommitteeId", "EmpployeeId");
 
                     b.HasIndex("EmployeeId");
 
                     b.ToTable("EmployeeCustomCommittees");
                 });
 
+            modelBuilder.Entity("RAM___RUC_Allocation_Manager.Models.DbConnections.EmployeeGroup", b =>
+                {
+                    b.Property<int>("EmployeeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("GroupId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RoleOfEmployee")
+                        .HasColumnType("int");
+
+                    b.HasKey("EmployeeId", "GroupId");
+
+                    b.HasIndex("GroupId");
+
+                    b.ToTable("EmployeeGroup");
+                });
+
             modelBuilder.Entity("RAM___RUC_Allocation_Manager.Models.DbConnections.EmployeeHiringCommittee", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
                     b.Property<int>("EmployeeId")
                         .HasColumnType("int");
 
                     b.Property<int>("HiringCommitteeId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("EmployeeId");
+                    b.HasKey("EmployeeId", "HiringCommitteeId");
 
                     b.HasIndex("HiringCommitteeId");
 
@@ -70,85 +74,52 @@ namespace RAM___RUC_Allocation_Manager.Migrations
 
             modelBuilder.Entity("RAM___RUC_Allocation_Manager.Models.DbConnections.EmployeeProgramme", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<int>("ProgrammeId")
+                        .HasColumnType("int");
 
                     b.Property<int>("EmployeeId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProgrammeId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
+                    b.HasKey("ProgrammeId", "EmployeeId");
 
                     b.HasIndex("EmployeeId");
-
-                    b.HasIndex("ProgrammeId");
 
                     b.ToTable("EmployeeProgrammes");
                 });
 
             modelBuilder.Entity("RAM___RUC_Allocation_Manager.Models.DbConnections.LeaderProgramme", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<int>("ProgrammeId")
+                        .HasColumnType("int");
 
                     b.Property<int>("LeaderId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProgrammeId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
+                    b.HasKey("ProgrammeId", "LeaderId");
 
                     b.HasIndex("LeaderId");
-
-                    b.HasIndex("ProgrammeId");
 
                     b.ToTable("LeaderProgrammes");
                 });
 
-            modelBuilder.Entity("RAM___RUC_Allocation_Manager.Models.Employee", b =>
+            modelBuilder.Entity("RAM___RUC_Allocation_Manager.Models.DbConnections.PhdTasks", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Balance")
+                    b.Property<int?>("EmployeeId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsGroupLeader")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(35)
-                        .HasColumnType("nvarchar(35)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Title")
+                    b.Property<int>("RoleOfEmployee")
                         .HasColumnType("int");
-
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Employees");
+                    b.HasIndex("EmployeeId");
+
+                    b.ToTable("Phds");
                 });
 
             modelBuilder.Entity("RAM___RUC_Allocation_Manager.Models.Group", b =>
@@ -158,55 +129,18 @@ namespace RAM___RUC_Allocation_Manager.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("InternalCensorId")
-                        .HasColumnType("int");
-
                     b.Property<bool>("IsMasterThesis")
                         .HasColumnType("bit");
+
+                    b.Property<int>("MemberAmount")
+                        .HasColumnType("int");
 
                     b.Property<int>("RucId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("SupervisorId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("InternalCensorId");
-
-                    b.HasIndex("SupervisorId");
 
                     b.ToTable("Groups");
-                });
-
-            modelBuilder.Entity("RAM___RUC_Allocation_Manager.Models.Leader", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(35)
-                        .HasColumnType("nvarchar(35)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Leaders");
                 });
 
             modelBuilder.Entity("RAM___RUC_Allocation_Manager.Models.Programme", b =>
@@ -216,11 +150,16 @@ namespace RAM___RUC_Allocation_Manager.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("LeaderId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("LeaderId");
 
                     b.ToTable("Programmes");
                 });
@@ -235,37 +174,66 @@ namespace RAM___RUC_Allocation_Manager.Migrations
                     b.Property<int?>("EmployeeId")
                         .HasColumnType("int");
 
-                    b.Property<int>("MinutesRedeemedForSemester")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("SemesterId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EmployeeId");
-
-                    b.HasIndex("SemesterId");
-
-                    b.ToTable("Redemptions");
-                });
-
-            modelBuilder.Entity("RAM___RUC_Allocation_Manager.Models.Semester", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("RedeemedMinutes")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Semester");
+                    b.HasIndex("EmployeeId");
+
+                    b.ToTable("Redemptions");
+                });
+
+            modelBuilder.Entity("RAM___RUC_Allocation_Manager.Models.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("LeaderId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(35)
+                        .HasColumnType("nvarchar(35)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ProgrammeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LeaderId");
+
+                    b.HasIndex("ProgrammeId");
+
+                    b.ToTable("User");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("User");
                 });
 
             modelBuilder.Entity("RAM___RUC_Allocation_Manager.Models.WorkAssigments.AssistantProfessorSupervision", b =>
@@ -275,15 +243,10 @@ namespace RAM___RUC_Allocation_Manager.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("AssistantProfessorId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("SupervisorId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AssistantProfessorId");
 
                     b.HasIndex("SupervisorId");
 
@@ -341,17 +304,14 @@ namespace RAM___RUC_Allocation_Manager.Migrations
                     b.ToTable("PhdCommittees");
                 });
 
-            modelBuilder.Entity("RAM___RUC_Allocation_Manager.Models.WorkAssigments.Committee.PromotionCommittee", b =>
+            modelBuilder.Entity("RAM___RUC_Allocation_Manager.Models.WorkAssigments.Committee.PromotionCommitteeTask", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("ParticipatingEmployeeOneId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ParticipatingEmployeeTwoId")
+                    b.Property<int?>("EmployeeId")
                         .HasColumnType("int");
 
                     b.Property<int>("PeopleToBeAssessed")
@@ -359,9 +319,7 @@ namespace RAM___RUC_Allocation_Manager.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ParticipatingEmployeeOneId");
-
-                    b.HasIndex("ParticipatingEmployeeTwoId");
+                    b.HasIndex("EmployeeId");
 
                     b.ToTable("PromotionCommittees");
                 });
@@ -373,7 +331,7 @@ namespace RAM___RUC_Allocation_Manager.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("EmployeeId")
+                    b.Property<int?>("EmployeeId")
                         .HasColumnType("int");
 
                     b.Property<int>("LectureAmount")
@@ -396,23 +354,16 @@ namespace RAM___RUC_Allocation_Manager.Migrations
 
             modelBuilder.Entity("RAM___RUC_Allocation_Manager.Models.WorkAssigments.EmployeeCourse", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
                     b.Property<int>("CourseId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("EmployeeId")
+                    b.Property<int>("EmployeeId")
                         .HasColumnType("int");
 
                     b.Property<int>("RelativeLectureAmount")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("CourseId");
+                    b.HasKey("CourseId", "EmployeeId");
 
                     b.HasIndex("EmployeeId");
 
@@ -437,33 +388,6 @@ namespace RAM___RUC_Allocation_Manager.Migrations
                     b.HasIndex("FacilitatorId");
 
                     b.ToTable("GroupFacilitationTasks");
-                });
-
-            modelBuilder.Entity("RAM___RUC_Allocation_Manager.Models.WorkAssigments.Phd", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("EndEvaluatorId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("MainSupervisorId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("SecondarySupervisorId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EndEvaluatorId");
-
-                    b.HasIndex("MainSupervisorId");
-
-                    b.HasIndex("SecondarySupervisorId");
-
-                    b.ToTable("Phds");
                 });
 
             modelBuilder.Entity("RAM___RUC_Allocation_Manager.Models.WorkAssigments.Portfolio", b =>
@@ -500,6 +424,35 @@ namespace RAM___RUC_Allocation_Manager.Migrations
                     b.ToTable("Synopses");
                 });
 
+            modelBuilder.Entity("RAM___RUC_Allocation_Manager.Models.Employee", b =>
+                {
+                    b.HasBaseType("RAM___RUC_Allocation_Manager.Models.User");
+
+                    b.Property<int>("Balance")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsGroupLeader")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Savings")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Title")
+                        .HasColumnType("int");
+
+                    b.HasDiscriminator().HasValue("Employee");
+                });
+
+            modelBuilder.Entity("RAM___RUC_Allocation_Manager.Models.Leader", b =>
+                {
+                    b.HasBaseType("RAM___RUC_Allocation_Manager.Models.User");
+
+                    b.Property<bool>("IsAdmin")
+                        .HasColumnType("bit");
+
+                    b.HasDiscriminator().HasValue("Leader");
+                });
+
             modelBuilder.Entity("RAM___RUC_Allocation_Manager.Models.DbConnections.EmployeeCustomCommittee", b =>
                 {
                     b.HasOne("RAM___RUC_Allocation_Manager.Models.WorkAssigments.Committee.CustomCommittee", "CustomCommittee")
@@ -515,6 +468,25 @@ namespace RAM___RUC_Allocation_Manager.Migrations
                     b.Navigation("CustomCommittee");
 
                     b.Navigation("Employee");
+                });
+
+            modelBuilder.Entity("RAM___RUC_Allocation_Manager.Models.DbConnections.EmployeeGroup", b =>
+                {
+                    b.HasOne("RAM___RUC_Allocation_Manager.Models.Employee", "Employee")
+                        .WithMany("EmployeeGroups")
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("RAM___RUC_Allocation_Manager.Models.Group", "Group")
+                        .WithMany("EmployeeGroups")
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Employee");
+
+                    b.Navigation("Group");
                 });
 
             modelBuilder.Entity("RAM___RUC_Allocation_Manager.Models.DbConnections.EmployeeHiringCommittee", b =>
@@ -574,47 +546,47 @@ namespace RAM___RUC_Allocation_Manager.Migrations
                     b.Navigation("Programme");
                 });
 
-            modelBuilder.Entity("RAM___RUC_Allocation_Manager.Models.Group", b =>
+            modelBuilder.Entity("RAM___RUC_Allocation_Manager.Models.DbConnections.PhdTasks", b =>
                 {
-                    b.HasOne("RAM___RUC_Allocation_Manager.Models.Employee", "InternalCensor")
-                        .WithMany()
-                        .HasForeignKey("InternalCensorId");
+                    b.HasOne("RAM___RUC_Allocation_Manager.Models.Employee", "Employee")
+                        .WithMany("PhdsTasks")
+                        .HasForeignKey("EmployeeId");
 
-                    b.HasOne("RAM___RUC_Allocation_Manager.Models.Employee", "Supervisor")
-                        .WithMany()
-                        .HasForeignKey("SupervisorId");
+                    b.Navigation("Employee");
+                });
 
-                    b.Navigation("InternalCensor");
-
-                    b.Navigation("Supervisor");
+            modelBuilder.Entity("RAM___RUC_Allocation_Manager.Models.Programme", b =>
+                {
+                    b.HasOne("RAM___RUC_Allocation_Manager.Models.Leader", null)
+                        .WithMany("Programmes")
+                        .HasForeignKey("LeaderId");
                 });
 
             modelBuilder.Entity("RAM___RUC_Allocation_Manager.Models.Redemption", b =>
                 {
                     b.HasOne("RAM___RUC_Allocation_Manager.Models.Employee", "Employee")
-                        .WithMany("Redemption")
+                        .WithMany("Redemptions")
                         .HasForeignKey("EmployeeId");
 
-                    b.HasOne("RAM___RUC_Allocation_Manager.Models.Semester", "Semester")
-                        .WithMany()
-                        .HasForeignKey("SemesterId");
-
                     b.Navigation("Employee");
+                });
 
-                    b.Navigation("Semester");
+            modelBuilder.Entity("RAM___RUC_Allocation_Manager.Models.User", b =>
+                {
+                    b.HasOne("RAM___RUC_Allocation_Manager.Models.Leader", null)
+                        .WithMany("ProgrammeUsers")
+                        .HasForeignKey("LeaderId");
+
+                    b.HasOne("RAM___RUC_Allocation_Manager.Models.Programme", null)
+                        .WithMany("Users")
+                        .HasForeignKey("ProgrammeId");
                 });
 
             modelBuilder.Entity("RAM___RUC_Allocation_Manager.Models.WorkAssigments.AssistantProfessorSupervision", b =>
                 {
-                    b.HasOne("RAM___RUC_Allocation_Manager.Models.Employee", "AssistantProfessor")
-                        .WithMany()
-                        .HasForeignKey("AssistantProfessorId");
-
                     b.HasOne("RAM___RUC_Allocation_Manager.Models.Employee", "Supervisor")
-                        .WithMany()
+                        .WithMany("AssistantProfessorSupervisions")
                         .HasForeignKey("SupervisorId");
-
-                    b.Navigation("AssistantProfessor");
 
                     b.Navigation("Supervisor");
                 });
@@ -622,34 +594,24 @@ namespace RAM___RUC_Allocation_Manager.Migrations
             modelBuilder.Entity("RAM___RUC_Allocation_Manager.Models.WorkAssigments.Committee.PhdCommittee", b =>
                 {
                     b.HasOne("RAM___RUC_Allocation_Manager.Models.Employee", "Employee")
-                        .WithMany()
+                        .WithMany("PhdCommittees")
                         .HasForeignKey("EmployeeId");
 
                     b.Navigation("Employee");
                 });
 
-            modelBuilder.Entity("RAM___RUC_Allocation_Manager.Models.WorkAssigments.Committee.PromotionCommittee", b =>
+            modelBuilder.Entity("RAM___RUC_Allocation_Manager.Models.WorkAssigments.Committee.PromotionCommitteeTask", b =>
                 {
-                    b.HasOne("RAM___RUC_Allocation_Manager.Models.Employee", "ParticipatingEmployeeOne")
-                        .WithMany()
-                        .HasForeignKey("ParticipatingEmployeeOneId");
-
-                    b.HasOne("RAM___RUC_Allocation_Manager.Models.Employee", "ParticipatingEmployeeTwo")
-                        .WithMany()
-                        .HasForeignKey("ParticipatingEmployeeTwoId");
-
-                    b.Navigation("ParticipatingEmployeeOne");
-
-                    b.Navigation("ParticipatingEmployeeTwo");
+                    b.HasOne("RAM___RUC_Allocation_Manager.Models.Employee", null)
+                        .WithMany("PromotionCommittees")
+                        .HasForeignKey("EmployeeId");
                 });
 
             modelBuilder.Entity("RAM___RUC_Allocation_Manager.Models.WorkAssigments.Course", b =>
                 {
                     b.HasOne("RAM___RUC_Allocation_Manager.Models.Employee", "ResponsibleEmployee")
-                        .WithMany()
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("CoordinatorOfCourses")
+                        .HasForeignKey("EmployeeId");
 
                     b.Navigation("ResponsibleEmployee");
                 });
@@ -664,7 +626,9 @@ namespace RAM___RUC_Allocation_Manager.Migrations
 
                     b.HasOne("RAM___RUC_Allocation_Manager.Models.Employee", "Employee")
                         .WithMany("EmployeeCourses")
-                        .HasForeignKey("EmployeeId");
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Course");
 
@@ -674,37 +638,16 @@ namespace RAM___RUC_Allocation_Manager.Migrations
             modelBuilder.Entity("RAM___RUC_Allocation_Manager.Models.WorkAssigments.GroupFacilitationTask", b =>
                 {
                     b.HasOne("RAM___RUC_Allocation_Manager.Models.Employee", "Facilitator")
-                        .WithMany()
+                        .WithMany("GroupFacilitationTasks")
                         .HasForeignKey("FacilitatorId");
 
                     b.Navigation("Facilitator");
                 });
 
-            modelBuilder.Entity("RAM___RUC_Allocation_Manager.Models.WorkAssigments.Phd", b =>
-                {
-                    b.HasOne("RAM___RUC_Allocation_Manager.Models.Employee", "EndEvaluator")
-                        .WithMany()
-                        .HasForeignKey("EndEvaluatorId");
-
-                    b.HasOne("RAM___RUC_Allocation_Manager.Models.Employee", "MainSupervisor")
-                        .WithMany()
-                        .HasForeignKey("MainSupervisorId");
-
-                    b.HasOne("RAM___RUC_Allocation_Manager.Models.Employee", "SecondarySupervisor")
-                        .WithMany()
-                        .HasForeignKey("SecondarySupervisorId");
-
-                    b.Navigation("EndEvaluator");
-
-                    b.Navigation("MainSupervisor");
-
-                    b.Navigation("SecondarySupervisor");
-                });
-
             modelBuilder.Entity("RAM___RUC_Allocation_Manager.Models.WorkAssigments.Portfolio", b =>
                 {
                     b.HasOne("RAM___RUC_Allocation_Manager.Models.Employee", "Examinator")
-                        .WithMany()
+                        .WithMany("Portfolios")
                         .HasForeignKey("ExaminatorId");
 
                     b.Navigation("Examinator");
@@ -713,28 +656,15 @@ namespace RAM___RUC_Allocation_Manager.Migrations
             modelBuilder.Entity("RAM___RUC_Allocation_Manager.Models.WorkAssigments.Synopsis", b =>
                 {
                     b.HasOne("RAM___RUC_Allocation_Manager.Models.Employee", "Examinator")
-                        .WithMany()
+                        .WithMany("Synopses")
                         .HasForeignKey("ExaminatorId");
 
                     b.Navigation("Examinator");
                 });
 
-            modelBuilder.Entity("RAM___RUC_Allocation_Manager.Models.Employee", b =>
+            modelBuilder.Entity("RAM___RUC_Allocation_Manager.Models.Group", b =>
                 {
-                    b.Navigation("EmployeeCourses");
-
-                    b.Navigation("EmployeeCustomCommittees");
-
-                    b.Navigation("EmployeeHiringCommittees");
-
-                    b.Navigation("EmployeeProgrammes");
-
-                    b.Navigation("Redemption");
-                });
-
-            modelBuilder.Entity("RAM___RUC_Allocation_Manager.Models.Leader", b =>
-                {
-                    b.Navigation("LeaderProgrammes");
+                    b.Navigation("EmployeeGroups");
                 });
 
             modelBuilder.Entity("RAM___RUC_Allocation_Manager.Models.Programme", b =>
@@ -742,6 +672,8 @@ namespace RAM___RUC_Allocation_Manager.Migrations
                     b.Navigation("EmployeeProgrammes");
 
                     b.Navigation("LeaderProgrammes");
+
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("RAM___RUC_Allocation_Manager.Models.WorkAssigments.Committee.CustomCommittee", b =>
@@ -752,6 +684,46 @@ namespace RAM___RUC_Allocation_Manager.Migrations
             modelBuilder.Entity("RAM___RUC_Allocation_Manager.Models.WorkAssigments.Committee.HiringCommittee", b =>
                 {
                     b.Navigation("EmployeeHiringCommittees");
+                });
+
+            modelBuilder.Entity("RAM___RUC_Allocation_Manager.Models.Employee", b =>
+                {
+                    b.Navigation("AssistantProfessorSupervisions");
+
+                    b.Navigation("CoordinatorOfCourses");
+
+                    b.Navigation("EmployeeCourses");
+
+                    b.Navigation("EmployeeCustomCommittees");
+
+                    b.Navigation("EmployeeGroups");
+
+                    b.Navigation("EmployeeHiringCommittees");
+
+                    b.Navigation("EmployeeProgrammes");
+
+                    b.Navigation("GroupFacilitationTasks");
+
+                    b.Navigation("PhdCommittees");
+
+                    b.Navigation("PhdsTasks");
+
+                    b.Navigation("Portfolios");
+
+                    b.Navigation("PromotionCommittees");
+
+                    b.Navigation("Redemptions");
+
+                    b.Navigation("Synopses");
+                });
+
+            modelBuilder.Entity("RAM___RUC_Allocation_Manager.Models.Leader", b =>
+                {
+                    b.Navigation("LeaderProgrammes");
+
+                    b.Navigation("Programmes");
+
+                    b.Navigation("ProgrammeUsers");
                 });
 #pragma warning restore 612, 618
         }

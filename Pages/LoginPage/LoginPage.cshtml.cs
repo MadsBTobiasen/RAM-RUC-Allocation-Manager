@@ -29,14 +29,12 @@ namespace RAM___RUC_Allocation_Manager.Pages.LoginPage
         #endregion
 
         #region Constructor
-
         public LoginPageModel(UserService us, LoginService ls)
         {
             userService = us;
             Users = userService.GetUsers();
 
             loginService = ls;
-
         }
         #endregion
 
@@ -52,7 +50,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.LoginPage
                 ErrorMessage = "Invalid attempt";
                 return Page();
             }
-
+            
         }
 
         public void OnGet() { }
