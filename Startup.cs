@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using RAM___RUC_Allocation_Manager.Models.DbConnections;
 
 namespace RAM___RUC_Allocation_Manager
 {
@@ -59,7 +60,8 @@ namespace RAM___RUC_Allocation_Manager
               
             services.AddDbContext<RamDbContext>();
             services.AddTransient<DbService<User>, DbService<User>>();
-          
+            services.AddTransient<DbService<LeaderProgramme>, DbService<LeaderProgramme>>();
+
             services.AddSingleton<JSONFileService<BaseSettings>, JSONFileService<BaseSettings>>();
             services.AddSingleton<UserService, UserService>();
             services.AddSingleton<SettingsService, SettingsService>();
