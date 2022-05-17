@@ -16,7 +16,7 @@ namespace RAM___RUC_Allocation_Manager.Models
         {
             Employee,
             Leader,
-            Administrator
+            Adminstrator
         }
         #endregion
 
@@ -42,6 +42,10 @@ namespace RAM___RUC_Allocation_Manager.Models
         #endregion
 
         #region Methods
+        /// <summary>
+        /// Overridable function.
+        /// Throws an error as it HAS to be overriden by it's children.
+        /// </summary>
         public virtual ClaimsPrincipal GetClaimsPrinciple()
         {
             throw new Exception("Method must be overriden.");
@@ -58,6 +62,11 @@ namespace RAM___RUC_Allocation_Manager.Models
         public override string ToString()
         {
             return base.ToString();
+        }
+
+        internal static bool HasClaim(object role, string v)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

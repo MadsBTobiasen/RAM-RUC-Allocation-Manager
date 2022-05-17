@@ -13,6 +13,14 @@ namespace RAM___RUC_Allocation_Manager.Models
     public class Leader : User
     {
 
+        #region Enumeration
+        public enum SortingOptions
+        {
+            NameASC,
+            NameDESC
+        }
+        #endregion
+
         #region Properties
         public virtual ICollection<LeaderProgramme> LeaderProgrammes { get; set; }
 
@@ -22,14 +30,14 @@ namespace RAM___RUC_Allocation_Manager.Models
          /// <summary>
         /// Returns a list of all the Users from the Users in Programme' list of Users.
         /// </summary>
-        public List<User> ProgrammeUsers { get
+        public List<Employee> ProgrammeUsers { get
             {
 
-                List<User> users = new List<User>();
+                List<Employee> users = new List<Employee>();
                 
                 foreach(Programme p in Programmes)
                 {
-                    users.AddRange(p.Users);
+                    users.AddRange(p.Users.Cast<Employee>());
                 }
 
                 return users;
@@ -46,6 +54,10 @@ namespace RAM___RUC_Allocation_Manager.Models
         #endregion
 
         #region Methods
+        /// <summary>
+        /// Method that returns a ClaimsPrincipal to be used for authentication. Since this object is a leader, it's also plausible for the leader to be an "adminstrator".
+        /// </summary>
+        /// <returns>Claims Principal object.</returns>
         public override ClaimsPrincipal GetClaimsPrinciple()
         {
 
@@ -59,9 +71,29 @@ namespace RAM___RUC_Allocation_Manager.Models
             };
 
             //Become adminstrator.
-            if (true) claims.Add(new Claim(ClaimTypes.Role, UserType.Administrator.ToString()));
+            if (true) claims.Add(new Claim(ClaimTypes.Role, UserType.Adminstrator.ToString()));
 
             return new ClaimsPrincipal(new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme));
+
+        }
+
+        /// <summary>
+        /// Method that checks if the Leader has the employee in one of it's courses.
+        /// </summary>
+        /// <param name="id">Employee id to check for.</param>
+        /// <returns>Returns true, if the Leader has the Employee in one of it's courses, and false if not.</returns>
+        public bool HasEmployeeInProgrammeById(int id)
+        {
+
+            foreach(User u in ProgrammeUsers)
+            {
+                if(u.Id == id)
+                {
+                    return true;
+                }
+            }
+
+            return false;
 
         }
 

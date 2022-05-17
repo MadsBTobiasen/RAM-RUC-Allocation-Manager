@@ -2,6 +2,7 @@
     --ram-background: rgb(43, 42, 51);
     --ram-gold: rgb(218,165,32);
     --ram-white: rgb(255 255 255);
+    --ram-element-background: rgba(255,255,255, .05);
 }
 
 .vertical-align-md {
@@ -11,6 +12,11 @@
 img.ram-icon-sm {
     height:3rem;
     width:3rem;
+}
+
+img.ram-icon-bg {
+    height: 25rem;
+    width: 25rem;
 }
 
 .mw-0 {
@@ -25,6 +31,15 @@ table.employee-landing-page {
     width: 100%;
 }
 
+a i.fa-solid, a i.fa, .btn-link, .btn-link i {
+    transition: all 0.5s ease;
+}
+
+a i.fa-solid:hover, a i.fa:hover, .btn-link:hover, .btn-link i:hover {
+    color: var(--ram-gold);
+    text-decoration: none;
+}
+
 table.allocated-hours-table td {
     border-top: 0.5px solid var(--ram-gold);
     border-bottom: 0.5px solid var(--ram-gold);
@@ -35,6 +50,4 @@ table.allocated-hours-table td {
 .text-ram-gold {
     color: var(--ram-gold);
 }
-
-
 

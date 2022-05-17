@@ -38,7 +38,7 @@ namespace RAM___RUC_Allocation_Manager.Services
             MaxItems = maxPerPage;
             objects = objs;
 
-            PageMax = Convert.ToInt32(Math.Floor((double)(objects.Count / MaxItems)));
+            PageMax = (int)Math.Ceiling(decimal.Divide(objs.Count, maxPerPage));
 
         }
 
@@ -55,28 +55,7 @@ namespace RAM___RUC_Allocation_Manager.Services
 
             PageIndex = requestedPage;
 
-            List<T> output = new List<T>();
-
-            if (objects == null) throw new Exception("PaginationService must be parsed a List of Objects<T> with the Setup-method to work."); 
-            else
-            {
-                if(objects.Count > 0)
-                {
-                    for(int i = 0; i < objects.Count; i++)
-                    {
-                        
-                        //Make sure that the loop quits if is bigger than the amount of objects.
-                        if (i + (PageIndex * MaxItems) >= objects.Count) break;
-                        //Make sure that there's no more than the MaxItems in the List.
-                        if (output.Count >= MaxItems) break;
-
-                        T item = objects[i + (PageIndex * MaxItems)];
-                        output.Add(item);
-
-                    }
-                }
-            }
-
+            List<T> output = objects.Skip((requestedPage - 1) * MaxItems).Take(MaxItems).ToList();
             return output;
 
         }

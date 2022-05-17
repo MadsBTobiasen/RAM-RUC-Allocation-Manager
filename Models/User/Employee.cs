@@ -27,6 +27,14 @@ namespace RAM___RUC_Allocation_Manager.Models
             AssistantProfessor
         }
 
+        public enum SortingOptions
+        {
+            NameASC,
+            NameDESC,
+            TitleASC,
+            TitleDESC
+        }
+        
         public enum EmployeeSavings
         {
             ZeroPercent,
@@ -78,6 +86,24 @@ namespace RAM___RUC_Allocation_Manager.Models
         #endregion
 
         #region Methods
+        /// <summary>
+        /// Method that returns a ClaimsPrincipal to be used for authentication.
+        /// </summary>
+        /// <returns>Claims Principal object.</returns>
+        public override ClaimsPrincipal GetClaimsPrinciple()
+        {
+            List<Claim> claims = new List<Claim>()
+            {
+                new Claim(ClaimTypes.NameIdentifier, Id.ToString()),
+                new Claim(ClaimTypes.Name, Username),
+                new Claim(ClaimTypes.GivenName, Name),
+                //new Claim(ClaimTypes.Email, Email),
+                new Claim(ClaimTypes.Role, Type.ToString())
+            };
+
+            return new ClaimsPrincipal(new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme));
+        }
+
         /// <summary>
         /// Calculates total work assignment minutes for an employee
         /// </summary>
@@ -254,20 +280,6 @@ namespace RAM___RUC_Allocation_Manager.Models
             return Redemptions.Where(r => r.StartDate < DateTime.Now && r.EndDate > DateTime.Now).Select(r => r.RedeemedMinutes).Sum();
         }
 
-        public override ClaimsPrincipal GetClaimsPrinciple()
-        {
-            List<Claim> claims = new List<Claim>()
-            {
-                new Claim(ClaimTypes.NameIdentifier, Id.ToString()),
-                new Claim(ClaimTypes.Name, Username),
-                new Claim(ClaimTypes.GivenName, Name),
-                //new Claim(ClaimTypes.Email, Email),
-                new Claim(ClaimTypes.Role, Type.ToString())
-            };
-
-            return new ClaimsPrincipal(new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme));
-        }
-
         public override int GetHashCode()
         {
             return base.GetHashCode();
@@ -280,8 +292,6 @@ namespace RAM___RUC_Allocation_Manager.Models
         {
             return $"[Employee] ({Id}) {Name} {Password} {Email}";
         }
-
-
         #endregion
 
     }

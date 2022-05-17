@@ -14,10 +14,10 @@ a {
     transition: all 0.5s ease;
 }
 
-    a:hover {
-        color: var(--ram-gold);
-        text-decoration: none;
-    }
+a:hover {
+    color: var(--ram-gold);
+    text-decoration: none;
+}
 
 .row {
     margin-right: 0 !important;
@@ -29,19 +29,20 @@ hr {
     width: 100%;
 }
 
-.btn-primary {
+.btn-primary, .btn-primary i, .btn-outline-primary, .btn-outline-primary i {
+    transition: all 0.5s ease;
     color: var(--ram-white);
     border-color: var(--ram-gold);
-    background-color: var(--ram-background);
+    background-color: var(--ram-element-background);
 }
 
-    .btn-primary:hover {
-        color: var(--ram-white);
-        border-color: var(--ram-gold);
-        background-color: var(--ram-background);
-    }
+.btn-primary:hover, .btn-primary i:hover, .btn-outline-primary:hover, .btn-outline-primary i:hover {
+    color: var(--ram-gold);
+    border-color: var(--ram-gold);
+    background-color: var(--ram-element-background);
+}
 
-.border, .border-top, .border-right, .border-left, .border-bottom {
+.border, .border-top, .border-right, .border-left, .border-bottom, .input-group input, input-group input:focus {
     border-color: var(--ram-gold) !important;
 }
 
@@ -53,10 +54,21 @@ hr {
     transition: all 0.5s ease;
 }
 
-    .text-white-hover:hover {
-        color: rgb(218,165,32) !important;
-    }
+.text-white-hover:hover {
+    color: var(--ram-gold) !important;
+}
 
-h1, h2, h3, h4, h5, h6, p, span, i, a, table {
+h1, h2, h3, h4, h5, h6, p, span, i, a, table, label {
+    color: var(--ram-white);
+}
+
+.input-group input {
+    border-radius: .25rem !important;
+    background-color: var(--ram-element-background);
+    color: var(--ram-white);
+}
+
+.input-group input:focus {
+    background-color: rgba(255,255,255, .15);
     color: var(--ram-white);
 }

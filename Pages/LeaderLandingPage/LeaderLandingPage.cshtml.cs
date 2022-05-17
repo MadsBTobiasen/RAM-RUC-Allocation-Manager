@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using RAM___RUC_Allocation_Manager.Models;
@@ -9,50 +11,106 @@ using RAM___RUC_Allocation_Manager.Services;
 
 namespace RAM___RUC_Allocation_Manager.Pages.LeaderLandingPage
 {
+    [Authorize(Roles = "Adminstrator")]
     public class LeaderLandingPageModel : PageModel
     {
 
         #region Fields
         private UserService userService;
-        private PaginationService<User> paginationService;
+
+        private PaginationService<Employee> employeePaginationService;
+        private PaginationService<Leader> leaderPaginationService;
+
+        private List<Employee> _employees;
+        private List<Employee> _programmeEmployees;
+        private List<Leader> _leaders;
         #endregion
 
         #region Properties
-        public Leader Leader { get; set; }
+        public Leader Leader => (Leader)userService.GetUserByID(Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier)));
         [BindProperty] public User CreatedUser { get; set; }
         [BindProperty] public Employee Employee { get; set; }
         public bool IsLeader { get; set; }
+
+        #region Search Options
+        [BindProperty] public string AllEmployeesSearchString { get; set; }
+        [BindProperty] public string ProgrammeEmployeesSearchString { get; set; }
+        [BindProperty] public string AllLeadersSearchString { get; set; }
         #endregion
-      
+
+        #region Sorting Options
+        [BindProperty] public Employee.SortingOptions AllEmployeesSortingOption { get; set; } = Employee.SortingOptions.NameASC;
+        [BindProperty] public Employee.SortingOptions ProgrammeEmployeesSortingOption { get; set; } = Employee.SortingOptions.NameASC;
+        [BindProperty] public Leader.SortingOptions AllLeadersSortingOption { get; set; } = Leader.SortingOptions.NameASC;
+        #endregion
+
+        #region Pagination Options
+
         #region All Employees
-        public List<User> Employees { get; set; }
-        public List<User> PaginatedEmployees { get; set; }
+        public List<Employee> Employees
+        {
+            get
+            {
+                if (_employees == null) _employees = userService.GetUsersByType(Models.User.UserType.Employee).Cast<Employee>().ToList();
+                return _employees;
+            }
+            set { _employees = value; }
+        }
+        public List<Employee> PaginatedEmployees { get; set; }
         [BindProperty] public int PageIndexAllEmployees { get; set; }
         public int PageMaxAllEmployees { get; set; }
         public int MaxItemsAllEmployees { get; set; }
         #endregion
 
         #region Programme Employees
-        public List<User> ProgrammeEmployees { get; set; }
-        public List<User> PaginatedProgrammeEmployees { get; set; }
+        public List<Employee> ProgrammeEmployees
+        {
+            get
+            {
+                if (_programmeEmployees == null) _programmeEmployees = Leader.ProgrammeUsers;
+                return _programmeEmployees;
+            }
+            set { _programmeEmployees = value; }
+        }
+        public List<Employee> PaginatedProgrammeEmployees { get; set; }
         [BindProperty] public int PageIndexProgrammeEmployees { get; set; }
         public int PageMaxProgrammeEmployees { get; set; }
         public int MaxItemsProgrammeEmployees { get; set; }
         #endregion
 
+        #region All Leaders
+        public List<Leader> Leaders
+        {
+            get
+            {
+                if (_leaders == null) _leaders = userService.GetUsersByType(Models.User.UserType.Leader).Cast<Leader>().ToList();
+                return _leaders;
+            }
+            set { _leaders = value; }
+        }
+        public List<Leader> PaginatedLeaders { get; set; }
+        [BindProperty] public int PageIndexAllLeaders { get; set; }
+        public int PageMaxAllLeaders { get; set; }
+        public int MaxItemsAllLeaders { get; set; }
+        #endregion
+
+        #endregion
+
+        #endregion
+
         #region Constructor
-        public LeaderLandingPageModel(UserService us, PaginationService<User> ps)
+        public LeaderLandingPageModel(UserService us, PaginationService<Employee> empps, PaginationService<Leader> leadsps)
         {
 
             CreatedUser = new Employee();
 
             userService = us;
-            paginationService = ps;
+            employeePaginationService = empps;
+            leaderPaginationService = leadsps;
 
-            MaxItemsAllEmployees = 25;
-            MaxItemsProgrammeEmployees = 25;
-
-            Employees = userService.GetUsersByType(Models.User.UserType.Employee);
+            MaxItemsAllEmployees = 10;
+            MaxItemsProgrammeEmployees = 10;
+            MaxItemsAllLeaders = 10;
 
         }
         #endregion
@@ -62,45 +120,39 @@ namespace RAM___RUC_Allocation_Manager.Pages.LeaderLandingPage
         /// <summary>
         /// Method that returns the Page.
         /// </summary>
-        public IActionResult OnGet(int id)
+        public IActionResult OnGet()
         {
         
             IsLeader = false;
-          
-            Leader = (Leader)userService.GetUserByID(id);
-            ProgrammeEmployees = Leader.ProgrammeUsers;
 
-            PaginationAllEmployees();
-            PaginationProgrammeEmployees();
+            Searching();
+            Sorting();
+            Pagination();
 
             return Page();
             
         }
 
         /// <summary>
-        /// Method that gets a paginated result of users, by setting up the PaginatationService & calling Paginate on it.
+        /// Method that paginates the respective list of users.
         /// </summary>
-        public IActionResult OnPostPaginatedResult(int id)
+        public IActionResult OnPostPaginatedResult()
         {
 
-            Leader = (Leader)userService.GetUserByID(id);
-            ProgrammeEmployees = Leader.ProgrammeUsers;
-
-            PaginationAllEmployees();
-            PaginationProgrammeEmployees();
+            Searching();
+            Sorting();
+            Pagination();
 
             return Page();
 
         }
 
-        public IActionResult OnPostCreateUser(int id)
+        public IActionResult OnPostCreateUser()
         {
 
-            Leader = (Leader)userService.GetUserByID(id);
-            ProgrammeEmployees = Leader.ProgrammeUsers;
-
-            PaginationAllEmployees();
-            PaginationProgrammeEmployees();
+            Searching();
+            Sorting();
+            Pagination();
 
             if (!ModelState.IsValid)
             {
@@ -112,14 +164,12 @@ namespace RAM___RUC_Allocation_Manager.Pages.LeaderLandingPage
 
         }
 
-        public void OnPostCheckType(int id)
+        public void OnPostCheckType()
         {
 
-            Leader = (Leader)userService.GetUserByID(id);
-            ProgrammeEmployees = Leader.ProgrammeUsers;
-
-            PaginationAllEmployees();
-            PaginationProgrammeEmployees();
+            Searching();
+            Sorting();
+            Pagination();
 
             if (CreatedUser.Type == Models.User.UserType.Employee)
             {
@@ -132,25 +182,109 @@ namespace RAM___RUC_Allocation_Manager.Pages.LeaderLandingPage
             }
         }
 
-        #region Non-HTTP-RequestMethods
+        #region Searching Methods
         /// <summary>
-        /// Method that setups the pagination, and paginates the list of Employees.
+        /// Method that searches, and returns only matching names of professors and leaders in their respective lists.
+        /// </summary>
+        private void Searching()
+        {
+
+            Console.WriteLine("empssearch: " + AllEmployeesSearchString);
+            Console.WriteLine("empssearch2: " + ProgrammeEmployeesSearchString);
+            Console.WriteLine("leadsearch: " + AllLeadersSearchString);
+
+            if (string.IsNullOrEmpty(AllEmployeesSearchString)) AllEmployeesSearchString = "";
+            if (string.IsNullOrEmpty(ProgrammeEmployeesSearchString)) ProgrammeEmployeesSearchString = "";
+            if (string.IsNullOrEmpty(AllLeadersSearchString)) AllLeadersSearchString = "";
+
+            Employees = (from emp in Employees where emp.Name.ToLower().Contains(AllEmployeesSearchString.ToLower()) select emp).ToList();
+            ProgrammeEmployees = (from emp in ProgrammeEmployees where emp.Name.ToLower().Contains(ProgrammeEmployeesSearchString.ToLower()) select emp).ToList();
+            Leaders = (from lead in Leaders where lead.Name.ToLower().Contains(AllLeadersSearchString.ToLower()) select lead).ToList();
+
+        }
+        #endregion
+
+        #region Sorting Methods
+        /// <summary>
+        /// Method that applies the sorting according to what the properties indicate.
+        /// </summary>
+        private void Sorting()
+        {
+
+            switch(AllEmployeesSortingOption)
+            {
+
+                case Employee.SortingOptions.NameASC: Employees = Employees.OrderBy(e => e.Name).ToList(); break;
+                case Employee.SortingOptions.NameDESC: Employees = Employees.OrderByDescending(e => e.Name).ToList(); break;
+                
+                case Employee.SortingOptions.TitleASC: Employees = Employees.OrderBy(e => e.Title).ToList(); break;
+                case Employee.SortingOptions.TitleDESC: Employees = Employees.OrderByDescending(e => e.Title).ToList(); break;
+
+            }
+
+            switch (ProgrammeEmployeesSortingOption)
+            {
+
+                case Employee.SortingOptions.NameASC: ProgrammeEmployees = ProgrammeEmployees.OrderBy(e => e.Name).ToList(); break;
+                case Employee.SortingOptions.NameDESC: ProgrammeEmployees = ProgrammeEmployees.OrderByDescending(e => e.Name).ToList(); break;
+
+                case Employee.SortingOptions.TitleASC: ProgrammeEmployees = ProgrammeEmployees.OrderBy(e => e.Title).ToList(); break;
+                case Employee.SortingOptions.TitleDESC: ProgrammeEmployees = ProgrammeEmployees.OrderByDescending(e => e.Title).ToList(); break;
+
+            }
+
+            switch (AllLeadersSortingOption)
+            {
+
+                case Leader.SortingOptions.NameASC: Leaders = Leaders.OrderBy(l => l.Name).ToList(); break;
+                case Leader.SortingOptions.NameDESC: Leaders = Leaders.OrderByDescending(l => l.Name).ToList(); break;
+
+            }
+
+        }
+        #endregion
+
+        #region Pagination Methods
+        /// <summary>
+        /// Method that setups the pagination, and paginates the lists.
         /// </summary>
         private void PaginationAllEmployees()
         {
-            paginationService.Setup(Employees, MaxItemsAllEmployees);
-            PaginatedEmployees = paginationService.Paginate(PageIndexAllEmployees);
+            employeePaginationService.Setup(Employees, MaxItemsAllEmployees);
+            PaginatedEmployees = employeePaginationService.Paginate(PageIndexAllEmployees);
 
-            PageIndexAllEmployees = paginationService.PageIndex;
-            PageMaxAllEmployees = paginationService.PageMax;
+            PageIndexAllEmployees = employeePaginationService.PageIndex;
+            PageMaxAllEmployees = employeePaginationService.PageMax;
         }
+
         private void PaginationProgrammeEmployees()
         {
-            paginationService.Setup(ProgrammeEmployees, MaxItemsProgrammeEmployees);
-            PaginatedProgrammeEmployees = paginationService.Paginate(PageIndexProgrammeEmployees);
+            employeePaginationService.Setup(ProgrammeEmployees, MaxItemsProgrammeEmployees);
+            PaginatedProgrammeEmployees = employeePaginationService.Paginate(PageIndexProgrammeEmployees);
 
-            PageIndexProgrammeEmployees = paginationService.PageIndex;
-            MaxItemsProgrammeEmployees = paginationService.PageMax;
+            PageIndexProgrammeEmployees = employeePaginationService.PageIndex;
+            PageMaxProgrammeEmployees = employeePaginationService.PageMax;
+        }
+
+        private void PaginationAllLeaders()
+        {
+            leaderPaginationService.Setup(Leaders, MaxItemsAllLeaders);
+            PaginatedLeaders = leaderPaginationService.Paginate(PageIndexAllLeaders);
+
+            PageIndexAllLeaders = leaderPaginationService.PageIndex;
+            PageMaxAllLeaders = leaderPaginationService.PageMax;
+        }
+
+        /// <summary>
+        /// Methods that must with each request.
+        /// </summary>
+        private void Pagination()
+        {
+
+            PaginationAllEmployees();
+            PaginationProgrammeEmployees();
+            PaginationAllLeaders();
+
         }
         #endregion
 

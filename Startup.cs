@@ -65,18 +65,9 @@ namespace RAM___RUC_Allocation_Manager
             services.AddSingleton<SettingsService, SettingsService>();
             services.AddSingleton<LoginService, LoginService>();
 
-            services.AddTransient<PaginationService<User>, PaginationService<User>>();
-          
+            services.AddTransient<PaginationService<Leader>, PaginationService<Leader>>();
+            services.AddTransient<PaginationService<Employee>, PaginationService<Employee>>();
 
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("Administrator", policy =>
-                    policy.RequireClaim(ClaimTypes.Role, "admin"));
-            });
-            services.AddMvc().AddRazorPagesOptions(options =>
-            {
-                options.Conventions.AuthorizeFolder("/EmployeeLandingPage");
-            }).SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

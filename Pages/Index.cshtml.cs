@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using RAM___RUC_Allocation_Manager.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,8 +31,8 @@ namespace RAM___RUC_Allocation_Manager.Pages
         /// </summary>
         public IActionResult OnGet()
         {
-
-            if (User.Identity.IsAuthenticated)
+        
+            if(User.Identity.IsAuthenticated)
             {
                 //Authenticated
                 if (User.HasClaim(ClaimTypes.Role, Models.User.UserType.Employee.ToString())) return Redirect($"/EmployeeLandingPage/EmployeeLandingPage/{Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier))}");

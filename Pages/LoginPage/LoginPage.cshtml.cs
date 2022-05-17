@@ -19,26 +19,29 @@ namespace RAM___RUC_Allocation_Manager.Pages.LoginPage
         #region Fields
         private UserService userService;
         private LoginService loginService;
-            #endregion
+        #endregion
 
         #region Properties
         [BindProperty] public string EnteredUsername { get; set; }
         [BindProperty] public string EnteredPassword { get; set; }
         public string ErrorMessage { get; set; }
+        private List<User> Users { get; set; }
         #endregion
 
         #region Constructor
-
-        public LoginPageModel(UserService userService, LoginService loginService)
+        public LoginPageModel(UserService us, LoginService ls)
         {
-            this.userService = userService;
-            this.loginService = loginService;
+            userService = us;
+            Users = userService.GetUsers();
+
+            loginService = ls;
         }
         #endregion
 
         #region Methods
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostLogin()
         {
+
             loginService.HttpContext = HttpContext;
 
             if (await loginService.Login(EnteredUsername, EnteredPassword)) return Redirect("/Index");
@@ -47,6 +50,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.LoginPage
                 ErrorMessage = "Invalid attempt";
                 return Page();
             }
+            
         }
 
         public void OnGet() { }
