@@ -17,7 +17,7 @@ namespace RAM___RUC_Allocation_Manager.Models
         public int RucId { get; set; }
         public bool IsMasterThesis { get; set; }
         public int MemberAmount { get; set; }
-        public ICollection<EmployeeGroup> EmployeeGroups { get; set; }
+        public ICollection<EmployeeGroup> EmployeeGroups { get; set; } = new List<EmployeeGroup>();
         #endregion
 
         #region Methods

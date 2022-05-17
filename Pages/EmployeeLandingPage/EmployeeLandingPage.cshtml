@@ -18,33 +18,32 @@
 
                 <tr>
                     <td>Total Allokerede Timer:</td>
-                    <td>@Model.ConvertMinutesToHours(Model.Employee.CalculateTotalAllocationMinutes())</td>
+                    <td>@Model.ConvertMinutesToHours(Model.Employee.CalculateTotalAllocationMinutes(Model.BaseSettings))</td>
                     <td><a asp-route-id="@Model.Employee.Id" asp-page="/TotalAllocatedHoursPage/TotalAllocatedHoursPage"><i class="fa-solid fa-circle-info"></i></a></td>
                 </tr>
 
                 <tr>
                     <td>Total Kursus Timer:</td>
-                    <td>@Model.ConvertMinutesToHours(Model.Employee.CalculateTotalCourseMinutes())</td>
+                    <td>@Model.ConvertMinutesToHours(Model.Employee.CalculateTotalCourseMinutes(Model.BaseSettings))</td>
                     <td><a asp-route-id="@Model.Employee.Id" asp-page="/TotalCourseHoursPage/TotalCourseHoursPage"><i class="fa-solid fa-circle-info"></i></a></td>
                 </tr>
 
                 <tr>
                     <td>Total Vejlednings Timer:</td>
-                    <td>@Model.ConvertMinutesToHours(Model.Employee.CalculateTotalSupervisionMinutes())</td>
+                    <td>@Model.ConvertMinutesToHours(Model.Employee.CalculateTotalSupervisionMinutes(Model.BaseSettings))</td>
                     <td><a asp-route-id="@Model.Employee.Id" asp-page="/TotalSupervisionHoursPage/TotalSupervisionHoursPage"><i class="fa-solid fa-circle-info"></i></a></td>
                 </tr>
 
                 <tr>
                     <td>Total Eksaminer Timer:</td>
-                    <td>@Model.ConvertMinutesToHours(Model.Employee.CalculateTotalExamMinutes())</td>
+                    <td>@Model.ConvertMinutesToHours(Model.Employee.CalculateTotalExamMinutes(Model.BaseSettings))</td>
                     <td><a asp-route-id="@Model.Employee.Id" asp-page="/TotalExaminationHoursPage/TotalExaminationHoursPage"><i class="fa-solid fa-circle-info"></i></a></td>
                 </tr>
 
                 <tr>
                     <td>Total Øvrige Timer:</td>
-                    <td>@Model.ConvertMinutesToHours(Model.Employee.CalculateTotalMiscMinutes())</td>
+                    <td>@Model.ConvertMinutesToHours(Model.Employee.CalculateTotalMiscMinutes(Model.BaseSettings))</td>
                     <td><a asp-route-id="@Model.Employee.Id" asp-page="/TotalMiscHoursPage/TotalMiscHoursPage"><i class="fa-solid fa-circle-info"></i></a></td>
-
                 </tr>
 
             </tbody>

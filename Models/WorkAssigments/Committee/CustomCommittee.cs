@@ -18,7 +18,7 @@ namespace RAM___RUC_Allocation_Manager.Models.WorkAssigments.Committee
         public string Name { get; set; }
         [Required]
         public int MinuteWorth { get; set; }
-        public virtual ICollection<EmployeeCustomCommittee> EmployeesCustomCommittees { get; set; }
+        public virtual ICollection<EmployeeCustomCommittee> EmployeesCustomCommittees { get; set; } = new List<EmployeeCustomCommittee>();
         #endregion
 
     }

@@ -129,36 +129,6 @@ namespace RAM___RUC_Allocation_Manager.MockData
 
             }
 
-            return new List<User>() { employee };
-
-        }
-        private static List<User> AddEmployees(int itterations, int idStart, string namePrefix)
-        {
-
-            List<User> output = new List<User>();
-
-            for (int i = 0; i < itterations; i++)
-            {
-
-                output.Add(new Employee() { Id = idStart + i, Username = $"{namePrefix + i}", Name = $"{namePrefix+i}", Password = hasher.HashPassword(null, "emp") });
-
-            }
-
-            return output;
-
-        }
-        private static List<User> AddLeaders(int itterations, int idStart, string namePrefix)
-        {
-
-            List<User> output = new List<User>();
-
-            for (int i = 0; i < itterations; i++)
-            {
-
-                output.Add(new Leader() { Id = idStart + i, Username = $"{namePrefix + i}", Name = $"{namePrefix + i}", Password = hasher.HashPassword(null, "lea") });
-
-            }
-          
             return output;
 
         }

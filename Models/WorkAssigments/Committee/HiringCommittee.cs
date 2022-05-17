@@ -16,7 +16,7 @@ namespace RAM___RUC_Allocation_Manager.Models.WorkAssigments.Committee
         public int Id { get; set; }
         [Required]
         public int PeopleToBeAssessed { get; set; }
-        public virtual ICollection<EmployeeHiringCommittee> EmployeeHiringCommittees { get; set; }
+        public virtual ICollection<EmployeeHiringCommittee> EmployeeHiringCommittees { get; set; } = new List<EmployeeHiringCommittee>();
         #endregion
 
     }

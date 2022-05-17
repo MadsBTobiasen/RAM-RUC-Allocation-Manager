@@ -22,7 +22,7 @@ namespace RAM___RUC_Allocation_Manager.Models
         #endregion
 
         #region Properties
-        public virtual ICollection<LeaderProgramme> LeaderProgrammes { get; set; }
+        public virtual ICollection<LeaderProgramme> LeaderProgrammes { get; set; } = new List<LeaderProgramme>();
 
         [Required]public bool IsAdmin { get; set; }
         //This is test list. Remove once DB is running.
