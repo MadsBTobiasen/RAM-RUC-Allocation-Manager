@@ -123,6 +123,21 @@ namespace RAM___RUC_Allocation_Manager.Services
 
         }
 
+        /// <summary>
+        /// Method that gets all the Leaders that a given employee has.
+        /// </summary>
+        /// <returns></returns>
+        public List<Leader> GetEmployeeLeaders(int employeeId)
+        {
+
+            return GetUsersByType(User.UserType.Leader).Cast<Leader>()
+                .Where(leader => leader.HasEmployeeInProgrammeById(employeeId))
+                .GroupBy(leader => leader.Id)
+                .Select(leader => leader.First())
+                .ToList();
+
+        }
+
         #endregion
 
     }

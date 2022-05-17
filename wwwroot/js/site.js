@@ -32,7 +32,10 @@ function decrementOne(elementToIncrement, minValue, callback) {
 function setValue(elementToSet, value, callback) {
 
     var element = document.getElementById(elementToSet);
-    element.value = value;
+
+    if (element.nodeName == "SPAN") element.textContent = value;
+    else element.value = value;
+
 
     if (callback != undefined) callback();
 
@@ -56,4 +59,8 @@ function submitForm(formToSubmit) {
         form.submit();
     }, 25)
 
+}
+
+function splitSelectValue(elementFired, splitChar, index) {
+    return document.getElementById(elementFired).value.split(splitChar)[index];
 }

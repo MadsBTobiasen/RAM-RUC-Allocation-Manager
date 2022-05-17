@@ -82,6 +82,7 @@ namespace RAM___RUC_Allocation_Manager.Models
         public Employee()
         {
             Type = UserType.Employee;
+            Email = "RAM-Employee-Test@Tier1TCG.dk";
         }
         #endregion
 

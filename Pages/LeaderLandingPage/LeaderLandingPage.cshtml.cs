@@ -11,7 +11,7 @@ using RAM___RUC_Allocation_Manager.Services;
 
 namespace RAM___RUC_Allocation_Manager.Pages.LeaderLandingPage
 {
-    [Authorize(Roles = "Adminstrator")]
+    [Authorize(Roles = "Leader")]
     public class LeaderLandingPageModel : PageModel
     {
 
@@ -139,7 +139,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.LeaderLandingPage
         {
         
             IsLeader = false;
-
+            Console.WriteLine(Leader.Id);
             return PageWithSortingSearchingAndPagination();
             
         }

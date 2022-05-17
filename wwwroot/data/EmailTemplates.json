@@ -1,0 +1,32 @@
+[
+  {
+    "Name": "Test1",
+    "ShortName": "Test1",
+    "Description": "Lorem Ipsum",
+    "TemplateBody": null
+  },
+  {
+    "Name": "Test2",
+    "ShortName": "Test2",
+    "Description": "Lorem Ipsum",
+    "TemplateBody": null
+  },
+  {
+    "Name": "Test3",
+    "ShortName": "Test3",
+    "Description": "Lorem Ipsum",
+    "TemplateBody": null
+  },
+  {
+    "Name": "Test4",
+    "ShortName": "Test4",
+    "Description": "Lorem Ipsum",
+    "TemplateBody": null
+  },
+  {
+    "Name": "Test5",
+    "ShortName": "Test5",
+    "Description": "Lorem Ipsum",
+    "TemplateBody": null
+  }
+]
