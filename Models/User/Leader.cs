@@ -94,8 +94,6 @@ namespace RAM___RUC_Allocation_Manager.Models
             foreach(User u in ProgrammeUsers)
             {
 
-                Console.WriteLine($"Comparing: {id}=={u.Id}");
-
                 if(u.Id == id)
                 {
                     return true;

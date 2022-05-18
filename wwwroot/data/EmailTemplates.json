@@ -1,32 +1,38 @@
 [
   {
-    "Name": "Test1",
-    "ShortName": "Test1",
-    "Description": "Lorem Ipsum",
-    "TemplateBody": null
+    "Name": "Allokerede Time Antal",
+    "ShortName": "ALLOCATED_HOURS",
+    "Description": "",
+    "TemplateBody": ""
   },
   {
-    "Name": "Test2",
-    "ShortName": "Test2",
-    "Description": "Lorem Ipsum",
-    "TemplateBody": null
+    "Name": "Kursus Time Antal",
+    "ShortName": "COURSE_HOURS",
+    "Description": "",
+    "TemplateBody": ""
   },
   {
-    "Name": "Test3",
-    "ShortName": "Test3",
-    "Description": "Lorem Ipsum",
-    "TemplateBody": null
+    "Name": "Vejlednings Time Antal",
+    "ShortName": "GUIDANCE_HOURS",
+    "Description": "",
+    "TemplateBody": ""
   },
   {
-    "Name": "Test4",
-    "ShortName": "Test4",
-    "Description": "Lorem Ipsum",
-    "TemplateBody": null
+    "Name": "Eksamens Time Antal",
+    "ShortName": "EXAM_HOURS",
+    "Description": "",
+    "TemplateBody": ""
   },
   {
-    "Name": "Test5",
-    "ShortName": "Test5",
-    "Description": "Lorem Ipsum",
-    "TemplateBody": null
+    "Name": "Oevrige Time Antal",
+    "ShortName": "MISC_HOURS",
+    "Description": "",
+    "TemplateBody": ""
+  },
+  {
+    "Name": "Andet..",
+    "ShortName": "OTHER",
+    "Description": "",
+    "TemplateBody": ""
   }
 ]

@@ -61,14 +61,8 @@ namespace RAM___RUC_Allocation_Manager.Models
         }
         public override string ToString()
         {
-            return base.ToString();
+            return $"User: ({Id}) {Name} {Username} {Email}";
         }
-
-        internal static bool HasClaim(object role, string v)
-        {
-            throw new NotImplementedException();
-        }
-
         #endregion
 
     }

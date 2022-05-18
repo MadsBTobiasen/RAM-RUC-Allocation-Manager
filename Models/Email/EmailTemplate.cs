@@ -22,7 +22,7 @@ namespace RAM___RUC_Allocation_Manager.Models.Email
         #region Methods
         public override string ToString()
         {
-            return $"$EmailTemplate: {Name} ({ShortName})";
+            return $"EmailTemplate: {Name} ({ShortName})";
         }
         #endregion
 
