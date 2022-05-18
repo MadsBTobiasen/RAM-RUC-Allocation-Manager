@@ -65,6 +65,7 @@ namespace RAM___RUC_Allocation_Manager
 
             services.AddSingleton<JSONFileService<BaseSettings>, JSONFileService<BaseSettings>>();
             services.AddSingleton<JSONFileService<EmailTemplate>, JSONFileService<EmailTemplate>>();
+            services.AddSingleton<JSONFileService<EmailConfiguration>, JSONFileService<EmailConfiguration>>();
 
             services.AddSingleton<UserService, UserService>();
             services.AddSingleton<SettingsService, SettingsService>();

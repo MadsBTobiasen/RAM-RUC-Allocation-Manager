@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using MimeKit;
+using RAM___RUC_Allocation_Manager.Models;
 using RAM___RUC_Allocation_Manager.Models.Email;
 using System;
 using System.Collections.Generic;
@@ -15,19 +16,23 @@ namespace RAM___RUC_Allocation_Manager.Services
 
         #region Fields
         private JSONFileService<EmailTemplate> emailTemplateJSONFileService;
+        private JSONFileService<EmailConfiguration> emailConfigurationJSONFileService;
         #endregion
 
         #region Properties
         public List<EmailTemplate> EmailTemplates { get; set; }
-
+        private EmailConfiguration EmailConfiguration { get; set; }
         #endregion
 
         #region Constructor
-        public EmailService(JSONFileService<EmailTemplate> etjfs)
+        public EmailService(JSONFileService<EmailTemplate> etjfs, JSONFileService<EmailConfiguration> ecjfs)
         {
 
             emailTemplateJSONFileService = etjfs;
             EmailTemplates = emailTemplateJSONFileService.GetJsonObjects().ToList();
+
+            emailConfigurationJSONFileService = ecjfs;
+            EmailConfiguration = emailConfigurationJSONFileService.GetJsonObjects().ToList()[0];
 
         }
 
@@ -55,7 +60,7 @@ namespace RAM___RUC_Allocation_Manager.Services
             {
 
                 client.Connect("smtp.simply.com", 587, false);
-                client.Authenticate("RAM-system.noreply@Tier1TCG.dk", "Tier1MTG");
+                client.Authenticate(EmailConfiguration.Username, EmailConfiguration.Password);
 
                 client.Send(message);
                 client.Disconnect(true);
