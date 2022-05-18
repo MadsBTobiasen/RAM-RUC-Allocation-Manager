@@ -204,8 +204,8 @@
                             <th style="width:10%" scope="row" class="text-center">@(i + 1 + (Model.MaxItemsProgrammeEmployees * Model.PageIndexProgrammeEmployees))</th>
                             <td class="text-left">@((Model.PaginatedProgrammeEmployees[i] as Models.Employee).Name)</td>
                             <td class="text-left">@((Model.PaginatedProgrammeEmployees[i] as Models.Employee).Title)</td>
-                            <td style="width:10%" class="text-center"><a asp-route-id="@(Model.PaginatedProgrammeEmployees[i].Id)" asp-page="/EmployeeLandingPage/EmployeeLandingPage"><i class="fa-solid fa-circle-info"></i></a></td>
-                            <td style="width:10%" class="text-center"><i class="fa-solid fa-pen"></i></td>
+                            <td style="width:10%" class="text-center"><a data-toggle="tooltip" title="Se Proffessor" asp-route-id="@(Model.PaginatedProgrammeEmployees[i].Id)" asp-page="/EmployeeLandingPage/EmployeeLandingPage"><i class="fa-solid fa-circle-info"></i></a></td>
+                            <td style="width:10%" class="text-center"><a data-toggle="tooltip" title="Redigér Proffessor" asp-route-id="@(Model.PaginatedProgrammeEmployees[i].Id)" asp-page=""><i class="fa-solid fa-pen"></i></a></td>
                         </tr>
                     }
 
@@ -305,13 +305,13 @@
 
                     @for (int i = 0; i < Model.PaginatedEmployees.Count; i++)
                     {
-                        <tr style="height: 1rem;">
-                            <th style="width:10%" scope="row" class="text-center">@(i + 1 + (Model.MaxItemsAllEmployees * Model.PageIndexAllEmployees))</th>
-                            <td class="text-left">@((Model.PaginatedEmployees[i] as Models.Employee).Name)</td>
-                            <td class="text-left">@((Model.PaginatedEmployees[i] as Models.Employee).Title)</td>
-                            <td style="width:10%" class="text-center"><a asp-route-id="@(Model.PaginatedEmployees[i].Id)" asp-page="/EmployeeLandingPage/EmployeeLandingPage"><i class="fa-solid fa-circle-info"></i></a></td>
-                            <td style="width:10%" class="text-center"><i class="fa-solid fa-pen"></i></td>
-                        </tr>
+                    <tr style="height: 1rem;">
+                        <th style="width:10%" scope="row" class="text-center">@(i + 1 + (Model.MaxItemsAllEmployees * Model.PageIndexAllEmployees))</th>
+                        <td class="text-left">@((Model.PaginatedEmployees[i] as Models.Employee).Name)</td>
+                        <td class="text-left">@((Model.PaginatedEmployees[i] as Models.Employee).Title)</td>
+                        <td style="width:10%" class="text-center"><a data-toggle="tooltip" title="Se Professor" asp-route-id="@(Model.PaginatedEmployees[i].Id)" asp-page="/EmployeeLandingPage/EmployeeLandingPage"><i class="fa-solid fa-circle-info"></i></a></td>
+                        <td style="width:10%" class="text-center"><a data-toggle="tooltip" title="Redigér Proffessor" asp-route-id="@(Model.PaginatedEmployees[i].Id)" asp-page=""><i class="fa-solid fa-pen"></i></a></td>
+                    </tr>
                     }
 
                 </tbody>
@@ -400,12 +400,12 @@
 
                         @for (int i = 0; i < Model.PaginatedLeaders.Count; i++)
                         {
-                            <tr style="height: 1rem;">
-                                <th style="width:10%" scope="row" class="text-center">@(i + 1 + (Model.MaxItemsAllLeaders * Model.PageIndexAllLeaders))</th>
-                                <td class="text-left">@((Model.PaginatedLeaders[i] as Models.Leader).Name)</td>
-                                <td class="text-left">Leader</td>
-                                <td style="width:10%" class="text-center"><i class="fa-solid fa-pen"></i></td>
-                            </tr>
+                        <tr style="height: 1rem;">
+                            <th style="width:10%" scope="row" class="text-center">@(i + 1 + (Model.MaxItemsAllLeaders * Model.PageIndexAllLeaders))</th>
+                            <td class="text-left">@((Model.PaginatedLeaders[i] as Models.Leader).Name)</td>
+                            <td class="text-left">Leader</td>
+                            <td style="width:10%" class="text-center"><a data-toggle="tooltip" title="Redigér Leder" asp-route-id="@(Model.PaginatedLeaders[i].Id)" asp-page=""><i class="fa-solid fa-pen"></i></a></td>
+                        </tr>
                         }
 
                     </tbody>
