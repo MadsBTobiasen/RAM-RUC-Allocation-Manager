@@ -1,0 +1,38 @@
+[
+  {
+    "Name": "Allokerede Time Antal",
+    "ShortName": "ALLOCATED_HOURS",
+    "Description": "",
+    "TemplateBody": ""
+  },
+  {
+    "Name": "Kursus Time Antal",
+    "ShortName": "COURSE_HOURS",
+    "Description": "",
+    "TemplateBody": ""
+  },
+  {
+    "Name": "Vejlednings Time Antal",
+    "ShortName": "GUIDANCE_HOURS",
+    "Description": "",
+    "TemplateBody": ""
+  },
+  {
+    "Name": "Eksamens Time Antal",
+    "ShortName": "EXAM_HOURS",
+    "Description": "",
+    "TemplateBody": ""
+  },
+  {
+    "Name": "Oevrige Time Antal",
+    "ShortName": "MISC_HOURS",
+    "Description": "",
+    "TemplateBody": ""
+  },
+  {
+    "Name": "Andet..",
+    "ShortName": "OTHER",
+    "Description": "",
+    "TemplateBody": ""
+  }
+]

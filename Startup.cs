@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RAM___RUC_Allocation_Manager.Models.DbConnections;
+using RAM___RUC_Allocation_Manager.Models.Email;
 
 namespace RAM___RUC_Allocation_Manager
 {
@@ -63,9 +64,13 @@ namespace RAM___RUC_Allocation_Manager
             services.AddTransient<DbService<LeaderProgramme>, DbService<LeaderProgramme>>();
 
             services.AddSingleton<JSONFileService<BaseSettings>, JSONFileService<BaseSettings>>();
+            services.AddSingleton<JSONFileService<EmailTemplate>, JSONFileService<EmailTemplate>>();
+            services.AddSingleton<JSONFileService<EmailConfiguration>, JSONFileService<EmailConfiguration>>();
+
             services.AddSingleton<UserService, UserService>();
             services.AddSingleton<SettingsService, SettingsService>();
             services.AddSingleton<LoginService, LoginService>();
+            services.AddSingleton<EmailService, EmailService>();
 
             services.AddTransient<PaginationService<Leader>, PaginationService<Leader>>();
             services.AddTransient<PaginationService<Employee>, PaginationService<Employee>>();
