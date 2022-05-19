@@ -14,68 +14,17 @@
     </script>
 }
 
-<table class="table table-bordered" width="60%">
-    <col style="width: 7%">
-    <col style="width: 74%">
-    <col style="width: 10%">
-    <col style="width: 9%">
-    <thead>
-        <tr class="btn-secondary active">
-            <th>
-                <div class="d-flex justify-content-between p-0">
-                    <div><h5>Id </h5></div>
-                </div>
-            </th>
-            <th>
-                <div class="d-flex justify-content-between p-0">
-                    <div>
-                        <h5>Name </h5>
-                    </div>
-                </div>
+<div class="row">
 
-            </th>
-            <th>
-                <div class="d-flex justify-content-between p-0">
-                    <div>
-                        <h5>Price </h5>
-                    </div>
-                </div>
-            </th>
-            <th>
-                <h5>Action</h5>
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @if (@Model.Users != null)
-        {
-            foreach (var user in Model.Users)
-            {
-                <tr class="btn-secondary">
-                    <td>
-                        @user.Id
-                    </td>
-                    <td>
-                        @user.Name
-                    </td>
-                    <td>
-                        @user.Type
-                    </td>
-                    <td>
-                        <ul class="list-inline m-0">
-                            <li class="list-inline-item">
-                                <a class="btn btn-primary btn-sm" type="button" data-toggle="tooltip" title="Edit" asp-page="../EditEmployeePage/EditEmployeePage" asp-route-id="@user.Id"><i class="fa-light fa-pen"></i></a>
-                                <a class="btn btn-primary btn-sm" type="button" data-toggle="tooltip" title="Edit" asp-page="../EditLeaderPage/EditLeaderPage" asp-route-id="@user.Id"><i class="fa-light fa-pen"></i></a>
-                                <a class="btn btn-primary btn-sm" type="button" data-toggle="tooltip" title="Edit" asp-page="../DeleteUser/DeleteUser" asp-route-id="@user.Id"><i class="fa fa-trash"></i></a>
-                            </li>
-                        </ul>
-                    </td>
-                </tr>
-            }
-        }
-    </tbody>
-</table>
-<br />
+    <div class="col-1"></div>
+    <div class="col-10">
+        <div class="container" style="display: flex; justify-content: center;">
+            <img src="~/assets/ram-full-icon-bg.png" class="ram-icon-bg">
+        </div>
+    </div>
+    <div class="col-1"></div>
+
+</div>
 
 <form method="post">
     <div class="container">
@@ -96,10 +45,6 @@
                                     asp-items="Html.GetEnumSelectList<User.UserType>()">
                             </select>
                         </div>
-                        @*<div class="form-group">
-                            <label asp-for="@Model.User.Id" class="control-lable"></label>
-                            <input asp-for="@Model.User.Id" class="form-control" readonly/>
-                        </div>*@
 
                         <div class="form-group">
                             <label asp-for="@Model.User.Name" class="control-lable"></label>

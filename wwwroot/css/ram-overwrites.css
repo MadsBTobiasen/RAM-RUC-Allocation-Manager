@@ -42,6 +42,19 @@ hr {
     background-color: var(--ram-element-background);
 }
 
+.btn-danger, .btn-danger i, .btn-outline-danger, .btn-outline-danger i {
+    transition: all 0.5s ease;
+    color: var(--ram-white);
+    border-color: var(--ram-danger) !important;
+    background-color: var(--ram-element-background);
+}
+
+.btn-danger:hover, .btn-danger i:hover, .btn-outline-danger:hover, .btn-outline-danger i:hover {
+    color: var(--ram-gold);
+    border-color: var(--ram-danger) !important;
+    background-color: var(--ram-element-background);
+}
+
 .border, .border-top, .border-right, .border-left, .border-bottom {
     border-color: var(--ram-gold) !important;
 }
