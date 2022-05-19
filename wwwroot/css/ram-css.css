@@ -62,3 +62,7 @@ section.top {
     position: fixed;
     transform: translateY(0rem);
 }
+
+.hidden-properties {
+    visibility: hidden;
+}

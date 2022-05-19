@@ -23,7 +23,6 @@ namespace RAM___RUC_Allocation_Manager.Pages.AddUser
         public Leader Leader { get; set; }
         public List<SelectListItem> TypeSelectList { get; set; }
 
-
         #region New User Properties
         [BindProperty] [Required] [StringLength(30, MinimumLength = 5)]
         public string Name { get; set; }
@@ -45,7 +44,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.AddUser
 
         [BindProperty] [Required]
         public string Password { get; set; }
-        [BindProperty] [Required] [Compare("Password", ErrorMessage = "Passwords er ikke ens. Prøv igen.")]
+        [BindProperty] [Required] [Compare("Password", ErrorMessage = "Password er ikke ens. Prøv igen.")]
         public string ConfirmPassword { get; set; }
         #endregion
 

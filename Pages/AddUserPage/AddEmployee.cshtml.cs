@@ -45,7 +45,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.AddUser
 
         [BindProperty] [Required]
         public string Password { get; set; }
-        [BindProperty] [Required] [Compare("Password", ErrorMessage = "Passwords er ikke ens. Prøv igen.")]
+        [BindProperty] [Required] [Compare("Password", ErrorMessage = "Password er ikke ens. Prøv igen.")]
         public string ConfirmPassword { get; set; }
         #endregion
 

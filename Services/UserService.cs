@@ -88,26 +88,38 @@ namespace RAM___RUC_Allocation_Manager.Services
         }
 
         /// <summary>
-        /// Method that "edits" a user object, by replacing it with the given argument, if the two objects have a matching id.
+        /// Method that edits a user object, by trying to match an incoming user-id with one in the list of Users,
+        /// if theres a match, that user in the list, gets updated with the properties of the userToEdit object.
         /// </summary>
         /// <param name="userToEdit">User object to update with.</param>
         /// <returns>Returns a user-object, the object is null if the edit failed, and the updated user if the update was succesfull.</returns>
-        public User EditUser(User userToEdit)
+        public User EditUser(User editedUser)
         {
-            User editedUser = null;
+
+            User userToEdit = null;
 
             foreach(User u in Users)
             {
-                if(u.Id == userToEdit.Id)
+                if(u.Id == editedUser.Id)
                 {
-                    Users.Remove(u);
-                    Users.Add(userToEdit);
-                    editedUser = userToEdit;
 
+                    userToEdit = u;
                     break;
+
                 }
             }
-            return editedUser;
+
+            if(userToEdit != null)
+            {
+                userToEdit.Name = editedUser.Name;
+                userToEdit.Email = editedUser.Email;
+                userToEdit.Type = editedUser.Type;
+                userToEdit.Username = editedUser.Username;
+                userToEdit.Password = editedUser.Password;
+            }
+
+            return userToEdit;
+
         }
 
 

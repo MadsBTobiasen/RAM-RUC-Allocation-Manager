@@ -35,21 +35,11 @@ namespace RAM___RUC_Allocation_Manager.Models
         [StringLength(20)]
         public string Username { get; set; }
         /// <summary>
-        /// OPMÆRKSOMHED HER
-        /// OPMÆRKSOMHED HER
-        /// PASSWORD'S SET ER SAT TIL PRIVATE. DA NÅR ET KODEORD SKAL ÆNDRES ELLER OPRETTES SKAL DET HASHES / SÆTTES GENNEM
-        /// SETPASSWORD() METODEN. SET-ACCESSOREN SKAL VÆRE PUBLIC NÅR DATABASE KØRER.
-        /// OPMÆRKSOMHED HER
-        /// OPMÆRKSOMHED HER
+        /// If you wish to set a new password, be it through the update form, or when adding a new user.
+        /// Use the SetPassword() Method. 
         /// </summary>
         [Required]
-        public string Password { get; private set; }
-
-        /*
-        *
-        *
-        *
-        */
+        public string Password { get; set; }
 
         [Required]
         public string Email { get; set; }
