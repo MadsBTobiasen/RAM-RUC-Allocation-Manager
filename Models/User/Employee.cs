@@ -168,10 +168,10 @@ namespace RAM___RUC_Allocation_Manager.Models
                             totalMinutes += baseSettings.SupervisionOfGroupHourFourMemberMasters;
                             break;
                         case 5:
-                            totalMinutes += baseSettings.SupervisionOfGroupHourFiveMembersMasters;
+                            totalMinutes += baseSettings.SupervisionOfGroupHourFiveMemberMasters;
                             break;
                         case 6:
-                            totalMinutes += baseSettings.SupervisionOfGroupHourSixMembersMasters;
+                            totalMinutes += baseSettings.SupervisionOfGroupHourSixMemberMasters;
                             break;
                     }
                 }

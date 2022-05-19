@@ -71,6 +71,7 @@ h1, h2, h3, h4, h5, h6, p, span, i, a, table, label {
     color: var(--ram-white);
 }
 
+.input-group-prepend span,
 .input-group input,
 .input-group textarea,
 .form-group input,

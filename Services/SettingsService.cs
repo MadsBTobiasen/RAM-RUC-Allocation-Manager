@@ -44,9 +44,9 @@ namespace RAM___RUC_Allocation_Manager.Services
                     b.LessonHourValue = baseSettings.LessonHourValue;
                     b.HourPerPersonHiringCommittee = baseSettings.HourPerPersonHiringCommittee;
                     b.HourPerPersonPromotionCommittee = baseSettings.HourPerPersonHiringCommittee;
-                    b.SupervisionOfGroupHourSixMembersMasters = baseSettings.SupervisionOfGroupHourSixMembersMasters;
+                    b.SupervisionOfGroupHourSixMemberMasters = baseSettings.SupervisionOfGroupHourSixMemberMasters;
                     b.SupervisionOfGroupHourFiveMember = baseSettings.SupervisionOfGroupHourFiveMember;
-                    b.SupervisionOfGroupHourFiveMembersMasters = baseSettings.SupervisionOfGroupHourFiveMembersMasters;
+                    b.SupervisionOfGroupHourFiveMemberMasters = baseSettings.SupervisionOfGroupHourFiveMemberMasters;
                     b.SupervisionOfGroupHourFourMember = baseSettings.SupervisionOfGroupHourFourMember;
                     b.SupervisionOfGroupHourFourMemberMasters = baseSettings.SupervisionOfGroupHourFourMemberMasters;
                     b.SupervisionOfGroupHourThreeMember = baseSettings.SupervisionOfGroupHourThreeMember;
