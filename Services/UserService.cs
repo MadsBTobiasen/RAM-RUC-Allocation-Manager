@@ -116,6 +116,12 @@ namespace RAM___RUC_Allocation_Manager.Services
                 userToEdit.Type = editedUser.Type;
                 userToEdit.Username = editedUser.Username;
                 userToEdit.Password = editedUser.Password;
+                
+                if(userToEdit is Employee)
+                {
+                    (userToEdit as Employee).Title = (editedUser as Employee).Title;
+                }
+
             }
 
             return userToEdit;

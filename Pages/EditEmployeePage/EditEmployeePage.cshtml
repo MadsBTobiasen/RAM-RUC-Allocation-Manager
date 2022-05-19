@@ -43,38 +43,47 @@
 
                     <hr />
 
-                    <div class="form-group">
-                        <label asp-for="@Model.EmployeeToEdit.Id" class="control-label"></label>
-                        <input asp-for="@Model.EmployeeToEdit.Id" readonly class="form-control" />
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="@Model.EmployeeToEdit.Name" class="control-label"></label>
-                        <input asp-for="@Model.EmployeeToEdit.Name" class="form-control" />
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="@Model.EmployeeToEdit.Username" class="control-label"></label>
-                        <input asp-for="@Model.EmployeeToEdit.Username" class="form-control" />
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="@Model.EmployeeToEdit.Password" class="control-label"></label>
-                        <input asp-for="@Model.EmployeeToEdit.Password" class="form-control" />
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="@Model.EmployeeToEdit.Email" class="control-label"></label>
-                        <input asp-for="@Model.EmployeeToEdit.Email" class="form-control" />
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="@Model.EmployeeToEdit.Type" class="control-label"></label>
-                        <select class="form-control" asp-for="@Model.EmployeeToEdit.Type"
-                                asp-items="Html.GetEnumSelectList<User.UserType>()">
-                        </select>
+                    <div hidden="@true">
+                        <div class="form-group">
+                            <label asp-for="@Model.Id" class="control-label"></label>
+                            <input asp-for="@Model.Id" value="@Model.EmployeeToEdit.Id" readonly class="form-control" />
+                        </div>
                     </div>
 
                     <div class="form-group">
-                        <label asp-for="@Model.EmployeeToEdit.Title" class="control-label"></label>
-                        <select class="form-control" asp-for="@Model.EmployeeToEdit.Title"
-                                asp-items="Html.GetEnumSelectList<Employee.EmployeeTitle>()">
+                        <span class="text-danger">*</span><label asp-for="@Model.Name" class="control-label"></label>
+                        <span class="text-danger ml-1" asp-validation-for="@Model.Name"></span>
+                        <input asp-for="@Model.Name" value="@Model.EmployeeToEdit.Name" class="form-control" placeholder="Indtast navn på ansat.." />
+                    </div>
+
+                    <div class="form-group">
+                        <span class="text-danger">*</span><label asp-for="@Model.Email" class="control-label"></label>
+                        <span class="text-danger ml-1" asp-validation-for="@Model.Email"></span>
+                        <input asp-for="@Model.Email" value="@Model.EmployeeToEdit.Email" type="email" readonly class="form-control" placeholder="Indtast email for ny ansat.." />
+                    </div>
+
+                    <div class="form-group">
+                        <span class="text-danger">*</span><label asp-for="@Model.Title" class="control-label"></label>
+                        <span class="text-danger ml-1" asp-validation-for="@Model.Title"></span>
+                        <select class="form-control" asp-for="@Model.Title"
+                                asp-items="@Model.TitleSelectList">
                         </select>
+                    </div>
+
+                    <hr />
+
+                    <div class="form-group">
+                        <span class="text-danger">*</span><label asp-for="@Model.Username" class="control-label"></label>
+                        <span class="text-danger ml-1" asp-validation-for="@Model.Username"></span>
+                        <input asp-for="@Model.Username" value="@Model.EmployeeToEdit.Username" class="form-control" placeholder="Indtast brugernavn for ny ansat.." />
+                    </div>
+
+                    <div class="form-group">
+                        <span class="text-danger">*</span><label asp-for="@Model.Password" class="control-label"></label>
+                        <span class="text-danger ml-1" asp-validation-for="@Model.Password"></span>
+                        <span class="text-danger ml-1" asp-validation-for="@Model.ConfirmPassword"></span>
+                        <input asp-for="@Model.Password" type="password" class="form-control mb-1" placeholder="Indtast password for ny ansat.." />
+                        <input asp-for="@Model.ConfirmPassword" type="password" class="form-control" placeholder="Gentag password .." />
                     </div>
 
                 </div>

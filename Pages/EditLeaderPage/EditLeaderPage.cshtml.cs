@@ -16,6 +16,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.EditLeaderPage
     {
         #region Fields
         public UserService userService;
+        private bool _debug = true;
         #endregion
 
         #region Properties
@@ -52,20 +53,28 @@ namespace RAM___RUC_Allocation_Manager.Pages.EditLeaderPage
 
         #endregion
 
+        #region Constructor
         public EditLeaderPageModel(UserService userService)
         {
 
             this.userService = userService;
 
+            //Role Change for Leaders disabled in the Prototype.
             TypeSelectList = new List<SelectListItem>()
             {
                 new SelectListItem() { Value = $"{(int)UserType.Leader}", Text = $"{UserType.Leader}" },
-                new SelectListItem() { Value = $"{(int)UserType.Adminstrator}", Text = $"{UserType.Adminstrator}" },
+                //new SelectListItem() { Value = $"{(int)UserType.Adminstrator}", Text = $"{UserType.Adminstrator}" },
             };
 
         }
+        #endregion
 
         #region Methods
+        /// <summary>
+        /// Method that returns the Page().
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public IActionResult OnGet(int id)
         { 
 
@@ -79,6 +88,10 @@ namespace RAM___RUC_Allocation_Manager.Pages.EditLeaderPage
 
         }
 
+        /// <summary>
+        /// Method that updates the user object.
+        /// </summary>
+        /// <param name="id"></param>
         public IActionResult OnPost(int id)
         {
 
@@ -107,10 +120,22 @@ namespace RAM___RUC_Allocation_Manager.Pages.EditLeaderPage
                 UserEdited.Password = UserToEdit.Password;
             }
 
-            if(UserEdited.Id != userService.EditUser(UserEdited).Id)
+            //Debug showing edits & differences:
+            if (_debug)
+            {
+                Console.WriteLine("to edit:     " + UserToEdit);
+                Console.WriteLine("edited:      " + UserEdited);
+            }
+
+            UserEdited = (Leader)userService.EditUser(UserEdited);
+
+            if (UserEdited.Id != UserToEdit.Id)
             {
                 throw new Exception("Error in updating user.");
             }
+
+            //Debug showing edits & differences:
+            if (_debug) Console.WriteLine("after edit:  " + UserEdited);
 
             return RedirectToPage("/LeaderLandingPage/LeaderLandingPage");
 

@@ -65,7 +65,7 @@
                     <div class="form-group">
                         <span class="text-danger">*</span><label asp-for="@Model.Type" class="control-label"></label>
                         <span class="text-danger ml-1" asp-validation-for="@Model.Type"></span>
-                        <select class="form-control" asp-for="@Model.Type"
+                        <select class="form-control" readonly asp-for="@Model.Type"
                                 asp-items="@Model.TypeSelectList">
                         </select>
                     </div>
