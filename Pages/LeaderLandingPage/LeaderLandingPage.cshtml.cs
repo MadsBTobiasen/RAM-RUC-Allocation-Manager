@@ -140,7 +140,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.LeaderLandingPage
 
             IsLeader = false;
             Console.WriteLine(Leader.Id);
-            return PageWithSortingSearchingAndPagination();
+            return Page();
 
         }
 
@@ -152,53 +152,22 @@ namespace RAM___RUC_Allocation_Manager.Pages.LeaderLandingPage
 
             Console.WriteLine("PageSection: " + PageSection);
 
-            return PageWithSortingSearchingAndPagination();
+            return Page();
 
         }
 
-        public IActionResult OnPostCreateUser()
-        {
-
-            if (!ModelState.IsValid)
-            {
-                return PageWithSortingSearchingAndPagination();
-            }
-
-            userService.CreateUser(CreatedUser);
-            return RedirectToPage("/AddUserPage/AllUsers");
-
-        }
-
-        public IActionResult OnPostCheckType()
-        {
-
-            if (CreatedUser.Type == Models.User.UserType.Employee)
-            {
-                IsLeader = false;
-            }
-
-            else
-            {
-                IsLeader = true;
-            }
-
-            return PageWithSortingSearchingAndPagination();
-
-        }
-
-        public IActionResult PageWithSortingSearchingAndPagination()
+        /// <summary>
+        /// Method that ensures that the Pagination, Sorting and Searching happens before the Page is returned.
+        /// </summary>
+        /// <returns></returns>
+        public override PageResult Page()
         {
 
             Searching();
             Sorting();
             Pagination();
 
-            foreach (object o in RouteData.DataTokens)
-            {
-                Console.WriteLine("output: " + o);
-            }
-
-            return Page();
+            return base.Page();
 
         }
 

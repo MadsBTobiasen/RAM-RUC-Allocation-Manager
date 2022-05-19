@@ -291,7 +291,7 @@ namespace RAM___RUC_Allocation_Manager.Models
         }
         public override string ToString()
         {
-            return $"[Employee] ({Id}) {Name} {Password} {Email}";
+            return $"[Employee] ({Id}) {Name} {Password} {Email} {Title}";
         }
         #endregion
 
