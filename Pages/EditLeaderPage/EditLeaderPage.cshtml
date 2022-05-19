@@ -29,46 +29,68 @@
 <div class="modal" id="myModal">
     <div class="modal-dialog">
         <div class="modal-content">
+
             <div class="modal-header">
-                <h5 class="modal-title">Ændre Leder</h5>
-                <a type="button" class="close" asp-page="../LeaderLandingPage/LeaderLandingPage">&times;</a>
+                <h2 class="modal-title">Redigér Leder</h2>
+                <span><a asp-page="../LeaderLandingPage/LeaderLandingPage"><i class="fa-solid fa-lg fa-xmark"></i></a></span>
             </div>
+
             <form method="post">
+
                 <div class="modal-body">
-                    <h5>Ændrer Lederen - @Model.UserToEdit.Name</h5>
+
+                    <span>Redigéring af brugeren: <b>@Model.UserToEdit.Name (@Model.UserToEdit.Username)</b></span>
+
+                    <hr />
+
                     <div class="form-group">
-                        <label asp-for="@Model.UserToEdit.Id" class="control-lable"></label>
-                        <input asp-for="@Model.UserToEdit.Id" class="form-control" />
+                        <label asp-for="@Model.UserToEdit.Id" class="control-label"></label>
+                        <input asp-for="@Model.UserToEdit.Id" readonly class="form-control" />
                     </div>
                     <div class="form-group">
-                        <label asp-for="@Model.UserToEdit.Name" class="control-lable"></label>
+                        <label asp-for="@Model.UserToEdit.Name" class="control-label"></label>
                         <input asp-for="@Model.UserToEdit.Name" class="form-control" />
                     </div>
                     <div class="form-group">
-                        <label asp-for="@Model.UserToEdit.Username" class="control-lable"></label>
+                        <label asp-for="@Model.UserToEdit.Username" class="control-label"></label>
                         <input asp-for="@Model.UserToEdit.Username" class="form-control" />
                     </div>
                     <div class="form-group">
-                        <label asp-for="@Model.UserToEdit.Password" class="control-lable"></label>
+                        <label asp-for="@Model.UserToEdit.Password" class="control-label"></label>
                         <input asp-for="@Model.UserToEdit.Password" class="form-control" />
                     </div>
                     <div class="form-group">
-                        <label asp-for="@Model.UserToEdit.Email" class="control-lable"></label>
+                        <label asp-for="@Model.UserToEdit.Email" class="control-label"></label>
                         <input asp-for="@Model.UserToEdit.Email" class="form-control" />
                     </div>
                     <div class="form-group">
-                        <label asp-for="@Model.UserToEdit.Type" class="control-lable"></label>
+                        <label asp-for="@Model.UserToEdit.Type" class="control-label"></label>
                         <select class="form-control" asp-for="@Model.UserToEdit.Type"
                                 asp-items="Html.GetEnumSelectList<User.UserType>()">
                         </select>
                     </div>
 
-                    <div class="form-group">
-                        <input type="submit" value="Opdater Leder" class="btn btn-primary" />
-                        <a class="btn btn-danger" asp-page="../LeaderLandingPage/LeaderLandingPage">Anuller</a>
-                    </div>
                 </div>
+
+                <div class="modal-footer">
+
+                    <div class="row w-100">
+
+                        <div class="col-6">
+                            <a type="button" class="w-100 btn btn-danger" asp-page="../LeaderLandingPage/LeaderLandingPage">Annullér</a>
+                        </div>
+                        <div class="col-6">
+                            <input type="submit" value="Opdatér Leder" class="w-100 btn btn-primary">
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
             </form>
+
         </div>
     </div>
 </div>

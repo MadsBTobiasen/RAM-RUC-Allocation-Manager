@@ -48,7 +48,7 @@
                         <button type="button" class="btn btn-outline-primary ml-1" title="Tryk her for at søge" onclick="copyValue('progEmpSearchHTML', 'progEmpSearchASP', setValue('pageSectionInput', '@LeaderLandingPageModel.PageSections.ProgrammeEmployees', submitForm('professorsAndLeadersForm')))">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </button>
-
+                        
                     </div>
 
                 </div>
@@ -123,9 +123,9 @@
                         <th style="width:10%" scope="row" class="text-center">@(i + 1 + (Model.MaxItemsProgrammeEmployees * Model.PageIndexProgrammeEmployees))</th>
                         <td class="text-left">@((Model.PaginatedProgrammeEmployees[i] as Models.Employee).Name)</td>
                         <td class="text-left">@((Model.PaginatedProgrammeEmployees[i] as Models.Employee).Title)</td>
-                        <td style="width:10%" class="text-center"><a data-toggle="tooltip" title="Se Proffessor" asp-route-id="@(Model.PaginatedProgrammeEmployees[i].Id)" asp-page="/EmployeeLandingPage/EmployeeLandingPage"><i class="fa-solid fa-circle-info"></i></a></td>
-                        <td style="width:10%" class="text-center"><a data-toggle="tooltip" title="Redigér Proffessor" asp-route-id="@(Model.PaginatedProgrammeEmployees[i].Id)" asp-page="/EditEmployeePage/EditEmployeePage"><i class="fa-solid fa-pen"></i></a></td>
-                        <td style="width:10%" class="text-center"><a data-toggle="tooltip" title="Slet Proffessor" asp-route-id="@(Model.PaginatedProgrammeEmployees[i].Id)" asp-page="/DeleteUserPage/DeleteUser"><i class="fa-solid fa-trash-can"></i></a></td>
+                        <td style="width:10%" class="text-center"><a data-toggle="tooltip" title="Se Underviser" asp-route-id="@(Model.PaginatedProgrammeEmployees[i].Id)" asp-page="/EmployeeLandingPage/EmployeeLandingPage"><i class="fa-solid fa-circle-info"></i></a></td>
+                        <td style="width:10%" class="text-center"><a data-toggle="tooltip" title="Redigér Underviser" asp-route-id="@(Model.PaginatedProgrammeEmployees[i].Id)" asp-page="/EditEmployeePage/EditEmployeePage"><i class="fa-solid fa-pen"></i></a></td>
+                        <td style="width:10%" class="text-center"><a data-toggle="tooltip" title="Slet Underviser" asp-route-id="@(Model.PaginatedProgrammeEmployees[i].Id)" asp-page="/DeleteUserPage/DeleteUser"><i class="fa-solid fa-trash-can"></i></a></td>
                     </tr>
                     }
 
@@ -156,6 +156,7 @@
                         <button type="button" class="btn btn-outline-primary ml-1" title="Tryk her for at søge" onclick="copyValue('allEmpSearchHTML', 'allEmpSearchASP', setValue('pageSectionInput', '@LeaderLandingPageModel.PageSections.AllEmployees', submitForm('professorsAndLeadersForm')))">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </button>
+                        <span class="ml-1"><a class="btn btn-primary" data-toggle="Tilføj Underviser" asp-page="/AddUserPage/AddEmployee"><i class="fa-solid fa-plus"></i></a></span>
 
                     </div>
 
@@ -231,9 +232,9 @@
                             <th style="width:10%" scope="row" class="text-center">@(i + 1 + (Model.MaxItemsAllEmployees * Model.PageIndexAllEmployees))</th>
                             <td class="text-left">@((Model.PaginatedEmployees[i] as Models.Employee).Name)</td>
                             <td class="text-left">@((Model.PaginatedEmployees[i] as Models.Employee).Title)</td>
-                            <td style="width:10%" class="text-center"><a data-toggle="tooltip" title="Se Professor" asp-route-id="@(Model.PaginatedEmployees[i].Id)" asp-page="/EmployeeLandingPage/EmployeeLandingPage"><i class="fa-solid fa-circle-info"></i></a></td>
-                            <td style="width:10%" class="text-center"><a data-toggle="tooltip" title="Redigér Proffessor" asp-route-id="@(Model.PaginatedEmployees[i].Id)" asp-page="/EditEmployeePage/EditEmployeePage"><i class="fa-solid fa-pen"></i></a></td>
-                            <td style="width:10%" class="text-center"><a data-toggle="tooltip" title="Slet Proffessor" asp-route-id="@(Model.PaginatedEmployees[i].Id)" asp-page="/DeleteUserPage/DeleteUser"><i class="fa-solid fa-trash-can"></i></a></td>
+                            <td style="width:10%" class="text-center"><a data-toggle="tooltip" title="Se Underviser" asp-route-id="@(Model.PaginatedEmployees[i].Id)" asp-page="/EmployeeLandingPage/EmployeeLandingPage"><i class="fa-solid fa-circle-info"></i></a></td>
+                            <td style="width:10%" class="text-center"><a data-toggle="tooltip" title="Redigér Underviser" asp-route-id="@(Model.PaginatedEmployees[i].Id)" asp-page="/EditEmployeePage/EditEmployeePage"><i class="fa-solid fa-pen"></i></a></td>
+                            <td style="width:10%" class="text-center"><a data-toggle="tooltip" title="Slet Underviser" asp-route-id="@(Model.PaginatedEmployees[i].Id)" asp-page="/DeleteUserPage/DeleteUser"><i class="fa-solid fa-trash-can"></i></a></td>
                         </tr>
                     }
 
@@ -266,6 +267,7 @@
                             <button type="button" class="btn btn-outline-primary ml-1" title="Tryk her for at søge" onclick="copyValue('allLeadsSearchHTML', 'allLeadsSearchASP', setValue('pageSectionInput', '@LeaderLandingPageModel.PageSections.AllLeaders', submitForm('professorsAndLeadersForm')))">
                                 <i class="fa-solid fa-magnifying-glass"></i>
                             </button>
+                            <span class="ml-1"><a class="btn btn-primary" data-toggle="Tilføj Leder" asp-page="/AddUserPage/AddUser"><i class="fa-solid fa-plus"></i></a></span>
 
                         </div>
 

@@ -33,52 +33,69 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Ændre ansat</h5>
-                <a type="button" class="close" asp-page="../LeaderLandingPage/LeaderLandingPage">&times;</a>
+                <h2 class="modal-title">Redigér Ansat</h2>
+                <span><a asp-page="../LeaderLandingPage/LeaderLandingPage"><i class="fa-solid fa-lg fa-xmark"></i></a></span>
             </div>
             <form method="post">
                 <div class="modal-body">
-                    <h5>Ændrer brugeren - @Model.EmployeeToEdit.Name</h5>
+
+                    <span>Redigéring af brugeren: <b>@Model.EmployeeToEdit.Name (@Model.EmployeeToEdit.Username)</b></span>
+
+                    <hr />
+
                     <div class="form-group">
-                        <label asp-for="@Model.EmployeeToEdit.Id" class="control-lable"></label>
-                        <input asp-for="@Model.EmployeeToEdit.Id" class="form-control" />
+                        <label asp-for="@Model.EmployeeToEdit.Id" class="control-label"></label>
+                        <input asp-for="@Model.EmployeeToEdit.Id" readonly class="form-control" />
                     </div>
                     <div class="form-group">
-                        <label asp-for="@Model.EmployeeToEdit.Name" class="control-lable"></label>
+                        <label asp-for="@Model.EmployeeToEdit.Name" class="control-label"></label>
                         <input asp-for="@Model.EmployeeToEdit.Name" class="form-control" />
                     </div>
                     <div class="form-group">
-                        <label asp-for="@Model.EmployeeToEdit.Username" class="control-lable"></label>
+                        <label asp-for="@Model.EmployeeToEdit.Username" class="control-label"></label>
                         <input asp-for="@Model.EmployeeToEdit.Username" class="form-control" />
                     </div>
                     <div class="form-group">
-                        <label asp-for="@Model.EmployeeToEdit.Password" class="control-lable"></label>
+                        <label asp-for="@Model.EmployeeToEdit.Password" class="control-label"></label>
                         <input asp-for="@Model.EmployeeToEdit.Password" class="form-control" />
                     </div>
                     <div class="form-group">
-                        <label asp-for="@Model.EmployeeToEdit.Email" class="control-lable"></label>
+                        <label asp-for="@Model.EmployeeToEdit.Email" class="control-label"></label>
                         <input asp-for="@Model.EmployeeToEdit.Email" class="form-control" />
                     </div>
                     <div class="form-group">
-                        <label asp-for="@Model.EmployeeToEdit.Type" class="control-lable"></label>
+                        <label asp-for="@Model.EmployeeToEdit.Type" class="control-label"></label>
                         <select class="form-control" asp-for="@Model.EmployeeToEdit.Type"
                                 asp-items="Html.GetEnumSelectList<User.UserType>()">
                         </select>
                     </div>
 
                     <div class="form-group">
-                        <label asp-for="@Model.EmployeeToEdit.Title" class="control-lable"></label>
+                        <label asp-for="@Model.EmployeeToEdit.Title" class="control-label"></label>
                         <select class="form-control" asp-for="@Model.EmployeeToEdit.Title"
                                 asp-items="Html.GetEnumSelectList<Employee.EmployeeTitle>()">
                         </select>
                     </div>
 
-                    <div class="form-group">
-                        <input type="submit" value="Opdater Ansat" class="btn btn-primary" />
-                        <a class="btn btn-danger" asp-page="../LeaderLandingPage/LeaderLandingPage">Annuller</a>
-                    </div>
                 </div>
+
+                <div class="modal-footer">
+
+                    <div class="row w-100">
+
+                        <div class="col-6">
+                            <a type="button" class="w-100 btn btn-danger" asp-page="../LeaderLandingPage/LeaderLandingPage">Annullér</a>
+                        </div>
+                        <div class="col-6">
+                            <input type="submit" value="Opdatér Ansat" class="w-100 btn btn-primary">
+                        </div>
+
+                    </div>
+
+                </div>
+
             </form>
+
         </div>
     </div>
 </div>

@@ -31,7 +31,7 @@
 
             <div class="modal-header">
                 <h2 class="modal-title">Slet Bruger</h2>
-                <a type="button" class="close" asp-page="../LeaderLandingPage/LeaderLandingPage">&times;</a>
+                <span><a asp-page="../LeaderLandingPage/LeaderLandingPage"><i class="fa-solid fa-lg fa-xmark"></i></a></span>
             </div>
 
             <div class="modal-body">
@@ -40,7 +40,11 @@
                     <span>Er du sikker på du gerne vil slette <b>@Model.User.Name (@Model.User.Username)</b>'s bruger?</span>
                 </div>
 
-                <form method="post">
+            </div>
+
+            <div class="modal-footer">
+
+                <form method="post" class="w-100">
 
                     <div class="row">
                         <div class="col-6">
@@ -50,10 +54,11 @@
                             <button type="submit" asp-page-handler="DeleteUser" class="w-100 btn btn-danger">Acceptér</button>
                         </div>
                     </div>
-                        
+
                 </form>
 
             </div>
+
         </div>
     </div>
 </div>

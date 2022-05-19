@@ -50,7 +50,8 @@ hr {
     background-color: var(--ram-element-background);
 }
 
-.border, .border-top, .border-right, .border-left, .border-bottom {
+.border, .border-top, .border-right, .border-left, .border-bottom,
+.modal-header, .modal-body, .modal-footer {
     border-color: var(--ram-gold) !important;
 }
 
@@ -70,8 +71,9 @@ h1, h2, h3, h4, h5, h6, p, span, i, a, table, label {
     color: var(--ram-white);
 }
 
-.input-group input, 
+.input-group input,
 .input-group textarea,
+.form-group input,
 .form-group select,
 span.form-control {
     border-radius: .25rem !important;
@@ -82,6 +84,7 @@ span.form-control {
 
 .input-group input:focus,
 .input-group textarea:focus,
+.form-group input:focus,
 .form-group select:focus,
 span.form-control:focus {
     background-color: rgba(255,255,255, .15);

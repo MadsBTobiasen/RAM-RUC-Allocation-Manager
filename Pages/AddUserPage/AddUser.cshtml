@@ -28,49 +28,60 @@
 
 <form method="post">
     <div class="container">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opret en ny leder</button>
         <div class="modal" id="myModal">
             <div class="modal-dialog">
                 <div class="modal-content">
 
                     <div class="modal-header">
-                        <h5 class="modal-title">Opret en ny leder</h5>
-                        <a type="button" class="close" asp-page="../LeaderLandingPage/LeaderLandingPage">&times;</a>
+                        <h2 class="modal-title">Opret Leder</h2>
+                        <span><a asp-page="../LeaderLandingPage/LeaderLandingPage"><i class="fa-solid fa-lg fa-xmark"></i></a></span>
                     </div>
 
                     <div class="modal-body">
+
                         <div class="form-group">
-                            <label asp-for="@Model.User.Type" class="control-lable"></label>
+                            <label asp-for="@Model.User.Type" class="control-label"></label>
                             <select class="form-control" asp-for="@Model.User.Type"
                                     asp-items="Html.GetEnumSelectList<User.UserType>()">
                             </select>
                         </div>
 
                         <div class="form-group">
-                            <label asp-for="@Model.User.Name" class="control-lable"></label>
-                            <input asp-for="@Model.User.Name" class="form-control"/>
+                            <label asp-for="@Model.User.Name" class="control-label"></label>
+                            <input asp-for="@Model.User.Name" class="form-control" placeholder="Indtast navn på leder.." />
                         </div>
                         <div class="form-group">
-                            <label asp-for="@Model.User.Password" class="control-lable"></label>
-                            <input asp-for="@Model.User.Password" class="form-control"/>
+                            <label asp-for="@Model.User.Password" class="control-label"></label>
+                            <input asp-for="@Model.User.Password" class="form-control" placeholder="Indtast password for ny leder.." />
                         </div>
                         <div class="form-group">
-                            <label asp-for="@Model.User.Username" class="control-lable"></label>
-                            <input asp-for="@Model.User.Username" class="form-control"/>
+                            <label asp-for="@Model.User.Username" class="control-label"></label>
+                            <input asp-for="@Model.User.Username" class="form-control" placeholder="Indtast brugernavn for ny leder.." />
                         </div>
                         <div class="form-group">
-                            <label asp-for="@Model.User.Email" class="control-lable"></label>
-                            <input asp-for="@Model.User.Email" class="form-control"/>
+                            <label asp-for="@Model.User.Email" class="control-label"></label>
+                            <input asp-for="@Model.User.Email" class="form-control" placeholder="Indtast email for ny leder.." />
                         </div>
 
-                        <div class="modal-footer">
-                            <div class="form-group">
-                                <input type="submit" value="Opret" class="btn btn-primary">
-                                <a type="button" class="btn btn-danger" asp-page="../LeaderLandingPage/LeaderLandingPage">Luk</a>
-                            </div>
-                        </div>
                     </div>
+
+                    <div class="modal-footer">
+
+                        <div class="row w-100">
+
+                            <div class="col-6">
+                                <a type="button" class="w-100 btn btn-danger" asp-page="../LeaderLandingPage/LeaderLandingPage">Annullér</a>
+                            </div>
+                            <div class="col-6">
+                                <input type="submit" value="Opret Leder" class="w-100 btn btn-primary">
+                            </div>
+
+                        </div>
+
+                    </div>
+
                 </div>
+
             </div>
         </div>
     </div>
