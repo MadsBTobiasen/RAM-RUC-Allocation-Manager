@@ -1,4 +1,4 @@
-﻿@page
+@page
 @using RAM___RUC_Allocation_Manager.Models
 @model RAM___RUC_Allocation_Manager.Pages.LeaderLandingPage.LeaderLandingPageModel
 @{
@@ -6,21 +6,6 @@
 @section Scripts
 {
     <script>
-
-        function myFunction() {
-            $("#myModal").on("submit", function (event) {
-                event.preventDefault();
-            });
-
-            $("#myModal").submit(function (event) {
-                event.preventDefault();
-            });
-
-            //$(document).ready(function () {
-            /*$("#myModal").modal({ backdrop: "static" });*/
-            //    $("#myModal").modal("show");
-            //});
-        }
 
         //JQuery function to "click" the anchor tag for the pageSection.
         $(document).ready(function () {
@@ -32,73 +17,6 @@
 
     </script>
 }
-
-<form method="post">
-    <div class="container">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Create a new user</button>
-        <div class="modal" id="myModal">
-            <div class="modal-dialog">
-                <div class="modal-content">
-
-                    <div class="modal-header">
-                        <h5 class="modal-title">Add a new User</h5>
-                        <a type="button" class="close" asp-page="/Index">&times;</a>
-                    </div>
-
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <select class="form-control" asp-for="CreatedUser.Type"
-                                    asp-items="Html.GetEnumSelectList<User.UserType>()">
-                                <option selected="selected" value="">User Type</option>
-                            </select>
-                            <br />
-                            <input type="submit" asp-page-handler="CheckType" onClick="myFunction()" value="Vælg Bruger Type" class="btn btn-primary" />
-                        </div>
-
-                        <br />
-
-                        @if (Model.IsLeader == false)
-                        {
-                            <select class="form-control" asp-for="Employee.Title"
-                                    asp-items="Html.GetEnumSelectList<Employee.EmployeeTitle>()">
-                                <option selected="selected" value="">Employee Title</option>
-                            </select>
-                        }
-
-                        <div class="form-group">
-                            <label asp-for="@Model.CreatedUser.Id" class="control-lable"></label>
-                            <input asp-for="@Model.CreatedUser.Id" class="form-control" readonly />
-                        </div>
-
-                        <div class="form-group">
-                            <label asp-for="@Model.CreatedUser.Name" class="control-lable"></label>
-                            <input asp-for="@Model.CreatedUser.Name" class="form-control" />
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="@Model.CreatedUser.Password" class="control-lable"></label>
-                            <input asp-for="@Model.CreatedUser.Password" class="form-control" />
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="@Model.CreatedUser.Username" class="control-lable"></label>
-                            <input asp-for="@Model.CreatedUser.Username" class="form-control" />
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="@Model.CreatedUser.Email" class="control-lable"></label>
-                            <input asp-for="@Model.CreatedUser.Email" class="form-control" />
-                        </div>
-
-                        <div class="modal-footer">
-                            <div class="form-group">
-                                <a type="button" class="btn btn-danger" asp-page="/Index">Close</a>
-                                <input type="submit" asp-page-handler="CreateUser" value="Create" class="btn btn-primary">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</form>
 
 <h2 class="text-white pb-3">Velkommen @Model.Leader.Name</h2>
 <section class="top" id="@LeaderLandingPageModel.PageSections.None.ToString().ToLower()"></section>
@@ -305,13 +223,13 @@
 
                     @for (int i = 0; i < Model.PaginatedEmployees.Count; i++)
                     {
-                    <tr style="height: 1rem;">
-                        <th style="width:10%" scope="row" class="text-center">@(i + 1 + (Model.MaxItemsAllEmployees * Model.PageIndexAllEmployees))</th>
-                        <td class="text-left">@((Model.PaginatedEmployees[i] as Models.Employee).Name)</td>
-                        <td class="text-left">@((Model.PaginatedEmployees[i] as Models.Employee).Title)</td>
-                        <td style="width:10%" class="text-center"><a data-toggle="tooltip" title="Se Professor" asp-route-id="@(Model.PaginatedEmployees[i].Id)" asp-page="/EmployeeLandingPage/EmployeeLandingPage"><i class="fa-solid fa-circle-info"></i></a></td>
-                        <td style="width:10%" class="text-center"><a data-toggle="tooltip" title="Redigér Proffessor" asp-route-id="@(Model.PaginatedEmployees[i].Id)" asp-page=""><i class="fa-solid fa-pen"></i></a></td>
-                    </tr>
+                        <tr style="height: 1rem;">
+                            <th style="width:10%" scope="row" class="text-center">@(i + 1 + (Model.MaxItemsAllEmployees * Model.PageIndexAllEmployees))</th>
+                            <td class="text-left">@((Model.PaginatedEmployees[i] as Models.Employee).Name)</td>
+                            <td class="text-left">@((Model.PaginatedEmployees[i] as Models.Employee).Title)</td>
+                            <td style="width:10%" class="text-center"><a data-toggle="tooltip" title="Se Professor" asp-route-id="@(Model.PaginatedEmployees[i].Id)" asp-page="/EmployeeLandingPage/EmployeeLandingPage"><i class="fa-solid fa-circle-info"></i></a></td>
+                            <td style="width:10%" class="text-center"><a data-toggle="tooltip" title="Redigér Proffessor" asp-route-id="@(Model.PaginatedEmployees[i].Id)" asp-page=""><i class="fa-solid fa-pen"></i></a></td>
+                        </tr>
                     }
 
                 </tbody>
@@ -400,12 +318,12 @@
 
                         @for (int i = 0; i < Model.PaginatedLeaders.Count; i++)
                         {
-                        <tr style="height: 1rem;">
-                            <th style="width:10%" scope="row" class="text-center">@(i + 1 + (Model.MaxItemsAllLeaders * Model.PageIndexAllLeaders))</th>
-                            <td class="text-left">@((Model.PaginatedLeaders[i] as Models.Leader).Name)</td>
-                            <td class="text-left">Leader</td>
-                            <td style="width:10%" class="text-center"><a data-toggle="tooltip" title="Redigér Leder" asp-route-id="@(Model.PaginatedLeaders[i].Id)" asp-page=""><i class="fa-solid fa-pen"></i></a></td>
-                        </tr>
+                            <tr style="height: 1rem;">
+                                <th style="width:10%" scope="row" class="text-center">@(i + 1 + (Model.MaxItemsAllLeaders * Model.PageIndexAllLeaders))</th>
+                                <td class="text-left">@((Model.PaginatedLeaders[i] as Models.Leader).Name)</td>
+                                <td class="text-left">Leader</td>
+                                <td style="width:10%" class="text-center"><a data-toggle="tooltip" title="Redigér Leder" asp-route-id="@(Model.PaginatedLeaders[i].Id)" asp-page=""><i class="fa-solid fa-pen"></i></a></td>
+                            </tr>
                         }
 
                     </tbody>

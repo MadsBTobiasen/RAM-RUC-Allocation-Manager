@@ -137,11 +137,11 @@ namespace RAM___RUC_Allocation_Manager.Pages.LeaderLandingPage
         /// </summary>
         public IActionResult OnGet()
         {
-        
+
             IsLeader = false;
             Console.WriteLine(Leader.Id);
             return PageWithSortingSearchingAndPagination();
-            
+
         }
 
         /// <summary>
@@ -193,7 +193,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.LeaderLandingPage
             Sorting();
             Pagination();
 
-            foreach(object o in RouteData.DataTokens)
+            foreach (object o in RouteData.DataTokens)
             {
                 Console.WriteLine("output: " + o);
             }
@@ -227,12 +227,12 @@ namespace RAM___RUC_Allocation_Manager.Pages.LeaderLandingPage
         private void Sorting()
         {
 
-            switch(AllEmployeesSortingOption)
+            switch (AllEmployeesSortingOption)
             {
 
                 case Employee.SortingOptions.NameASC: Employees = Employees.OrderBy(e => e.Name).ToList(); break;
                 case Employee.SortingOptions.NameDESC: Employees = Employees.OrderByDescending(e => e.Name).ToList(); break;
-                
+
                 case Employee.SortingOptions.TitleASC: Employees = Employees.OrderBy(e => e.Title).ToList(); break;
                 case Employee.SortingOptions.TitleDESC: Employees = Employees.OrderByDescending(e => e.Title).ToList(); break;
 
