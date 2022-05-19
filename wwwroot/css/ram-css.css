@@ -1,8 +1,9 @@
 ﻿:root {
     --ram-background: rgb(43, 42, 51);
-    --ram-gold: rgb(218,165,32);
-    --ram-white: rgb(255 255 255);
-    --ram-element-background: rgba(255,255,255, .05);
+    --ram-element-background: rgba(255, 255, 255, .05);
+    --ram-gold: rgb(218, 165, 32);
+    --ram-white: rgb(255, 255, 255);
+    --ram-white-secondary: rgb(206, 212, 218);
 }
 
 .vertical-align-md {
@@ -51,3 +52,12 @@ table.allocated-hours-table td {
     color: var(--ram-gold);
 }
 
+section {
+    position: absolute;
+    transform: translateY(-3.5rem);
+}
+
+section.top {
+    position: fixed;
+    transform: translateY(0rem);
+}

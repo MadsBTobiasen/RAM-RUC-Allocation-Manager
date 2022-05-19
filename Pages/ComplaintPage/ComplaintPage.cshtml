@@ -1,0 +1,67 @@
+﻿@page
+@model RAM___RUC_Allocation_Manager.Pages.ComplaintPage.ComplaintPageModel
+@{
+}
+@section Scripts
+{
+    <script>
+
+        //JQuery function to "select" the 0th index of the recepient selector.
+        $(document).ready(function () {
+
+            $("#recepientSelector")[0].onchange();
+
+        }); 
+
+    </script>
+}
+
+<div class="row">
+
+    <div class="col-1"></div>
+    <div class="col-10">
+        <form method="post" asp-page-handler="SendMail">
+
+            <div class="form-group">
+
+                <div class="form-row">
+                    <div class="form-group col-md-6 mb-2">
+
+                        <div><h5><span class="text-danger">*</span>Emne:</h5></div>
+                        <select class="form-control mb-1" asp-items="@Model.SelectListTemplateOptions" asp-for="@Model.SelectListTemplateOption"></select>
+                        <p class="mb-1"><span class="text-danger" asp-validation-for="@Model.SelectListTemplateOption"></span></p>
+
+                        <div><h5><span class="text-danger"></span>Afsenders Email:</h5></div>
+                        <div><span class="form-control text-muted" readonly>@Model.Employee.Email</span></div>
+
+                    </div>
+                    <div class="form-group col-md-6 mb-2">
+
+                        <div><h5><span class="text-danger">*</span>Vælg Modtager:</h5></div>
+                        <select class="form-control mb-1" id="recepientSelector" onchange="setValue('recepientEmailContainer', splitSelectValue('recepientSelector', ':', 1))" asp-items="@Model.SelectListEmployeeLeaders" asp-for="@Model.SelectListEmployeeLeader"></select>
+                        <p class="mb-1"><span class="text-danger" asp-validation-for="@Model.SelectListEmployeeLeader"></span></p>
+
+                        <div><h5><span class="text-danger"></span>Modtagers Email:</h5></div>
+                        <div><span class="form-control text-muted" readonly id="recepientEmailContainer"></span></div>
+
+                    </div>
+                </div>
+
+                <div><h5><span class="text-danger">*</span>Krop:</h5></div>
+                <p class="mb-1"><span class="text-danger" asp-validation-for="@Model.MailBody"></span></p>
+                <div class="input-group">
+                    <textarea class="form-control" asp-for="@Model.MailBody" placeholder="Beskriv dit problem her.."></textarea>
+                </div>
+
+            </div>
+
+            <div class="float-right">
+                <a class="btn btn-primary" asp-page="/ComplaintPage/ComplaintPage">Annullér</a>
+                <button type="submit" class="btn btn-primary">Send Klage</button>
+            </div>
+
+        </form>
+    </div>
+    <div class="col-1"></div>
+
+</div>

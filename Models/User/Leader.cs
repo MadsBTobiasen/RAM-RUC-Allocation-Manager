@@ -26,7 +26,7 @@ namespace RAM___RUC_Allocation_Manager.Models
 
         [Required]public bool IsAdmin { get; set; }
         //This is test list. Remove once DB is running.
-        public List<Programme> Programmes { get; set; }
+        public List<Programme> Programmes { get; set; } = new List<Programme>();
          /// <summary>
         /// Returns a list of all the Users from the Users in Programme' list of Users.
         /// </summary>
@@ -35,9 +35,14 @@ namespace RAM___RUC_Allocation_Manager.Models
 
                 List<Employee> users = new List<Employee>();
                 
-                foreach(Programme p in Programmes)
+                if(Programmes != null)
                 {
-                    users.AddRange(p.Users.Cast<Employee>());
+
+                    foreach (Programme p in Programmes)
+                    {
+                        users.AddRange(p.Users.Cast<Employee>());
+                    }
+
                 }
 
                 return users;
@@ -50,6 +55,7 @@ namespace RAM___RUC_Allocation_Manager.Models
         public Leader()
         {
             Type = UserType.Leader;
+            Email = "RAM-Leader-Test@Tier1TCG.dk";
         }
         #endregion
 
@@ -87,6 +93,7 @@ namespace RAM___RUC_Allocation_Manager.Models
 
             foreach(User u in ProgrammeUsers)
             {
+
                 if(u.Id == id)
                 {
                     return true;
