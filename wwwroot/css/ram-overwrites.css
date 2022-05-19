@@ -1,11 +1,6 @@
-﻿body {
+﻿body, header, .modal-content {
     background-color: var(--ram-background) !important;
 }
-
-header {
-    background-color: var(--ram-background) !important;
-}
-
 a span {
     vertical-align: middle;
 }

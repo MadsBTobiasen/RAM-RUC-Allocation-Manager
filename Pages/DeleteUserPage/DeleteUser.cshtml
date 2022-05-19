@@ -30,19 +30,29 @@
         <div class="modal-content">
 
             <div class="modal-header">
-                <h5 class="modal-title">Slet bruger</h5>
+                <h2 class="modal-title">Slet Bruger</h2>
                 <a type="button" class="close" asp-page="../LeaderLandingPage/LeaderLandingPage">&times;</a>
             </div>
 
             <div class="modal-body">
-                <h1>Delete Confimation</h1>
-                <div class="alert alert-danger">
-                    <h5>Er du sikker på at slette brugeren - @Model.User.Name</h5>
-                    <form method="post">
-                        <button type="submit" asp-page-handler="DeleteUser" class="btn btn-danger">Ja</button>
-                        <a class="btn btn-primary" asp-page="../LeaderLandingPage/LeaderLandingPage">Annuller</a>
-                    </form>
+
+                <div class="pb-3">
+                    <span>Er du sikker på du gerne vil slette <b>@Model.User.Name (@Model.User.Username)</b>'s bruger?</span>
                 </div>
+
+                <form method="post">
+
+                    <div class="row">
+                        <div class="col-6">
+                            <a class="w-100 btn btn-primary" asp-page="../LeaderLandingPage/LeaderLandingPage">Annullér</a>
+                        </div>
+                        <div class="col-6">
+                            <button type="submit" asp-page-handler="DeleteUser" class="w-100 btn btn-danger">Acceptér</button>
+                        </div>
+                    </div>
+                        
+                </form>
+
             </div>
         </div>
     </div>
