@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using RAM___RUC_Allocation_Manager.MockData;
 using RAM___RUC_Allocation_Manager.Models.DbConnections;
+using RAM___RUC_Allocation_Manager.Models.WorkAssigments;
 
 namespace RAM___RUC_Allocation_Manager.Services
 {
