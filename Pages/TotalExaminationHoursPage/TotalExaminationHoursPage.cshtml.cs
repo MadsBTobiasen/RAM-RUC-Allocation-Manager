@@ -60,9 +60,9 @@ namespace RAM___RUC_Allocation_Manager.Pages.TotalExaminationHoursPage
 
             if (id == -1) id = LoggedInUserId;
             Employee = (Employee)userService.GetUserByID(id);
-            TotalWrittenAssignmentAssessments = Employee.Portfolios.Count() + Employee.Synopses.Count();
-            TotalSynopsisMinutes = Employee.Synopses.Count() * BaseSettings.SynopsisHourWorth;
-            TotalPorfolioMinutes = Employee.Portfolios.Count() * BaseSettings.PortfolioHourWorth;
+            TotalWrittenAssignmentAssessments = Employee.PortfolioExaminations + Employee.SynopsisExaminations;
+            TotalSynopsisMinutes = Employee.SynopsisExaminations * BaseSettings.SynopsisHourWorth;
+            TotalPorfolioMinutes = Employee.PortfolioExaminations * BaseSettings.PortfolioHourWorth;
             TotalWrittenAssignmentsAssessmentsMinutes = TotalPorfolioMinutes + TotalSynopsisMinutes;
             TotalProjectAssesmentHours = ConvertMinutesToHours(
                 Employee.EmployeeGroups.Where(eg => eg.RoleOfEmployee == EmployeeGroup.EmployeeRole.InternalCensor).Select(g => g).Count() *

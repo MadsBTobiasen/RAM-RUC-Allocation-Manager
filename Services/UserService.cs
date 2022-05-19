@@ -18,12 +18,13 @@ namespace RAM___RUC_Allocation_Manager.Services
         #endregion
 
         #region Constructor
-        public UserService()
+        public UserService(/*DbService<User> dbService*/)
         {
 
-
+            //this.dbService = dbService;
             //TODO: Retrieve Users from DB-Service.
             Users = MockData.MockUsers.GetUsers();
+            //Users = dbService.GetObjectsAsync().Result.ToList();
             Users = Users.OrderBy(u => u.Name).ToList();
 
         }
