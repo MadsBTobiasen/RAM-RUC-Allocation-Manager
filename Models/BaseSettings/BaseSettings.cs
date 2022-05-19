@@ -47,5 +47,48 @@ namespace RAM___RUC_Allocation_Manager.Models
         public int SupervisionOfGroupHourSixMembersMasters { get; set; } = 0;
         #endregion
 
+        public BaseSettings(int id, int pedagogicalQualification, int baseHoursForProfessor, int baseHoursForAssociateProfessor, int baseHoursForAssistantProfessor, int lessonHourValue, int coordinatorOfCourseMinuteValue, int sabLessonHourValue, int sibLessonHourValue, int hourPerPersonHiringCommittee, int hourPerPersonPromotionCommittee, int phdCommitteeHourValue, int groupFacilitationBaseHour, int groupFacilitationHourDailyIncrement, int phdEndEvalHourWorth, int phdMainSupervisionHourWorth, int phdSecondarySupervisionHourWorth, int assistantProfessorSupervisonMinuteValue, int internalCensorMinuteValue, int groupLeaderMinuteValue, int portfolioHourWorth, int synopsisHourWorth, int supervisionOfGroupHourOneMember, int supervisionOfGroupHourTwoMember, int supervisionOfGroupHourThreeMember, int supervisionOfGroupHourFourMember, int supervisionOfGroupHourFiveMember, int supervisionOfGroupHourSixMember, int supervisionOfGroupHourOneMemberMasters, int supervisionOfGroupHourTwoMemberMasters, int supervisionOfGroupHourThreeMemberMasters, int supervisionOfGroupHourFourMemberMasters, int supervisionOfGroupHourFiveMembersMasters, int supervisionOfGroupHourSixMembersMasters)
+        {
+            ID = id;
+            PedagogicalQualification = pedagogicalQualification;
+            BaseHoursForProfessor = baseHoursForProfessor;
+            BaseHoursForAssociateProfessor = baseHoursForAssociateProfessor;
+            BaseHoursForAssistantProfessor = baseHoursForAssistantProfessor;
+            LessonHourValue = lessonHourValue;
+            CoordinatorOfCourseMinuteValue = coordinatorOfCourseMinuteValue;
+            SabLessonHourValue = sabLessonHourValue;
+            SibLessonHourValue = sibLessonHourValue;
+            HourPerPersonHiringCommittee = hourPerPersonHiringCommittee;
+            HourPerPersonPromotionCommittee = hourPerPersonPromotionCommittee;
+            PhdCommitteeHourValue = phdCommitteeHourValue;
+            GroupFacilitationBaseHour = groupFacilitationBaseHour;
+            GroupFacilitationHourDailyIncrement = groupFacilitationHourDailyIncrement;
+            PhdEndEvalHourWorth = phdEndEvalHourWorth;
+            PhdMainSupervisionHourWorth = phdMainSupervisionHourWorth;
+            PhdSecondarySupervisionHourWorth = phdSecondarySupervisionHourWorth;
+            AssistantProfessorSupervisonMinuteValue = assistantProfessorSupervisonMinuteValue;
+            InternalCensorMinuteValue = internalCensorMinuteValue;
+            GroupLeaderMinuteValue = groupLeaderMinuteValue;
+            PortfolioHourWorth = portfolioHourWorth;
+            SynopsisHourWorth = synopsisHourWorth;
+            SupervisionOfGroupHourOneMember = supervisionOfGroupHourOneMember;
+            SupervisionOfGroupHourTwoMember = supervisionOfGroupHourTwoMember;
+            SupervisionOfGroupHourThreeMember = supervisionOfGroupHourThreeMember;
+            SupervisionOfGroupHourFourMember = supervisionOfGroupHourFourMember;
+            SupervisionOfGroupHourFiveMember = supervisionOfGroupHourFiveMember;
+            SupervisionOfGroupHourSixMember = supervisionOfGroupHourSixMember;
+            SupervisionOfGroupHourOneMemberMasters = supervisionOfGroupHourOneMemberMasters;
+            SupervisionOfGroupHourTwoMemberMasters = supervisionOfGroupHourTwoMemberMasters;
+            SupervisionOfGroupHourThreeMemberMasters = supervisionOfGroupHourThreeMemberMasters;
+            SupervisionOfGroupHourFourMemberMasters = supervisionOfGroupHourFourMemberMasters;
+            SupervisionOfGroupHourFiveMembersMasters = supervisionOfGroupHourFiveMembersMasters;
+            SupervisionOfGroupHourSixMembersMasters = supervisionOfGroupHourSixMembersMasters;
+        }
+
+        public BaseSettings()
+        {
+            
+        }
+
     }
 }

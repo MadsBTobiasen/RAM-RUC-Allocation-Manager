@@ -1,28 +1,170 @@
-﻿@page
+﻿@page 
 @model RAM___RUC_Allocation_Manager.Pages.SettingsPage.SettingsPageModel
 @{
 }
-<h2>Settings Page</h2>
-<div class="container" style="display: flex; justify-content: left;">
-    <div>
+
+
+<form method="post">
+    <div class="form-group">
+                <label asp-for="@Model.BaseSettings.LessonHourValue" class="control-lable"></label>
+                <input asp-for="@Model.BaseSettings.LessonHourValue" class="form-control" />
     </div>
-    <form method="post">
-        <div class="form-group">
-            <label asp-for="ProgrammeName" class="col-form-label" style="color:white"></label>
-            <div>
-                <input asp-for="ProgrammeName" />
+
+            <hr />
+            <div class="form-group">
+                <label asp-for="@Model.BaseSettings.BaseHoursForAssistantProfessor" class="control-lable"></label>
+                <input asp-for="@Model.BaseSettings.BaseHoursForAssistantProfessor" class="form-control" />
             </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="Leader" class="col-form-label" style="color:white"></label>
-            <div>
-                <input asp-for="Leader" />
+
+            <div class="form-group">
+                <label asp-for="@Model.BaseSettings.BaseHoursForAssociateProfessor" class="control-lable"></label>
+                <input asp-for="@Model.BaseSettings.BaseHoursForAssociateProfessor" class="form-control" />
             </div>
-        </div>
-        <div class="form-group">
-            <button class="btn btn-outline-light">Create Programme</button>
-            <a asp-page="/LeaderLandingPage/LeaderLandingPage/10"><button class="btn btn-outline-light">Back</button></a>
-        </div>
-        
-    </form>
-</div>
+
+            <div class="form-group">
+                <label asp-for="@Model.BaseSettings.BaseHoursForProfessor" class="control-lable"></label>
+                <input asp-for="@Model.BaseSettings.BaseHoursForProfessor" class="form-control" />
+            </div>
+
+
+            <hr />
+
+            <div class="form-group">
+                <label asp-for="@Model.BaseSettings.GroupFacilitationBaseHour" class="control-lable"></label>
+                <input asp-for="@Model.BaseSettings.GroupFacilitationBaseHour" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="@Model.BaseSettings.GroupFacilitationHourDailyIncrement" class="control-lable"></label>
+                <input asp-for="@Model.BaseSettings.GroupFacilitationHourDailyIncrement" class="form-control" />
+            </div>
+
+            <hr />
+
+            <div class="form-group">
+                <label asp-for="@Model.BaseSettings.PhdCommitteeHourValue" class="control-lable"></label>
+                <input asp-for="@Model.BaseSettings.PhdCommitteeHourValue" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="@Model.BaseSettings.PhdEndEvalHourWorth" class="control-lable"></label>
+                <input asp-for="@Model.BaseSettings.PhdEndEvalHourWorth" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="@Model.BaseSettings.PhdMainSupervisionHourWorth" class="control-lable"></label>
+                <input asp-for="@Model.BaseSettings.PhdMainSupervisionHourWorth" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="@Model.BaseSettings.PhdSecondarySupervisionHourWorth" class="control-lable"></label>
+                <input asp-for="@Model.BaseSettings.PhdSecondarySupervisionHourWorth" class="form-control" />
+            </div>
+
+            <hr />
+
+            <div class="form-group">
+                <label asp-for="@Model.BaseSettings.HourPerPersonHiringCommittee" class="control-lable"></label>
+                <input asp-for="@Model.BaseSettings.HourPerPersonHiringCommittee" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="@Model.BaseSettings.HourPerPersonPromotionCommittee" class="control-lable"></label>
+                <input asp-for="@Model.BaseSettings.HourPerPersonPromotionCommittee" class="form-control" />
+            </div>
+
+            <hr />
+
+            <div class="form-group">
+                <label asp-for="@Model.BaseSettings.PortfolioHourWorth" class="control-lable"></label>
+                <input asp-for="@Model.BaseSettings.PortfolioHourWorth" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="@Model.BaseSettings.SynopsisHourWorth" class="control-lable"></label>
+                <input asp-for="@Model.BaseSettings.SynopsisHourWorth" class="form-control" />
+            </div>
+
+            <hr />
+
+            <div class="form-group">
+                <label asp-for="@Model.BaseSettings.PedagogicalQualification" class="control-lable"></label>
+                <input asp-for="@Model.BaseSettings.PedagogicalQualification" class="form-control" />
+            </div>
+
+            <hr />
+
+            <div class="form-group">
+                <label asp-for="@Model.BaseSettings.SabLessonHourValue" class="control-lable"></label>
+                <input asp-for="@Model.BaseSettings.SabLessonHourValue" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="@Model.BaseSettings.SibLessonHourValue" class="control-lable"></label>
+                <input asp-for="@Model.BaseSettings.SibLessonHourValue" class="form-control" />
+            </div>
+
+
+            <hr />
+
+            <div class="form-group">
+                <label asp-for="@Model.BaseSettings.SupervisionOfGroupHourOneMember" class="control-lable"></label>
+                <input asp-for="@Model.BaseSettings.SupervisionOfGroupHourOneMember" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="@Model.BaseSettings.SupervisionOfGroupHourOneMemberMasters" class="control-lable"></label>
+                <input asp-for="@Model.BaseSettings.SupervisionOfGroupHourOneMemberMasters" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="@Model.BaseSettings.SupervisionOfGroupHourTwoMember" class="control-lable"></label>
+                <input asp-for="@Model.BaseSettings.SupervisionOfGroupHourTwoMember" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="@Model.BaseSettings.SupervisionOfGroupHourTwoMemberMasters" class="control-lable"></label>
+                <input asp-for="@Model.BaseSettings.SupervisionOfGroupHourTwoMemberMasters" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="@Model.BaseSettings.SupervisionOfGroupHourThreeMember" class="control-lable"></label>
+                <input asp-for="@Model.BaseSettings.SupervisionOfGroupHourThreeMember" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="@Model.BaseSettings.SupervisionOfGroupHourThreeMemberMasters" class="control-lable"></label>
+                <input asp-for="@Model.BaseSettings.SupervisionOfGroupHourThreeMemberMasters" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="@Model.BaseSettings.SupervisionOfGroupHourFourMember" class="control-lable"></label>
+                <input asp-for="@Model.BaseSettings.SupervisionOfGroupHourFourMember" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="@Model.BaseSettings.SupervisionOfGroupHourFourMemberMasters" class="control-lable"></label>
+                <input asp-for="@Model.BaseSettings.SupervisionOfGroupHourFourMemberMasters" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="@Model.BaseSettings.SupervisionOfGroupHourFiveMember" class="control-lable"></label>
+                <input asp-for="@Model.BaseSettings.SupervisionOfGroupHourFiveMember" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="@Model.BaseSettings.SupervisionOfGroupHourFiveMembersMasters" class="control-lable"></label>
+                <input asp-for="@Model.BaseSettings.SupervisionOfGroupHourFiveMembersMasters" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="@Model.BaseSettings.SupervisionOfGroupHourSixMembersMasters" class="control-lable"></label>
+                <input asp-for="@Model.BaseSettings.SupervisionOfGroupHourSixMembersMasters" class="form-control" />
+            </div>
+
+            <br />
+    <div class="form-group">
+        <input type="submit" value="Update" class="btn btn-primary" />
+        <a class="btn btn-danger" asp-page="../LeaderLandingPage/LeaderLandingPage">Cancel</a>
+    </div>
+</form>

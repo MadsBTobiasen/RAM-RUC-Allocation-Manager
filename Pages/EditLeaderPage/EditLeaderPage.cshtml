@@ -1,9 +1,6 @@
 ﻿@page "{id:int}"
 @using RAM___RUC_Allocation_Manager.Models
-@using RAM___RUC_Allocation_Manager.Models.DbConnections
-@using RAM___RUC_Allocation_Manager.Models.WorkAssigments
-@using RAM___RUC_Allocation_Manager.MockData
-@model RAM___RUC_Allocation_Manager.Pages.EditEmployeePage.EditEmployeePageModel
+@model RAM___RUC_Allocation_Manager.Pages.EditLeaderPage.EditLeaderPageModel
 @{
 }
 
@@ -16,7 +13,6 @@
         });
     </script>
 }
-
 
 <table class="table table-bordered" width="60%">
     <col style="width: 7%">
@@ -99,49 +95,42 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Ændre ansat</h5>
+                <h5 class="modal-title">Ændre Leder</h5>
                 <a type="button" class="close" asp-page="../LeaderLandingPage/LeaderLandingPage">&times;</a>
             </div>
             <form method="post">
                 <div class="modal-body">
-                    <h5>Ændrer brugeren - @Model.EmployeeToEdit.Name</h5>
+                    <h5>Ændrer Lederen - @Model.UserToEdit.Name</h5>
                     <div class="form-group">
-                        <label asp-for="@Model.EmployeeToEdit.Id" class="control-lable"></label>
-                        <input asp-for="@Model.EmployeeToEdit.Id" class="form-control" />
+                        <label asp-for="@Model.UserToEdit.Id" class="control-lable"></label>
+                        <input asp-for="@Model.UserToEdit.Id" class="form-control" />
                     </div>
                     <div class="form-group">
-                        <label asp-for="@Model.EmployeeToEdit.Name" class="control-lable"></label>
-                        <input asp-for="@Model.EmployeeToEdit.Name" class="form-control" />
+                        <label asp-for="@Model.UserToEdit.Name" class="control-lable"></label>
+                        <input asp-for="@Model.UserToEdit.Name" class="form-control" />
                     </div>
                     <div class="form-group">
-                        <label asp-for="@Model.EmployeeToEdit.Username" class="control-lable"></label>
-                        <input asp-for="@Model.EmployeeToEdit.Username" class="form-control" />
+                        <label asp-for="@Model.UserToEdit.Username" class="control-lable"></label>
+                        <input asp-for="@Model.UserToEdit.Username" class="form-control" />
                     </div>
                     <div class="form-group">
-                        <label asp-for="@Model.EmployeeToEdit.Password" class="control-lable"></label>
-                        <input asp-for="@Model.EmployeeToEdit.Password" class="form-control" />
+                        <label asp-for="@Model.UserToEdit.Password" class="control-lable"></label>
+                        <input asp-for="@Model.UserToEdit.Password" class="form-control" />
                     </div>
                     <div class="form-group">
-                        <label asp-for="@Model.EmployeeToEdit.Email" class="control-lable"></label>
-                        <input asp-for="@Model.EmployeeToEdit.Email" class="form-control" />
+                        <label asp-for="@Model.UserToEdit.Email" class="control-lable"></label>
+                        <input asp-for="@Model.UserToEdit.Email" class="form-control" />
                     </div>
                     <div class="form-group">
-                        <label asp-for="@Model.EmployeeToEdit.Type" class="control-lable"></label>
-                        <select class="form-control" asp-for="@Model.EmployeeToEdit.Type"
+                        <label asp-for="@Model.UserToEdit.Type" class="control-lable"></label>
+                        <select class="form-control" asp-for="@Model.UserToEdit.Type"
                                 asp-items="Html.GetEnumSelectList<User.UserType>()">
                         </select>
                     </div>
 
                     <div class="form-group">
-                        <label asp-for="@Model.EmployeeToEdit.Title" class="control-lable"></label>
-                        <select class="form-control" asp-for="@Model.EmployeeToEdit.Title"
-                                asp-items="Html.GetEnumSelectList<Employee.EmployeeTitle>()">
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <input type="submit" value="Opdater Ansat" class="btn btn-primary" />
-                        <a class="btn btn-danger" asp-page="../LeaderLandingPage/LeaderLandingPage">Annuller</a>
+                        <input type="submit" value="Opdater Leder" class="btn btn-primary" />
+                        <a class="btn btn-danger" asp-page="../LeaderLandingPage/LeaderLandingPage">Anuller</a>
                     </div>
                 </div>
             </form>

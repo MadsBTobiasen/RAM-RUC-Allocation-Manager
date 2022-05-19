@@ -1,16 +1,17 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using RAM___RUC_Allocation_Manager.MockData;
 using RAM___RUC_Allocation_Manager.Models;
+using RAM___RUC_Allocation_Manager.Models.WorkAssigments;
 using RAM___RUC_Allocation_Manager.Services;
 
 namespace RAM___RUC_Allocation_Manager.Pages.LeaderLandingPage
 {
+
     [Authorize(Roles = "Leader")]
     public class LeaderLandingPageModel : PageModel
     {
@@ -27,13 +28,6 @@ namespace RAM___RUC_Allocation_Manager.Pages.LeaderLandingPage
 
         #region Fields
         private UserService userService;
-
-        private PaginationService<Employee> employeePaginationService;
-        private PaginationService<Leader> leaderPaginationService;
-
-        private List<Employee> _employees;
-        private List<Employee> _programmeEmployees;
-        private List<Leader> _leaders;
         #endregion
 
         #region Properties
@@ -59,128 +53,33 @@ namespace RAM___RUC_Allocation_Manager.Pages.LeaderLandingPage
         [BindProperty] public Leader.SortingOptions AllLeadersSortingOption { get; set; } = Leader.SortingOptions.NameASC;
         #endregion
 
-        #region Pagination Options
+        [BindProperty]
+        public Models.User User { get; set; }
 
-        #region All Employees
-        public List<Employee> Employees
+        [BindProperty]
+        public Models.Employee Employee { get; set; }
+
+        public bool IsLeader { get; set; }
+        #endregion
+
+        public LeaderLandingPageModel(UserService userService)
         {
-            get
-            {
-                if (_employees == null) _employees = userService.GetUsersByType(Models.User.UserType.Employee).Cast<Employee>().ToList();
-                return _employees;
-            }
-            set { _employees = value; }
+            this.userService = userService;
         }
-        public List<Employee> PaginatedEmployees { get; set; }
-        [BindProperty] public int PageIndexAllEmployees { get; set; }
-        public int PageMaxAllEmployees { get; set; }
-        public int MaxItemsAllEmployees { get; set; }
-        #endregion
-
-        #region Programme Employees
-        public List<Employee> ProgrammeEmployees
-        {
-            get
-            {
-                if (_programmeEmployees == null) _programmeEmployees = Leader.ProgrammeUsers;
-                return _programmeEmployees;
-            }
-            set { _programmeEmployees = value; }
-        }
-        public List<Employee> PaginatedProgrammeEmployees { get; set; }
-        [BindProperty] public int PageIndexProgrammeEmployees { get; set; }
-        public int PageMaxProgrammeEmployees { get; set; }
-        public int MaxItemsProgrammeEmployees { get; set; }
-        #endregion
-
-        #region All Leaders
-        public List<Leader> Leaders
-        {
-            get
-            {
-                if (_leaders == null) _leaders = userService.GetUsersByType(Models.User.UserType.Leader).Cast<Leader>().ToList();
-                return _leaders;
-            }
-            set { _leaders = value; }
-        }
-        public List<Leader> PaginatedLeaders { get; set; }
-        [BindProperty] public int PageIndexAllLeaders { get; set; }
-        public int PageMaxAllLeaders { get; set; }
-        public int MaxItemsAllLeaders { get; set; }
-        #endregion
-
-        #endregion
-
-        #endregion
-
-        #region Constructor
-        public LeaderLandingPageModel(UserService us, PaginationService<Employee> empps, PaginationService<Leader> leadsps)
-        {
-
-            CreatedUser = new Employee();
-
-            userService = us;
-            employeePaginationService = empps;
-            leaderPaginationService = leadsps;
-
-            MaxItemsAllEmployees = 10;
-            MaxItemsProgrammeEmployees = 10;
-            MaxItemsAllLeaders = 10;
-
-        }
-        #endregion
-
-        #region Methods
-
-        /// <summary>
-        /// Method that returns the Page.
-        /// </summary>
+        
         public IActionResult OnGet()
         {
-        
             IsLeader = false;
+            
             Console.WriteLine(Leader.Id);
             return PageWithSortingSearchingAndPagination();
-            
+
         }
 
-        /// <summary>
-        /// Method that paginates the respective list of users.
-        /// </summary>
-        public IActionResult OnPostPaginatedResult()
+        public IActionResult OnPost()
         {
 
             Console.WriteLine("PageSection: " + PageSection);
-
-            return PageWithSortingSearchingAndPagination();
-
-        }
-
-        public IActionResult OnPostCreateUser()
-        {
-
-            if (!ModelState.IsValid)
-            {
-                return PageWithSortingSearchingAndPagination();
-            }
-
-            userService.CreateUser(CreatedUser);
-            return RedirectToPage("/AddUserPage/AllUsers");
-
-        }
-
-        public IActionResult OnPostCheckType()
-        {
-
-            if (CreatedUser.Type == Models.User.UserType.Employee)
-            {
-                IsLeader = false;
-            }
-
-            else
-            {
-                IsLeader = true;
-            }
 
             return PageWithSortingSearchingAndPagination();
 

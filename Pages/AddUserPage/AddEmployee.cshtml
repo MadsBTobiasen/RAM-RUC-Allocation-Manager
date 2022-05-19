@@ -1,0 +1,145 @@
+﻿@page
+@using RAM___RUC_Allocation_Manager.Models
+@model RAM___RUC_Allocation_Manager.Pages.AddUser.AddEmployeeModel
+@{
+}
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            $("#myModal").modal({ backdrop: "static" });
+                $("#myModal").modal("show");
+            });
+    </script>
+}
+
+<table class="table table-bordered" width="60%">
+    <col style="width: 7%">
+    <col style="width: 74%">
+    <col style="width: 10%">
+    <col style="width: 9%">
+    <thead>
+        <tr class="btn-secondary active">
+            <th>
+                <div class="d-flex justify-content-between p-0">
+                    <div><h5>Id </h5></div>
+                    <div>
+                        <a data-toggle="tooltip" title="Sort By Id" asp-page-handler="SortById"><i class="fa fa-angle-up"></i></a>
+                        <a data-toggle="tooltip" title="Sort By Id Descending" asp-page-handler="SortByIdDescending"><i class="fa fa-angle-down"></i></a>
+                    </div>
+                </div>
+            </th>
+            <th>
+                <div class="d-flex justify-content-between p-0">
+                    <div>
+                        <h5>Name </h5>
+                    </div>
+                    <div>
+                        <a data-toggle="tooltip" title="Sort By Name" asp-page-handler="SortByName"><i class="fa fa-angle-up"></i></a>
+                        <a data-toggle="tooltip" title="Sort By Name Descending" asp-page-handler="SortByNameDescending"><i class="fa fa-angle-down"></i></a>
+                    </div>
+                </div>
+
+            </th>
+            <th>
+                <div class="d-flex justify-content-between p-0">
+                    <div>
+                        <h5>Price </h5>
+                    </div>
+                    <div>
+                        <a data-toggle="tooltip" title="Sort By Price" asp-page-handler="SortByPrice"><i class="fa fa-angle-up"></i></a>
+                        <a data-toggle="tooltip" title="Sort By Price Descending" asp-page-handler="SortByPriceDescending"><i class="fa fa-angle-down"></i></a>
+                    </div>
+                </div>
+            </th>
+            <th>
+                <h5>Action</h5>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (@Model.Users != null)
+        {
+            foreach (var user in Model.Users)
+            {
+                <tr class="btn-secondary">
+                    <td>
+                        @user.Id
+                    </td>
+                    <td>
+                        @user.Name
+                    </td>
+                    <td>
+                        @user.Type
+                    </td>
+                    <td>
+                        <ul class="list-inline m-0">
+                            <li class="list-inline-item">
+                                <a class="btn btn-primary btn-sm" type="button" data-toggle="tooltip" title="Edit" asp-page="../EditEmployeePage/EditEmployeePage" asp-route-id="@user.Id"><i class="fa-light fa-pen"></i></a>
+                                <a class="btn btn-primary btn-sm" type="button" data-toggle="tooltip" title="Edit" asp-page="../EditLeaderPage/EditLeaderPage" asp-route-id="@user.Id"><i class="fa-light fa-pen"></i></a>
+                                <a class="btn btn-primary btn-sm" type="button" data-toggle="tooltip" title="Edit" asp-page="../DeleteUser/DeleteUser" asp-route-id="@user.Id"><i class="fa fa-trash"></i></a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+<br />
+
+<form method="post">
+    <div class="container">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opret en ny ansat</button>
+    <div class="modal" id="myModal">
+    <div class="modal-dialog">
+    <div class="modal-content">
+
+    <div class="modal-header">
+        <h5 class="modal-title">Opret en ny ansat</h5>
+        <a type="button" class="close" asp-page="../LeaderLandingPage/LeaderLandingPage">&times;</a>
+    </div>
+
+    <div class="modal-body">
+    @*<div class="form-group">
+            <label asp-for="@Model.User.Id" class="control-lable"></label>
+            <input asp-for="@Model.User.Id" class="form-control" readonly />
+        </div>*@
+
+    <div class="form-group">
+        <label asp-for="@Model.Employee.Name" class="control-lable"></label>
+        <input asp-for="@Model.Employee.Name" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Employee.Password" class="control-lable"></label>
+        <input asp-for="@Model.Employee.Password" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Employee.Username" class="control-lable"></label>
+        <input asp-for="@Model.Employee.Username" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Employee.Email" class="control-lable"></label>
+        <input asp-for="@Model.Employee.Email" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.Employee.Title" class="control-lable"></label>
+        <select class="form-control" asp-for="Employee.Title"
+                asp-items="Html.GetEnumSelectList<Employee.EmployeeTitle>()">
+        </select>
+    </div>
+
+    <div class="modal-footer">
+        <div class="form-group">
+            <input type="submit" value="Opret" class="btn btn-primary">
+            <a type="button" class="btn btn-danger" asp-page="../LeaderLandingPage/LeaderLandingPage">Luk</a>
+        </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+</form>

@@ -2,49 +2,45 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using RAM___RUC_Allocation_Manager.Models;
-using RAM___RUC_Allocation_Manager.Models.DbConnections;
 using RAM___RUC_Allocation_Manager.Services;
 
 namespace RAM___RUC_Allocation_Manager.Pages.SettingsPage
 {
-
-    [Authorize(Roles = "Leader")]
-
     public class SettingsPageModel : PageModel
     {
-        
-        public Programme NewProgramme { get; set; }
-        [BindProperty]
-        public string ProgrammeName { get; set; }
-        public LeaderProgramme NewLeaderProgramme { get; set; }
-        [BindProperty]
-        public Leader Leader { get; set; }
+      
+        private SettingsService settingsService;
 
-        public DbService<LeaderProgramme> dbService { get; set; }
 
-        public SettingsPageModel(DbService<LeaderProgramme> dbservice)
+        public List<BaseSettings> BaseSettingsList { get; set; }
+
+        [BindProperty]
+        public BaseSettings BaseSettings { get; set; }
+
+        public SettingsPageModel(SettingsService settingsService)
         {
-            dbService = dbservice;
+            this.settingsService = settingsService;
         }
 
-        public IActionResult OnPostCreateProgramme()
-        {
-            NewProgramme = new Programme();
-            NewProgramme.Name = ProgrammeName;
-            
-            NewLeaderProgramme = new LeaderProgramme();
-            NewLeaderProgramme.Leader = Leader;
-            NewLeaderProgramme.Programme = NewProgramme;
-            dbService.AddObjectAsync(NewLeaderProgramme);
-
-            return Page();
-        }
         public void OnGet()
         {
+            BaseSettings = settingsService.GetSettings(); 
+            BaseSettingsList = settingsService.LoadSettings();
+
+        }
+
+        public IActionResult OnPost()
+        {
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+
+            settingsService.ApplySetting(BaseSettings);
+            return RedirectToPage("/LeaderLandingPage/LeaderLandingPage");
         }
     }
 }
