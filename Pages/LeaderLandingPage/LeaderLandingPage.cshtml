@@ -1,20 +1,21 @@
-@page 
+@page
 @using RAM___RUC_Allocation_Manager.Models
 @model RAM___RUC_Allocation_Manager.Pages.LeaderLandingPage.LeaderLandingPageModel
 @{
 }
-
 @section Scripts
 {
+    <script>
 
-      //JQuery function to "click" the anchor tag for the pageSection.
-      $(document).ready(function () {
+        //JQuery function to "click" the anchor tag for the pageSection.
+        $(document).ready(function () {
 
-          var element = document.getElementById('pageSectionAchor');
-          element.click();
+            var element = document.getElementById('pageSectionAchor');
+            element.click();
 
-      });
+        });
 
+    </script>
 }
 
 <h2 class="text-white pb-3">Velkommen @Model.Leader.Name</h2>
@@ -153,8 +154,9 @@
                         <button type="button" class="btn btn-outline-primary ml-1" onclick="copyValue('allEmpSearchHTML', 'allEmpSearchASP', setValue('pageSectionInput', '@LeaderLandingPageModel.PageSections.AllEmployees', submitForm('professorsAndLeadersForm')))">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </button>
-                      
+
                     </div>
+
                 </div>
 
                 <div class="float-right pb-3">
@@ -221,13 +223,13 @@
 
                     @for (int i = 0; i < Model.PaginatedEmployees.Count; i++)
                     {
-                    <tr style="height: 1rem;">
-                        <th style="width:10%" scope="row" class="text-center">@(i + 1 + (Model.MaxItemsAllEmployees * Model.PageIndexAllEmployees))</th>
-                        <td class="text-left">@((Model.PaginatedEmployees[i] as Models.Employee).Name)</td>
-                        <td class="text-left">@((Model.PaginatedEmployees[i] as Models.Employee).Title)</td>
-                        <td style="width:10%" class="text-center"><a data-toggle="tooltip" title="Se Professor" asp-route-id="@(Model.PaginatedEmployees[i].Id)" asp-page="/EmployeeLandingPage/EmployeeLandingPage"><i class="fa-solid fa-circle-info"></i></a></td>
-                        <td style="width:10%" class="text-center"><a data-toggle="tooltip" title="Redigér Proffessor" asp-route-id="@(Model.PaginatedEmployees[i].Id)" asp-page=""><i class="fa-solid fa-pen"></i></a></td>
-                    </tr>
+                        <tr style="height: 1rem;">
+                            <th style="width:10%" scope="row" class="text-center">@(i + 1 + (Model.MaxItemsAllEmployees * Model.PageIndexAllEmployees))</th>
+                            <td class="text-left">@((Model.PaginatedEmployees[i] as Models.Employee).Name)</td>
+                            <td class="text-left">@((Model.PaginatedEmployees[i] as Models.Employee).Title)</td>
+                            <td style="width:10%" class="text-center"><a data-toggle="tooltip" title="Se Professor" asp-route-id="@(Model.PaginatedEmployees[i].Id)" asp-page="/EmployeeLandingPage/EmployeeLandingPage"><i class="fa-solid fa-circle-info"></i></a></td>
+                            <td style="width:10%" class="text-center"><a data-toggle="tooltip" title="Redigér Proffessor" asp-route-id="@(Model.PaginatedEmployees[i].Id)" asp-page=""><i class="fa-solid fa-pen"></i></a></td>
+                        </tr>
                     }
 
                 </tbody>
@@ -279,6 +281,7 @@
                         </button>
 
                     </div>
+
                 </div>
 
                 <input type="hidden" id="allLeadsSortingOption" asp-for="@Model.AllLeadersSortingOption" value="@(Model.AllLeadersSortingOption)" />
@@ -315,12 +318,12 @@
 
                         @for (int i = 0; i < Model.PaginatedLeaders.Count; i++)
                         {
-                        <tr style="height: 1rem;">
-                            <th style="width:10%" scope="row" class="text-center">@(i + 1 + (Model.MaxItemsAllLeaders * Model.PageIndexAllLeaders))</th>
-                            <td class="text-left">@((Model.PaginatedLeaders[i] as Models.Leader).Name)</td>
-                            <td class="text-left">Leader</td>
-                            <td style="width:10%" class="text-center"><a data-toggle="tooltip" title="Redigér Leder" asp-route-id="@(Model.PaginatedLeaders[i].Id)" asp-page=""><i class="fa-solid fa-pen"></i></a></td>
-                        </tr>
+                            <tr style="height: 1rem;">
+                                <th style="width:10%" scope="row" class="text-center">@(i + 1 + (Model.MaxItemsAllLeaders * Model.PageIndexAllLeaders))</th>
+                                <td class="text-left">@((Model.PaginatedLeaders[i] as Models.Leader).Name)</td>
+                                <td class="text-left">Leader</td>
+                                <td style="width:10%" class="text-center"><a data-toggle="tooltip" title="Redigér Leder" asp-route-id="@(Model.PaginatedLeaders[i].Id)" asp-page=""><i class="fa-solid fa-pen"></i></a></td>
+                            </tr>
                         }
 
                     </tbody>
