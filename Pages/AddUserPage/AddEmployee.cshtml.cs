@@ -94,9 +94,10 @@ namespace RAM___RUC_Allocation_Manager.Pages.AddUser
                 Name = Name,
                 Email = Email,
                 Title = (EmployeeTitle)Convert.ToInt32(Title),
-                Username = Username,
-                Password = Password
+                Username = Username
             };
+
+            Employee.SetPassword(Password);
 
             userService.CreateUser(Employee);
             return RedirectToPage("/LeaderLandingPage/LeaderLandingPage");

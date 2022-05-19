@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -20,6 +21,10 @@ namespace RAM___RUC_Allocation_Manager.Models
         }
         #endregion
 
+        #region Fields
+        private static PasswordHasher<string> hasher = new PasswordHasher<string>();
+        #endregion
+
         #region Properties
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
@@ -29,8 +34,23 @@ namespace RAM___RUC_Allocation_Manager.Models
         [Required]
         [StringLength(20)]
         public string Username { get; set; }
+        /// <summary>
+        /// OPMÆRKSOMHED HER
+        /// OPMÆRKSOMHED HER
+        /// PASSWORD'S SET ER SAT TIL PRIVATE. DA NÅR ET KODEORD SKAL ÆNDRES ELLER OPRETTES SKAL DET HASHES / SÆTTES GENNEM
+        /// SETPASSWORD() METODEN. SET-ACCESSOREN SKAL VÆRE PUBLIC NÅR DATABASE KØRER.
+        /// OPMÆRKSOMHED HER
+        /// OPMÆRKSOMHED HER
+        /// </summary>
         [Required]
-        public string Password { get; set; }
+        public string Password { get; private set; }
+
+        /*
+        *
+        *
+        *
+        */
+
         [Required]
         public string Email { get; set; }
         [NotMapped]
@@ -49,6 +69,15 @@ namespace RAM___RUC_Allocation_Manager.Models
         public virtual ClaimsPrincipal GetClaimsPrinciple()
         {
             throw new Exception("Method must be overriden.");
+        }
+
+        /// <summary>
+        /// Method that sets the password. This is needed, so that everytime a password has to be changed,
+        /// it can be done so using a passwordHasher.
+        /// </summary>
+        public void SetPassword(string password)
+        {
+            Password = hasher.HashPassword(null, password);
         }
 
         public override int GetHashCode()
