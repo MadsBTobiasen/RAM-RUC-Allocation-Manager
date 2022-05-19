@@ -1,30 +1,19 @@
-﻿@page 
-@using RAM___RUC_Allocation_Manager.Models
-@model RAM___RUC_Allocation_Manager.Pages.LeaderLandingPage.LeaderLandingPageModel
+﻿@page "{id:int}"
+@model RAM___RUC_Allocation_Manager.Pages.EditUser.DeleteUserModel
 @{
 }
 
 @section Scripts
 {
     <script>
-
-        function myFunction() {
-            $("#myModal").on("submit", function (event) {
-                event.preventDefault();
-            });
-
-            $("#myModal").submit(function (event) {
-                event.preventDefault();
-            });
-
-            //$(document).ready(function () {
-            /*$("#myModal").modal({ backdrop: "static" });*/
-            //    $("#myModal").modal("show");
-            //});
+        $(document).ready(function () {
+            $("#myModal").modal({ backdrop: "static" });
+            $("#myModal").modal("show");
+        });
     </script>
 }
 
-    <table class="table table-bordered" width="60%">
+<table class="table table-bordered" width="60%">
     <col style="width: 7%">
     <col style="width: 74%">
     <col style="width: 10%">
@@ -86,15 +75,37 @@
                     <td>
                         <ul class="list-inline m-0">
                             <li class="list-inline-item">
-                                <a class="btn btn-primary btn-sm" type="button" data-toggle="tooltip" title="Edit Employee" asp-page="../EditEmployeePage/EditEmployeePage" asp-route-id="@user.Id"><i class="fa-light fa-pen"></i></a>
-                                <a class="btn btn-primary btn-sm" type="button" data-toggle="tooltip" title="Edit Leader" asp-page="../EditLeaderPage/EditLeaderPage" asp-route-id="@user.Id"><i class="fa-light fa-pen"></i></a>
-                                <a class="btn btn-primary btn-sm" type="button" data-toggle="tooltip" title="Delete" asp-page="../DeleteUser/DeleteUser" asp-route-id="@user.Id"><i class="fa fa-trash"></i></a>
+                                <a class="btn btn-primary btn-sm" type="button" data-toggle="tooltip" title="Edit" asp-page="../EditEmployeePage/EditEmployeePage" asp-route-id="@user.Id"><i class="fa-light fa-pen"></i></a>
+                                <a class="btn btn-primary btn-sm" type="button" data-toggle="tooltip" title="Edit" asp-page="../DeleteUser/DeleteUser" asp-route-id="@user.Id"><i class="fa fa-trash"></i></a>
                             </li>
                         </ul>
                     </td>
                 </tr>
             }
         }
+
+
+        <div class="modal" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h5 class="modal-title">Slet bruger</h5>
+                        <a type="button" class="close" asp-page="../LeaderLandingPage/LeaderLandingPage">&times;</a>
+                    </div>
+
+                    <div class="modal-body">
+                        <h1>Delete Confimation</h1>
+                        <div class="alert alert-danger">
+                            <h5>Er du sikker på at slette brugeren - @Model.User.Name</h5>
+                            <form method="post">
+                                <button type="submit" asp-page-handler="DeleteUser" class="btn btn-danger">Ja</button>
+                                <a class="btn btn-primary" asp-page="../LeaderLandingPage/LeaderLandingPage">Annuller</a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </tbody>
 </table>
-<br />

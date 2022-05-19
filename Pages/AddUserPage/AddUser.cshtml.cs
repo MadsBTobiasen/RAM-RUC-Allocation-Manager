@@ -4,14 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using RAM___RUC_Allocation_Manager.MockData;
 using RAM___RUC_Allocation_Manager.Models;
-using RAM___RUC_Allocation_Manager.Models.WorkAssigments;
 using RAM___RUC_Allocation_Manager.Services;
 
-namespace RAM___RUC_Allocation_Manager.Pages.LeaderLandingPage
+namespace RAM___RUC_Allocation_Manager.Pages.AddUser
 {
-    public class LeaderLandingPageModel : PageModel
+    public class AddUserModel : PageModel
     {
         #region Fields
         private UserService userService;
@@ -22,25 +20,19 @@ namespace RAM___RUC_Allocation_Manager.Pages.LeaderLandingPage
 
         [BindProperty]
         public Models.User User { get; set; }
-
-        [BindProperty]
-        public Models.Employee Employee { get; set; }
-
-        public bool IsLeader { get; set; }
         #endregion
 
-        public LeaderLandingPageModel(UserService userService)
+        public AddUserModel(UserService userService)
         {
             this.userService = userService;
         }
-        
+
         public IActionResult OnGet()
         {
-            IsLeader = false;
             Users = userService.GetUsers();
             return Page();
         }
-
+        #region Methods
         public IActionResult OnPost()
         {
             if (!ModelState.IsValid)
@@ -51,19 +43,6 @@ namespace RAM___RUC_Allocation_Manager.Pages.LeaderLandingPage
             userService.CreateUser(User);
             return RedirectToPage("/LeaderLandingPage/LeaderLandingPage");
         }
-
-        //public void OnPostCheckType()
-        //{
-        //    if (User.Type == User.UserType.Employee)
-        //    {
-        //        IsLeader = false;
-        //    }
-
-        //    else
-        //    {
-        //        IsLeader = true;
-        //    }
-            
-        //}
+        #endregion
     }
 }
