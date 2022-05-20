@@ -1,0 +1,794 @@
+﻿@page
+@using RAM___RUC_Allocation_Manager.Models
+@using RAM___RUC_Allocation_Manager.Models.DbConnections
+@using RAM___RUC_Allocation_Manager.Models.WorkAssigments
+@using RAM___RUC_Allocation_Manager.Models.WorkAssigments.Committee
+@model RAM___RUC_Allocation_Manager.Pages.EditEmployeePage.AllocateHoursPageModel
+@{
+}
+<h1>Timeallokering for @Model.Employee.Name</h1>
+<form method="post">
+    <table>
+
+        <tr>
+            <td>Gruppeleder:</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <div class="custom-control custom-switch">
+                    <input asp-for="@Model.Employee.IsGroupLeader" type="checkbox" class="custom-control-input" id="customSwitch" name="customSwitch">
+                    <label class="custom-control-label" for="customSwitch"></label>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <input type="hidden" name="userId" value="@Model.Employee.Id"/>
+            <td><input asp-page-handler="GroupLeader" type="submit" value="Registrer" /></td>
+        </tr>
+
+    </table>
+</form>
+
+<hr/>
+
+<form method="post">
+    <table>
+        <tr>
+            <td>Opsparing:</td>
+        </tr>
+        <tr>
+            <td>
+                <td>
+                    <select asp-for="Employee.Savings" name="savings">
+                        <option value="@Employee.EmployeeSavings.ZeroPercent">0 procent opsparet</option>
+                        <option value="@Employee.EmployeeSavings.TwentyPercent">20 procent opsparet</option>
+                        <option value="@Employee.EmployeeSavings.FortyPercent">40 procent opsparet</option>
+                        <option value="@Employee.EmployeeSavings.SixtyPercent">60 procent opsparet</option>
+                        <option value="@Employee.EmployeeSavings.EightyPercent">80 procent opsparet</option>
+                        <option value="@Employee.EmployeeSavings.HundredPercent">100 procent opsparet</option>
+                    </select>
+                </td>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <input type="hidden" name="userId" value="@Model.Employee.Id" />
+            <td><input asp-page-handler="Savings" type="submit" value="Registrer" /></td>
+        </tr>
+    </table>
+</form>
+
+<hr />
+
+@if (Model.Employee.Title != Employee.EmployeeTitle.AssistantProfessor)
+{
+    <form method="post">
+        <table>
+            <tr>
+                <td>Frikøb:</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input name="startDate" type="date" /> Start dato</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input name="endDate" type="date" /> Slut dato</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input name="hours" pattern="[0-9]+" /> Frikøbte timer</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input name="minutes" pattern="([1-5][0-9]|[1-9])" /> Frikøbte minutter</td>
+            </tr>
+            <tr>
+                <td></td>
+                <input type="hidden" name="userId" value="@Model.Employee.Id" />
+                <td><input asp-page-handler="Redeem" type="submit" value="Registrer" /></td>
+            </tr>
+        </table>
+        @*@if (Model.Redemptions != null || Model.Redemptions.Any())*@
+        {
+            <table>
+                <thead>
+                <th></th>
+                <th>start dato</th>
+                <th>slut dato</th>
+                <th>Tid frikøbt</th>
+                </thead>
+                @foreach (Redemption redemption in Model.Employee.Redemptions)
+                {
+                    <tr>
+                        <td></td>
+                        <td>@redemption.StartDate</td>
+                        <td>@redemption.EndDate</td>
+                        <td>@Model.ConvertMinutesToHours(redemption.RedeemedMinutes)</td>
+                        <input type="hidden" name="id" value="@redemption.Id"/>
+                        <input type="hidden"  name="userId" value="@Model.Employee.Id"/>
+                        <td><input asp-page-handler="DeleteRedemption" type="submit" value="fjern frikøb"/></td>
+                    </tr>
+                }
+                <td><input asp-page-handler="DeleteRedemption" type="submit" value="fjern frikøb"/></td>
+            </table>
+        }
+        
+    </form>
+
+    <hr />
+}
+
+<form method="post">
+    <table>
+        <tr>
+            <td>Gæld/Overskud</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>Nuværende gæld/overskud:</td>
+            <td>@Model.ConvertMinutesToHours(Model.Employee.Balance)</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>Gæld/OverSkud for nyt semester:</td>
+            <td>@Model.ConvertMinutesToHours(Model.Employee.CalculateNewMinuteBalance(Model.BaseSettings))</td>
+        </tr>
+        <tr>
+            <td></td>
+            <input type="hidden"  name="userId" value="@Model.Employee.Id" />
+            <td><input asp-page-handler="AutoBalance" type="submit" value="Registrer" /></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>Manuelt indstil timer</td>
+            <td><input name="hours" pattern="[0-9]+" /></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>Manuelt indstil minutter</td>
+            <td><input name="minutes" pattern="([1-5][0-9]|[1-9])"/></td>
+        </tr>
+        <tr>
+            <td></td>
+            <input type="hidden" name="userId" value="@Model.Employee.Id" />
+            <td><input asp-page-handler="ManualBalance" type="submit" value="Registrer" /></td>
+        </tr>
+    </table>
+</form>
+
+<form method="post">
+    <table>
+        <thead>
+        <th>Underviser på:</th>
+        </thead>
+        @if (Model.Employee.EmployeeCourses.Any())
+{
+    <tbody>
+        @foreach (Course course in Model.Employee.EmployeeCourses.Select(ep => ep.Course))
+        {
+        <tr>
+            <td></td>
+            <td>@course.Name</td>
+            <td>@course.Type.ToString()</td>
+            <input type="hidden" name="removeId" value="@course.Id" />
+            <input type="hidden" name="userId" value="@Model.Employee.Id" />
+            <td><input asp-page-handler="RemoveCourse" type="submit" value="Fjern kursus" /></td>
+        </tr>
+        }
+    </tbody>
+}
+    </table>
+</form>
+
+<hr/>
+
+<form method="post">
+    <table>
+        <thead>
+        <th>øvrige kurser:</th>
+        </thead>
+        @if (Model.Courses != null || Model.Courses.Any())
+        {
+            <tbody>
+            @foreach (Course course in Model.Courses.Where(c => !Model.Employee.EmployeeCourses.ToList().Select(ec => ec.CourseId).Contains(c.Id)).Select(c => c))
+            {
+                <tr>
+                    <td></td>
+                    <td>@course.Name</td>
+                    <td>@course.Type.ToString()</td>
+                    <input type="hidden" name="addId" value="@course.Id" />
+                    <td><input name="hours" pattern="[0-9]+" size="1" /> timer for kursus</td>
+                    <td><input name="minutes" pattern="([1-5][0-9]|[1-9])" size="1" /> minutter for kursus</td>
+                    <input type="hidden" name="userId" value="@Model.Employee.Id" />
+                    <td><input asp-page-handler="AddCourse" type="submit" value="Tilføj kursus" /></td>
+                </tr>
+            }
+            </tbody>
+        }
+    </table>
+</form>
+<hr/>
+<form method ="post">
+    <table>
+        <caption>Vejleder grupper:</caption>
+        <thead>
+        <th>Id</th>
+        <th>Kandidat</th>
+        </thead>
+        @if (Model.Employee.EmployeeGroups != null || Model.Employee.EmployeeGroups.Any())
+        {
+            <tbody>
+            @foreach (Group g in Model.Employee.EmployeeGroups.Where(eg => eg.RoleOfEmployee == EmployeeGroup.EmployeeRole.Supervisor).Select(eg => eg.Group))
+            {
+                <tr>
+                    <td></td>
+                    <td>@g.RucId</td>
+                    @if (g.IsMasterThesis)
+                    {
+                        <td>Ja</td>
+                    }
+                    else
+                    {
+                        <td>Nej</td>
+                    }
+                    <input type="hidden" name="removeId" value="@g.Id"/>
+                    <input type="hidden" name="userId" value="@Model.Employee.Id"/>
+                    <td><input asp-page-handler="RemoveGroup" type="submit" value="Fjern vejledning"/></td>
+                </tr>
+            }
+            </tbody>
+        }
+    </table>
+</form>
+
+<form method="post">
+    <table>
+        <caption>Øvrige grupper</caption>
+        @if (Model.Employee.EmployeeGroups != null || Model.Employee.EmployeeGroups.Any())
+        {
+            <thead>
+            <th>Id</th>
+            <th>Kandidat</th>
+            </thead>
+            <tbody>
+            @foreach (Group g in Model.Groups.Where(g => !Model.Employee.EmployeeGroups.ToList().Select(eg => eg.GroupId).Contains(g.Id)).Select(g => g))
+            {
+                <tr>
+                    <td></td>
+                    <td>@g.RucId</td>
+                    @if (g.IsMasterThesis)
+                    {
+                        <td>Ja</td>
+                    }
+                    else
+                    {
+                        <td>Nej</td>
+                    }
+                    <input type="hidden" name="addId" value="@g.Id"/>
+                    <input type="hidden" name="userId" value="@Model.Employee.Id"/>
+                    <td><input asp-page-handler="AddGroup" type="submit" value="tilføj vejledning"/></td>
+                </tr>
+            }
+            </tbody>
+        }
+    </table>
+</form>
+<form method="post">
+    <table>
+        <caption>Ny gruppe:</caption>
+        <tr>
+            <td>Ruc id</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input pattern="[0-9]+" title="Skal være et nummer" name="rucId"/></td>
+        </tr>
+        <tr>
+            <td>Gruppestørreslse</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input pattern="[1-6]" title="Grupper kan maks være på 6" name="members"/></td>
+        </tr>
+        <tr>
+            <td>Kandidat</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <div class="custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="customSwitch" name="isMasterThesis">
+                    <label class="custom-control-label" for="customSwitch"></label>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td><input asp-page-handler="CreateGroup" type="submit" value="Opret ny gruppe"/></td>
+        </tr>
+    </table>
+</form>
+
+<form method="post">
+    <table>
+        <caption>Gruppedannelsesfacilitering</caption>
+        <tr>
+            <td>Dage</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input pattern="[1-3]" title="Gruppefacilitering kan maks vare 3 dage" /></td>
+        </tr>
+        <tr>
+            <input type="hidden" value="@Model.Employee.Id" name="userId"/>
+            <td><input asp-page-handler="AddGroupFacilitation" type="submit" value="Gem"/></td>
+        </tr>
+    </table>
+</form>
+<form method="post">
+    <table>
+        <caption>Aktive gruppefaciliteringer</caption>
+        @if (Model.Employee.GroupFacilitationTasks != null || Model.Employee.GroupFacilitationTasks.Any())
+        {
+            <thead>
+            <th>Id</th>
+            <th>Kandidat</th>
+            </thead>
+            <tbody>
+            @foreach (GroupFacilitationTask gft in Model.Employee.GroupFacilitationTasks)
+            {
+                <tr>
+                    <td></td>
+                    <td>@gft.Id</td>
+                    <td>@gft.DaysSpan</td>
+                    <input type="hidden" name="gftId" value="@gft.Id" />
+                    <input type="hidden" name="userId" value="@Model.Employee.Id" />
+                    <td><input asp-page-handler="RemoveGroupFacilitation" type="submit" value="Fjern gruppefacilitering" /></td>
+                </tr>
+            }
+            </tbody>
+        }
+    </table>
+</form>
+<form method="post">
+    <table>
+        <caption>Ph.D vejledning</caption>
+        <tr>
+            <td>Rolle</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <select name="employeeRole">
+                    <option value="@PhdTasks.EmployeeRole.MainSupervisor">Hoved vejleder</option>
+                    <option value="@PhdTasks.EmployeeRole.SecondarySupervisor">Sekundær vejleder</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <input type="hidden" value="@Model.Employee.Id" name="userId"/>
+            <td><input asp-page-handler="PhdSupervision" type="submit" value="Gem"/></td>
+        </tr>
+    </table>
+</form>
+
+<form method="post">
+    <table>
+        <caption>Aktive Ph.D vejledninger</caption>
+        @if (Model.Employee.PhdsTasks != null || Model.Employee.PhdsTasks.Where(phd => phd.RoleOfEmployee != PhdTasks.EmployeeRole.EndEvaluator).Select(phd=>phd).Any())
+        {
+            <thead>
+            <th>Id</th>
+            <th>Rolle</th>
+            </thead>
+            <tbody>
+            @foreach (PhdTasks phd in Model.Employee.PhdsTasks)
+            {
+                <tr>
+                    <td></td>
+                    <td>@phd.Id</td>
+                    @if (phd.RoleOfEmployee == PhdTasks.EmployeeRole.MainSupervisor)
+                    {
+                        <td>Hovedvejleder</td>
+                    }
+                    else if (phd.RoleOfEmployee == PhdTasks.EmployeeRole.SecondarySupervisor)
+                    {
+                        <td>Sekundær vejleder</td>
+                    }
+                    <input type="hidden" name="phdId" value="@phd.Id" />
+                    <input type="hidden" name="userId" value="@Model.Employee.Id" />
+                    <td><input asp-page-handler="RemovePhdSupervision" type="submit" value="Fjern gruppefacilitering" /></td>
+                </tr>
+            }
+            </tbody>
+        }
+    </table>
+</form>
+<form method="post">
+    <table>
+        <td>Antal adjunktvejledninger</td>
+        <input type="hidden" name="userId" value="@Model.Employee.Id"/>
+        <td><input asp-for="Employee.AssistantProfessorSupervisions" type="number" name="apSupervisions"/></td>
+        <td><input type="submit" asp-page-handler="APSupervision"/></td>
+    </table>
+</form>
+
+<form method="post">
+    <table>
+        <td>Antal Portfolie eksaminationer</td>
+        <input type="hidden" name="userId" value="@Model.Employee.Id" />
+        <td><input asp-for="Employee.PortfolioExaminations" type="number" name="portfolios" /></td>
+        <td><input type="submit" asp-page-handler="Portfolios" value="gem"/></td>
+    </table>
+</form>
+<form method="post">
+    <table>
+        <td>Antal synopsis eksaminationer</td>
+        <input type="hidden" name="userId" value="@Model.Employee.Id" />
+        <td><input asp-for="Employee.SynopsisExaminations" type="number" name="synopses" /></td>
+        <td><input type="submit" asp-page-handler="Synopses" value="gem"/></td>
+    </table>
+</form>
+
+<form method="post">
+    <table>
+        <caption>Intern censor for:</caption>
+        <thead>
+        <th>Id</th>
+        <th>Kandidat</th>
+        </thead>
+        @if (Model.Employee.EmployeeGroups != null || Model.Employee.EmployeeGroups.Any())
+        {
+            <tbody>
+                @foreach (Group g in Model.Employee.EmployeeGroups.Where(eg => eg.RoleOfEmployee == EmployeeGroup.EmployeeRole.InternalCensor).Select(eg => eg.Group))
+                {
+                    <tr>
+                        <td></td>
+                        <td>@g.RucId</td>
+                        @if (g.IsMasterThesis)
+                        {
+                            <td>Ja</td>
+                        }
+                        else
+                        {
+                            <td>Nej</td>
+                        }
+                        <input type="hidden" name="removeId" value="@g.Id" />
+                        <input type="hidden" name="userId" value="@Model.Employee.Id" />
+                        <td><input asp-page-handler="RemoveInternalCensor" type="submit" value="Fjern" /></td>
+                    </tr>
+                }
+            </tbody>
+        }
+    </table>
+</form>
+<form method="post">
+    <table>
+        <caption>Grupper uden intern censor</caption>
+        @if (Model.Employee.EmployeeGroups != null || Model.Employee.EmployeeGroups.Any())
+        {
+            <thead>
+            <th>Id</th>
+            <th>Kandidat</th>
+            </thead>
+            <tbody>
+            @foreach (Group g in Model.Groups)
+            {
+                if (g.EmployeeGroups.Select(g => g.RoleOfEmployee).Contains(EmployeeGroup.EmployeeRole.InternalCensor))
+                {
+                    <tr>
+                        <td></td>
+                        <td>@g.RucId</td>
+                        @if (g.IsMasterThesis)
+                        {
+                            <td>Ja</td>
+                        }
+                        else
+                        {
+                            <td>Nej</td>
+                        }
+                        <input type="hidden" name="addId" value="@g.Id" />
+                        <input type="hidden" name="userId" value="@Model.Employee.Id" />
+                        <td><input asp-page-handler="AddInternalCensor" type="submit" value="Tilføj" /></td>
+                    </tr>
+                }
+                    
+            }
+            </tbody>
+        }
+    </table>
+</form>
+
+<form method="post">
+    <table>
+        <caption>Tilføj Ph.D slutevaluering</caption>
+        <thead>
+        <th>Antal at tilføje</th>
+        </thead>
+        <tbody>
+        <tr>
+            <td><input name="amount" pattern="[0-9]+" /></td>
+        </tr>
+        <tr>
+            <input type="hidden" name="userId" value="@Model.Employee.Id"/>
+            <td><input asp-page-handler="AddPhdEndEval" type="submit" value="gem"/></td>
+        </tr>
+        </tbody>
+    </table>
+</form>
+<form method="post">
+    <table>
+        <caption>Fjern Ph.D slutevaluering</caption>
+        <thead>
+        <th>Antal at fjerne</th>
+        </thead>
+        <tbody>
+        <tr>
+            <td><input name="amount" pattern="[0-9]+" value="gem" /></td>
+        </tr>
+
+        <tr>
+            <input type="hidden" name="userId" value="@Model.Employee.Id"/>
+            <td><input asp-page-handler="RemovePhdEndEval" type="submit"/></td>
+        </tr>
+        </tbody>
+    </table>
+</form>
+<form method="post">
+    <table>
+        <caption>Tilføj unikke bedømmelsesudvalg</caption>
+        @if (Model.CustomCommittees != null || Model.CustomCommittees.Any())
+        {
+            <thead>
+            <th>Navn</th>
+            </thead>
+            <tbody>
+            @foreach (CustomCommittee cc in Model.CustomCommittees)
+            {
+                if (!cc.EmployeesCustomCommittees.Select(ecc => ecc.EmpployeeId).Contains(Model.Employee.Id))
+                {
+                    <tr>
+                        <td></td>
+                        <td>@cc.Name</td>
+                            
+                        <input type="hidden" name="ccId" value="@cc.Id" />
+                        <input type="hidden" name="userId" value="@Model.Employee.Id" />
+                        <td><input asp-page-handler="AddCustomCommittee" type="submit" value="Tilføj" /></td>
+                    </tr>
+                }
+
+            }
+            </tbody>
+        }
+    </table>
+</form>
+<form method="post">
+    <table>
+        <caption>Fjern unikke bedømmelsesudvalg</caption>
+        @if (Model.CustomCommittees != null || Model.CustomCommittees.Any())
+        {
+            <thead>
+            <th>Navn</th>
+            </thead>
+            <tbody>
+            @foreach (EmployeeCustomCommittee cc in Model.Employee.EmployeeCustomCommittees)
+            {
+                
+                
+                <tr>
+                    <td></td>
+                    <td>@cc.CustomCommittee.Name</td>
+                            
+                    <input type="hidden" name="ccId" value="@cc.CustomCommitteeId" />
+                    <input type="hidden" name="userId" value="@Model.Employee.Id" />
+                    <td><input asp-page-handler="RemoveCustomCommittee" type="submit" value="Fjern" /></td>
+                </tr>
+                
+
+            }
+            </tbody>
+        }
+    </table>
+</form>
+<form method="post">
+    <table>
+        <caption>Nyt unikt bedømmelsesudvalg:</caption>
+        <tr>
+            <td>Navn</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="text" name="name" /></td>
+        </tr>
+        <tr>
+            <td>Timer for hvert medlem</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input pattern="[0-9]+" name="hours" /></td>
+        </tr>
+        <tr>
+            <td>Minutter for hvert medlem</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input pattern="([1-5][0-9]|[1-9])" name="minutes" /></td>
+        </tr>
+        <tr>
+            <input type="hidden" name="userId" value="@Model.Employee.Id"/>
+            <td><input asp-page-handler="CreateCustomCommittee" type="submit" value="Opret nyt bedømmelsesudvalg"/></td>
+        </tr>
+    </table>
+</form>
+<form method="post">
+    <table>
+        <caption>Tilføj ansættelsesbedømmelsesudvalg</caption>
+        @if (Model.HiringCommittees != null || Model.HiringCommittees.Any())
+        {
+            <thead>
+            <th>Antal personer der skal bedømmes</th>
+            </thead>
+            <tbody>
+                @foreach (HiringCommittee hc in Model.HiringCommittees)
+                {
+                    if (!hc.EmployeeHiringCommittees.Select(ehc => ehc.EmployeeId).Contains(Model.Employee.Id))
+                    {
+                        <tr>
+                            <td></td>
+                            <td>@hc.PeopleToBeAssessed</td>
+
+                            <input type="hidden" name="hcId" value="@hc.Id" />
+                            <input type="hidden" name="userId" value="@Model.Employee.Id" />
+                            <td><input asp-page-handler="AddHiringCommittee" type="submit" value="Tilføj" /></td>
+                        </tr>
+                    }
+
+                }
+            </tbody>
+        }
+    </table>
+</form>
+<form method="post">
+    <table>
+        <caption>Fjern ansættelsesbedømmelsesudvalg</caption>
+        @if (Model.HiringCommittees != null || Model.HiringCommittees.Any())
+        {
+            <thead>
+            <th>Antal personer der skal bedømmes</th>
+            </thead>
+            <tbody>
+                @foreach (EmployeeHiringCommittee ehc in Model.Employee.EmployeeHiringCommittees)
+                {
+
+
+                    <tr>
+                        <td></td>
+                        <td>@ehc.HiringCommittee.PeopleToBeAssessed</td>
+
+                        <input type="hidden" name="hcId" value="@ehc.HiringCommitteeId" />
+                        <input type="hidden" name="userId" value="@Model.Employee.Id" />
+                        <td><input asp-page-handler="RemoveHiringCommittee" type="submit" value="Fjern" /></td>
+                    </tr>
+
+
+                }
+            </tbody>
+        }
+    </table>
+</form>
+
+<form method="post">
+    <table>
+        <caption>Nyt ansættelsesbedømmelsesudvalg:</caption>
+        <tr>
+            <td>Antal personer der skal bedømmes</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input pattern="[1-9]+" name="amount" /></td>
+        </tr>
+        <tr>
+            <input name="userId" value="@Model.Employee.Id" type="hidden"/>
+            <td><input asp-page-handler="CreateHiringCommittee" type="submit" value="Opret nyt bedømmelsesudvalg"/></td>
+        </tr>
+    </table>
+</form>
+<form>
+    <table>
+        <caption>Tilføj forfremmelsesudvalg:</caption>
+        <tr>
+            <td>Antal personer der skal bedømmes</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input pattern="[1-9]+" name="amount"/></td>
+        </tr>
+        <tr>
+            <input name="userId" value="@Model.Employee.Id" type="hidden"/>
+            <td><input asp-page-handler="AddPromotionCommittee" type="submit" value="Tildel bedømmelsesudvalg"/></td>
+        </tr>
+    </table>
+</form>
+<form method="post">
+    <table>
+        <caption>fjern forfremmelsesudvalg</caption>
+        @if (Model.Employee.PromotionCommittees != null || Model.Employee.PromotionCommittees.Any())
+        {
+            <thead>
+            <th>Antal personer der skal bedømmes</th>
+            </thead>
+            <tbody>
+                @foreach (PromotionCommitteeTask pct in Model.Employee.PromotionCommittees)
+                {
+                    <tr>
+                        <td></td>
+                        <td>@pct.PeopleToBeAssessed</td>
+                        <input type="hidden" name="gftId" value="@pct.Id" />
+                        <input type="hidden" name="userId" value="@Model.Employee.Id" />
+                        <td><input asp-page-handler="RemovePromotionCommittee" type="submit" value="Fjern" /></td>
+                    </tr>
+                }
+            </tbody>
+        }
+    </table>
+</form>
+
+<form method="post">
+    <table>
+        <td>Antal Ph.D bedømmelser</td>
+        <input type="hidden" name="userId" value="@Model.Employee.Id" />
+        <td><input asp-for="Employee.PhdCommittees" type="number" name="amount" /></td>
+        <td><input type="submit" asp-page-handler="PhdCommittees" value="gem" /></td>
+    </table>
+</form>
+
+
+@*<h1>Timeallokering for @Model.Employee.Name</h1>
+
+    <table class="employee-landing-page allocated-hours-table">
+        <tbody>
+        <tr>
+            <td>
+                Personlige timeforhold
+            </td>
+            <td>
+                <a class="btn btn-primary btn-sm" type="button" title="Rediger" asp-page="/EditEmployee/EditPersonalHoursPage" asp-route="@Model.Employee.Id"></a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Timer for kursusopgaver
+            </td>
+            <td>
+                <a class="btn btn-primary btn-sm" type="button" title="Rediger" asp-page="/EditEmployee/EditCourseHoursPage" asp-route="@Model.Employee.Id"></a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Timer for vejledningsopgaver
+            </td>
+            <td>
+                <a class="btn btn-primary btn-sm" type="button" title="Rediger" asp-page="/EditEmployee/EditSupervisionHoursPage" asp-route="@Model.Employee.Id"></a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Timer for eksamensopgaver
+            </td>
+            <td>
+                <a class="btn btn-primary btn-sm" type="button" title="Rediger" asp-page="/EditEmployee/EditExamHoursPage" asp-route="@Model.Employee.Id"></a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Timer for øvrige opgaver
+            </td>
+            <td>
+                <a class="btn btn-primary btn-sm" type="button" title="Rediger" asp-page="/EditEmployee/EditMiscHoursPage" asp-route="@Model.Employee.Id"></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>*@

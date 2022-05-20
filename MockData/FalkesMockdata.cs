@@ -13,27 +13,28 @@ namespace RAM___RUC_Allocation_Manager.MockData
 {
     public class FalkesMockdata
     {
-        private List<Employee> employeeList;
-        private List<Leader> leaderList;
-        private List<Programme> programmesList;
-        private List<CustomCommittee> customCommitteesList;
-        private List<PromotionCommitteeTask> promotionCommitteeTasksList;
-        private List<HiringCommittee> hiringCommitteeList;
-        private List<PhdCommittee> phdCommitteeList;
-        private List<AssistantProfessorSupervision> assistantProfessorSupervisionList;
-        private List<Course> courseList;
-        private List<GroupFacilitationTask> groupFacilitationTaskList;
-        private List<PhdTasks> phdTaskList;
-        private List<Portfolio> portfolioList;
-        private List<Synopsis> synopsisList;
-        private List<Group> groupList;
-        private List<Redemption> redemptionList;
-        private List<EmployeeCourse> employeeCoursesList;
-        private List<EmployeeCustomCommittee> employeeCustomCommitteesList;
-        private List<EmployeeGroup> employeeGroupsList;
-        private List<EmployeeHiringCommittee> employeeHiringCommitteesList;
-        private List<EmployeeProgramme> employeeProgrammesList;
-        private List<LeaderProgramme> leaderProgrammesList;
+        private List<Employee> employeeList = new List<Employee>();
+        private List<Leader> leaderList = new List<Leader>();
+        private List<Programme> programmesList = new List<Programme>();
+        private List<CustomCommittee> customCommitteesList = new List<CustomCommittee>();
+        private List<PromotionCommitteeTask> promotionCommitteeTasksList = new List<PromotionCommitteeTask>();
+        private List<HiringCommittee> hiringCommitteeList = new List<HiringCommittee>();
+        private List<Course> courseList = new List<Course>();
+        private List<GroupFacilitationTask> groupFacilitationTaskList = new List<GroupFacilitationTask>();
+        private List<PhdTasks> phdTaskList = new List<PhdTasks>();
+        private List<Group> groupList = new List<Group>();
+        private List<Redemption> redemptionList = new List<Redemption>();
+        private List<EmployeeCourse> employeeCoursesList = new List<EmployeeCourse>();
+        private List<EmployeeCustomCommittee> employeeCustomCommitteesList = new List<EmployeeCustomCommittee>();
+        private List<EmployeeGroup> employeeGroupsList = new List<EmployeeGroup>();
+        private List<EmployeeHiringCommittee> employeeHiringCommitteesList = new List<EmployeeHiringCommittee>();
+        private List<EmployeeProgramme> employeeProgrammesList = new List<EmployeeProgramme>();
+        private List<LeaderProgramme> leaderProgrammesList = new List<LeaderProgramme>();
+
+        public FalkesMockdata()
+        {
+            CreateMockData();
+        }
         private void CreateMockData()
         {
             //Users
@@ -41,7 +42,7 @@ namespace RAM___RUC_Allocation_Manager.MockData
             Falke.Name = "Falke";
             Falke.Email = "Falke@mail.dk";
             Falke.Username = "FalkeUsername";
-            Falke.Password = "FalkePassword";
+            Falke.SetPassword("FalkePassword");
             Falke.Title = Employee.EmployeeTitle.Professor;
             Falke.IsGroupLeader = true;
             Falke.Balance = 0;
@@ -51,7 +52,7 @@ namespace RAM___RUC_Allocation_Manager.MockData
             Mads.Name = "Mads";
             Mads.Email = "Mads@mail.dk";
             Mads.Username = "MadsUsername";
-            Mads.Password = "MadsPassword";
+            Mads.SetPassword("MadsPassword");
             Mads.Title = Employee.EmployeeTitle.AssistantProfessor;
             Mads.IsGroupLeader = false;
             Mads.Balance = 60;
@@ -61,14 +62,14 @@ namespace RAM___RUC_Allocation_Manager.MockData
             Martin.Name = "Martin";
             Martin.Email = "Martin@Mail.dk";
             Martin.Username = "MatinUsername";
-            Martin.Password = "MartinPassword";
+            Martin.SetPassword("MartinPassword");
             Martin.IsAdmin = true;
 
             Leader Simon = new Leader();
             Simon.Name = "Simon";
             Simon.Email = "Simon@mail.dk";
             Simon.Username = "SimonUsername";
-            Simon.Password = "SimonPassword";
+            Simon.SetPassword("SimonPassword");
             Simon.IsAdmin = false;
 
             //Programmes
@@ -95,11 +96,6 @@ namespace RAM___RUC_Allocation_Manager.MockData
             HiringCommittee hiringCommittee = new HiringCommittee();
             hiringCommittee.PeopleToBeAssessed = 5;
 
-            PhdCommittee phdCommittee = new PhdCommittee();
-            phdCommittee.Employee = Falke;
-
-            AssistantProfessorSupervision assistantProfessorSupervision = new AssistantProfessorSupervision();
-            assistantProfessorSupervision.Supervisor = Falke;
 
             Course course = new Course();
             course.ResponsibleEmployee = Mads;
@@ -115,11 +111,6 @@ namespace RAM___RUC_Allocation_Manager.MockData
             phd.Employee = Falke;
             phd.RoleOfEmployee = PhdTasks.EmployeeRole.EndEvaluator;
 
-            Portfolio portfolio = new Portfolio();
-            portfolio.Examinator = Falke;
-
-            Synopsis synopsis = new Synopsis();
-            synopsis.Examinator = Falke;
 
             Group group = new Group();
             group.IsMasterThesis = false;
@@ -171,13 +162,9 @@ namespace RAM___RUC_Allocation_Manager.MockData
             customCommitteesList.Add(CustomCommittee);
             promotionCommitteeTasksList.Add(promotionCommitteeTask);
             hiringCommitteeList.Add(hiringCommittee);
-            phdCommitteeList.Add(phdCommittee);
-            assistantProfessorSupervisionList.Add(assistantProfessorSupervision);
             courseList.Add(course);
             groupFacilitationTaskList.Add(groupFacilitation);
             phdTaskList.Add(phd);
-            portfolioList.Add(portfolio);
-            synopsisList.Add(synopsis);
             groupList.Add(group);
             redemptionList.Add(redemption);
             employeeCoursesList.Add(employeeCourse);
@@ -218,15 +205,7 @@ namespace RAM___RUC_Allocation_Manager.MockData
             return hiringCommitteeList;
         }
 
-        public List<PhdCommittee> GetPhdCommittees()
-        {
-            return phdCommitteeList;
-        }
 
-        public List<AssistantProfessorSupervision> GetAssistantProfessorSupervisions()
-        {
-            return assistantProfessorSupervisionList;
-        }
 
         public List<Course> GetCourses()
         {
@@ -243,15 +222,8 @@ namespace RAM___RUC_Allocation_Manager.MockData
             return phdTaskList;
         }
 
-        public List<Portfolio> GetPortfolios()
-        {
-            return portfolioList;
-        }
 
-        public List<Synopsis> GetSynopses()
-        {
-            return synopsisList;
-        }
+
 
         public List<Group> GetGroups()
         {
@@ -278,7 +250,7 @@ namespace RAM___RUC_Allocation_Manager.MockData
             return employeeGroupsList;
         }
 
-        public List<EmployeeHiringCommittee> EmployeeHiringCommittees()
+        public List<EmployeeHiringCommittee> GetEmployeeHiringCommittees()
         {
             return employeeHiringCommitteesList;
         }

@@ -15,6 +15,9 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RAM___RUC_Allocation_Manager.Models.DbConnections;
+using RAM___RUC_Allocation_Manager.Models.Email;
+using RAM___RUC_Allocation_Manager.Models.WorkAssigments;
+using RAM___RUC_Allocation_Manager.Models.WorkAssigments.Committee;
 
 namespace RAM___RUC_Allocation_Manager
 {
@@ -59,18 +62,37 @@ namespace RAM___RUC_Allocation_Manager
             #endregion
               
             services.AddDbContext<RamDbContext>();
-            services.AddTransient<DbService<User>, DbService<User>>();
             services.AddTransient<DbService<LeaderProgramme>, DbService<LeaderProgramme>>();
+            services.AddTransient<DbService<Employee>, DbService<Employee>>();
+            services.AddTransient<DbService<Leader>, DbService<Leader>>();
+            services.AddTransient<DbService<Programme>, DbService<Programme>>();
+            services.AddTransient<DbService<CustomCommittee>, DbService<CustomCommittee>>();
+            services.AddTransient<DbService<PromotionCommitteeTask>, DbService<PromotionCommitteeTask>>();
+            services.AddTransient<DbService<HiringCommittee>, DbService<HiringCommittee>>();
+            services.AddTransient<DbService<Course>, DbService<Course>>();
+            services.AddTransient<DbService<GroupFacilitationTask>, DbService<GroupFacilitationTask>>();
+            services.AddTransient<DbService<PhdTasks>, DbService<PhdTasks>>();
+            services.AddTransient<DbService<Group>, DbService<Group>>();
+            services.AddTransient<DbService<Redemption>, DbService<Redemption>>();
+            services.AddTransient<DbService<EmployeeCourse>, DbService<EmployeeCourse>>();
+            services.AddTransient<DbService<EmployeeCustomCommittee>, DbService<EmployeeCustomCommittee>>();
+            services.AddTransient<DbService<EmployeeGroup>, DbService<EmployeeGroup>>();
+            services.AddTransient<DbService<EmployeeHiringCommittee>, DbService<EmployeeHiringCommittee>>();
+            services.AddTransient<DbService<EmployeeProgramme>, DbService<EmployeeProgramme>>();
             services.AddTransient<DbService<Leader>, DbService<Leader>>();
 
             services.AddSingleton<JSONFileService<BaseSettings>, JSONFileService<BaseSettings>>();
+            services.AddSingleton<JSONFileService<EmailTemplate>, JSONFileService<EmailTemplate>>();
+            services.AddSingleton<JSONFileService<EmailConfiguration>, JSONFileService<EmailConfiguration>>();
+
             services.AddSingleton<UserService, UserService>();
             services.AddSingleton<SettingsService, SettingsService>();
             services.AddSingleton<LoginService, LoginService>();
+            services.AddSingleton<EmailService, EmailService>();
 
             services.AddTransient<PaginationService<Leader>, PaginationService<Leader>>();
             services.AddTransient<PaginationService<Employee>, PaginationService<Employee>>();
-
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

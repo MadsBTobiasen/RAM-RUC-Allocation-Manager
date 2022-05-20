@@ -3,65 +3,91 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using RAM___RUC_Allocation_Manager.MockData;
 
 namespace RAM___RUC_Allocation_Manager.Services
 {
     public class SettingsService
     {
-
         #region Fields
         private JSONFileService<BaseSettings> jsonFileService;
+        private List<BaseSettings> BaseSettings;
         #endregion
 
         #region Properties
-        public BaseSettings Settings { get; set; }
         #endregion
 
-        #region Constructor
-        public SettingsService(JSONFileService<BaseSettings> json)
+        public SettingsService(JSONFileService<BaseSettings> jsonFileService)
         {
-
-            jsonFileService = json;
-            LoadSettings();
-
-            Console.WriteLine($"Found and loaded the settings file, with settings id: ({Settings.ID})");
-
+            this.jsonFileService = jsonFileService;
+            //BaseSettingsList = MockSettings.GetMocksBaseSettings();
+            BaseSettings = jsonFileService.GetJsonObjects().ToList();
+            //jsonFileService.SaveJsonObjects(BaseSettings);
         }
-        #endregion
 
         #region Methods
-        /// <summary>
-        /// Method that retrieves the settings from the settings file, and loads it into the Settings-property.
-        /// </summary>
-        private void LoadSettings()
+        public List<BaseSettings> LoadSettings()
         {
-
-            Settings = jsonFileService.GetJsonObjects().SingleOrDefault();
-
+            return BaseSettings;
         }
 
         /// <summary>
-        /// Method that updates the setting-object, and saves the changes to the JSON file.
+        /// Updates the value of all the properties in BaseSettings.
         /// </summary>
-        /// <param name="updatedSettings"></param>
-        public void ApplySetting(BaseSettings updatedSettings)
+        /// <param name="baseSettings"></param>
+        public void ApplySetting(BaseSettings baseSettings)
         {
-
-            //Apply changes to settings
-            Settings = updatedSettings;
-            jsonFileService.SaveJsonObjects(new List<BaseSettings>() { Settings });
-
+            if (baseSettings != null)
+            {
+                foreach (BaseSettings b in BaseSettings)
+                {
+                    b.LessonHourValue = baseSettings.LessonHourValue;
+                    b.HourPerPersonHiringCommittee = baseSettings.HourPerPersonHiringCommittee;
+                    b.HourPerPersonPromotionCommittee = baseSettings.HourPerPersonHiringCommittee;
+                    b.SupervisionOfGroupHourSixMemberMasters = baseSettings.SupervisionOfGroupHourSixMemberMasters;
+                    b.SupervisionOfGroupHourFiveMember = baseSettings.SupervisionOfGroupHourFiveMember;
+                    b.SupervisionOfGroupHourFiveMemberMasters = baseSettings.SupervisionOfGroupHourFiveMemberMasters;
+                    b.SupervisionOfGroupHourFourMember = baseSettings.SupervisionOfGroupHourFourMember;
+                    b.SupervisionOfGroupHourFourMemberMasters = baseSettings.SupervisionOfGroupHourFourMemberMasters;
+                    b.SupervisionOfGroupHourThreeMember = baseSettings.SupervisionOfGroupHourThreeMember;
+                    b.SupervisionOfGroupHourThreeMemberMasters = baseSettings.SupervisionOfGroupHourThreeMemberMasters;
+                    b.SupervisionOfGroupHourTwoMember = baseSettings.SupervisionOfGroupHourTwoMember;
+                    b.SupervisionOfGroupHourTwoMemberMasters = baseSettings.SupervisionOfGroupHourTwoMemberMasters;
+                    b.SupervisionOfGroupHourOneMember = baseSettings.SupervisionOfGroupHourOneMember;
+                    b.SupervisionOfGroupHourOneMemberMasters = baseSettings.SupervisionOfGroupHourOneMemberMasters;
+                    b.BaseHoursForAssistantProfessor = baseSettings.BaseHoursForAssistantProfessor;
+                    b.BaseHoursForAssociateProfessor = baseSettings.BaseHoursForAssociateProfessor;
+                    b.BaseHoursForProfessor = baseSettings.BaseHoursForProfessor;
+                    b.GroupFacilitationBaseHour = baseSettings.GroupFacilitationBaseHour;
+                    b.GroupFacilitationHourDailyIncrement = baseSettings.GroupFacilitationHourDailyIncrement;
+                    b.HourPerPersonHiringCommittee = baseSettings.HourPerPersonHiringCommittee;
+                    b.HourPerPersonPromotionCommittee = baseSettings.HourPerPersonPromotionCommittee;
+                    b.PedagogicalQualification = baseSettings.PedagogicalQualification;
+                    b.PhdCommitteeHourValue = baseSettings.PhdCommitteeHourValue;
+                    b.PhdEndEvalHourWorth = baseSettings.PhdEndEvalHourWorth;
+                    b.PhdMainSupervisionHourWorth = baseSettings.PhdMainSupervisionHourWorth;
+                    b.PhdSecondarySupervisionHourWorth = baseSettings.PhdSecondarySupervisionHourWorth;
+                    b.PortfolioHourWorth = baseSettings.PortfolioHourWorth;
+                    b.SynopsisHourWorth = baseSettings.SynopsisHourWorth;
+                    b.SabLessonHourValue = baseSettings.SabLessonHourValue;
+                    b.SibLessonHourValue = baseSettings.SibLessonHourValue;
+                }
+                jsonFileService.SaveJsonObjects(BaseSettings);
+            }
         }
 
         /// <summary>
-        /// Method that returns the BaseSettings object.
+        /// Gets the value of the properties in BaseSettings.
         /// </summary>
-        /// <returns>BaseSettings object.</returns>
+        /// <returns></returns>
         public BaseSettings GetSettings()
         {
-            return Settings;
+            foreach (BaseSettings settings in BaseSettings)
+            {
+                return settings;
+            }
+            return null;
         }
         #endregion
-
     }
 }

@@ -2,11 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using RAM___RUC_Allocation_Manager.Models;
-using RAM___RUC_Allocation_Manager.Models.DbConnections;
 using RAM___RUC_Allocation_Manager.Services;
 
 namespace RAM___RUC_Allocation_Manager.Pages.SettingsPage
@@ -24,6 +22,8 @@ namespace RAM___RUC_Allocation_Manager.Pages.SettingsPage
         public EmployeeProgramme NewEmployeeProgramme { get; set; }
         [BindProperty]
         public Leader Leader { get; set; }
+      
+        private SettingsService settingsService;
 
         public IEnumerable<Leader> Leaders { get; set; }
 
@@ -31,15 +31,27 @@ namespace RAM___RUC_Allocation_Manager.Pages.SettingsPage
         public DbService<Leader> dbService2 { get; set; }
         public UserService userService { get; set; }
 
+        public List<BaseSettings> BaseSettingsList { get; set; }
+
+        [BindProperty]
+        public BaseSettings BaseSettings { get; set; }
+
+        public SettingsPageModel(SettingsService settingsService)
         public SettingsPageModel(DbService<LeaderProgramme> dbservice, DbService<Leader> dbservice2, UserService userservice)
         {
+            this.settingsService = settingsService;
             dbService = dbservice;
             dbService2 = dbservice2;
             userService = userservice;
         }
 
+        public void OnGet()
         public IActionResult OnPost()
         {
+            BaseSettings = settingsService.GetSettings(); 
+            BaseSettingsList = settingsService.LoadSettings();
+
+        }
             NewProgramme = new Programme();
             NewLeaderProgramme = new LeaderProgramme();
             NewEmployeeProgramme = new EmployeeProgramme();
@@ -64,6 +76,15 @@ namespace RAM___RUC_Allocation_Manager.Pages.SettingsPage
         {
             Leaders = await dbService2.GetObjectsAsync();
             //Leaders = userService.GetUsersByType(Models.User.UserType.Leader).Cast<Leader>().ToList();
+        public IActionResult OnPost()
+        {
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+
+            settingsService.ApplySetting(BaseSettings);
+            return RedirectToPage("/LeaderLandingPage/LeaderLandingPage");
         }
     }
 }
