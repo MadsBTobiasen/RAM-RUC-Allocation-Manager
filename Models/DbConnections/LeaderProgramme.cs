@@ -15,5 +15,10 @@ namespace RAM___RUC_Allocation_Manager.Models.DbConnections
         public int LeaderId { get; set; }
 
         public Leader Leader { get; set; }
+
+        public LeaderProgramme()
+        {
+            
+        }
     }
 }

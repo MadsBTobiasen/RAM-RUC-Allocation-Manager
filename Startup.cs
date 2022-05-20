@@ -61,6 +61,7 @@ namespace RAM___RUC_Allocation_Manager
             services.AddDbContext<RamDbContext>();
             services.AddTransient<DbService<User>, DbService<User>>();
             services.AddTransient<DbService<LeaderProgramme>, DbService<LeaderProgramme>>();
+            services.AddTransient<DbService<Leader>, DbService<Leader>>();
 
             services.AddSingleton<JSONFileService<BaseSettings>, JSONFileService<BaseSettings>>();
             services.AddSingleton<UserService, UserService>();

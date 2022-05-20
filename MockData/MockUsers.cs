@@ -87,9 +87,9 @@ namespace RAM___RUC_Allocation_Manager.MockData
             };
             Group Group = new Group();
             EmployeeGroup employeeGroupOne = new EmployeeGroup()
-                {Employee = employee, Group = Group, RoleOfEmployee = EmployeeGroup.EmployeeRole.Supervisor};
+            { Employee = employee, Group = Group, RoleOfEmployee = EmployeeGroup.EmployeeRole.Supervisor };
             EmployeeGroup employeeGroupTwo = new EmployeeGroup()
-                { Employee = employee, Group = Group, RoleOfEmployee = EmployeeGroup.EmployeeRole.Supervisor };
+            { Employee = employee, Group = Group, RoleOfEmployee = EmployeeGroup.EmployeeRole.Supervisor };
             Group.Id = 1;
             Group.RucId = 1;
             Group.EmployeeGroups.Add(employeeGroupOne);

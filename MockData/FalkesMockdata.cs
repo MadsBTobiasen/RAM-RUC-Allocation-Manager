@@ -72,17 +72,17 @@ namespace RAM___RUC_Allocation_Manager.MockData
             Simon.IsAdmin = false;
 
             //Programmes
-            Programme ComputerScience = new Programme();
-            ComputerScience.Name = "Computer science";
+            //Programme ComputerScience = new Programme();
+            //ComputerScience.Name = "Computer science";
 
-            Programme Sociology = new Programme();
-            Sociology.Name = "Sociology";
+            //Programme Sociology = new Programme();
+            //Sociology.Name = "Sociology";
 
-            Programme Medicine = new Programme();
-            Medicine.Name = "Medicine";
+            //Programme Medicine = new Programme();
+            //Medicine.Name = "Medicine";
 
-            Programme MultimediaDesign = new Programme();
-            MultimediaDesign.Name = "Multimedia Design";
+            //Programme MultimediaDesign = new Programme();
+            //MultimediaDesign.Name = "Multimedia Design";
 
             //WorkAssignments
             CustomCommittee CustomCommittee = new CustomCommittee();
@@ -153,21 +153,21 @@ namespace RAM___RUC_Allocation_Manager.MockData
 
             EmployeeProgramme employeeProgramme = new EmployeeProgramme();
             employeeProgramme.Employee = Falke;
-            employeeProgramme.Programme = ComputerScience;
+            //employeeProgramme.Programme = ComputerScience;
 
-            LeaderProgramme leaderProgramme = new LeaderProgramme();
-            leaderProgramme.Programme = ComputerScience;
-            leaderProgramme.Leader = Martin;
+            //LeaderProgramme leaderProgramme = new LeaderProgramme();
+            //leaderProgramme.Programme = ComputerScience;
+            //leaderProgramme.Leader = Martin;
 
-            //ListGenerating
-            employeeList.Add(Falke);
-            employeeList.Add(Mads);
-            leaderList.Add(Martin);
-            leaderList.Add(Simon);
-            programmesList.Add(ComputerScience);
-            programmesList.Add(Sociology);
-            programmesList.Add(MultimediaDesign);
-            programmesList.Add(Medicine);
+            ////ListGenerating
+            //employeeList.Add(Falke);
+            //employeeList.Add(Mads);
+            //leaderList.Add(Martin);
+            //leaderList.Add(Simon);
+            //programmesList.Add(ComputerScience);
+            //programmesList.Add(Sociology);
+            //programmesList.Add(MultimediaDesign);
+            //programmesList.Add(Medicine);
             customCommitteesList.Add(CustomCommittee);
             promotionCommitteeTasksList.Add(promotionCommitteeTask);
             hiringCommitteeList.Add(hiringCommittee);
@@ -185,7 +185,7 @@ namespace RAM___RUC_Allocation_Manager.MockData
             employeeGroupsList.Add(employeeGroup);
             employeeHiringCommitteesList.Add(employeeHiringCommittee);
             employeeProgrammesList.Add(employeeProgramme);
-            leaderProgrammesList.Add(leaderProgramme);
+            //leaderProgrammesList.Add(leaderProgramme);
         }
 
         public List<Employee> GetEmployees()
