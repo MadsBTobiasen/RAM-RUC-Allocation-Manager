@@ -4,8 +4,38 @@
 }
 
 <form method="post">
+    
+    <div class="container" style="display: flex; justify-content: left;">
+        <div>
+        </div>
+        <div class="form-group">
+            <label asp-for="ProgrammeName" class="col-form-label" style="color:white"></label>
+            <div>
+                <input asp-for="ProgrammeName" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Leader" class="col-form-label" style="color:white"></label>
+            <div class="form-group">
+            <label asp-for="Leader">Choose a Leader:</label>
+            <select id="Leader" name="Leaders">
+                @foreach (var l in @Model.Leaders)
+                {
+                    <option asp-for="@l">@l.Name</option>
+                }
+            </select>
+        </div>
+        </div>
+        <div class="form-group">
+            <a class="btn btn-danger" asp-page="../EditSettingsProgramme/EditSettingsProgramme">Edit Settings Programe</a>
+            <input type="submit" asp-page-handler="LeaderProgramme" value="Create Programme" class="btn btn-primary" />
+        </div>
+    </div>
+</form>
 
-    <div class="form-group">
+<form method="post">
+
+<div class="form-group">
         <h5 class="vertical-align-md pr-5">Lesson Hour Value</h5>
         <input asp-for="@Model.BaseSettings.LessonHourValue" class="form-control" />
     </div>
@@ -301,7 +331,6 @@
 
     <div class="form-group float-right">
         <a class="btn btn-danger" asp-page="../LeaderLandingPage/LeaderLandingPage">Annullér</a>
-        <input type="submit" value="Gem Ændringer" class="btn btn-primary" />
+        <input type="submit" asp-page-handler="Settings" value="Gem Ændringer" class="btn btn-primary" />
     </div>
-
 </form>

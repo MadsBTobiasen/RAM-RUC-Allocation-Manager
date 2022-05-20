@@ -14,6 +14,9 @@ namespace RAM___RUC_Allocation_Manager.Pages.EditSettingsProgramme
     [Authorize(Roles = "Adminstrator")]
     public class EditSettingsProgramme2Model : PageModel
     {
+        private List<Leader> _leaders;
+        private List<Employee> _employees;
+
         [BindProperty]
         public Leader Leader { get; set; }
         [BindProperty]
@@ -21,43 +24,56 @@ namespace RAM___RUC_Allocation_Manager.Pages.EditSettingsProgramme
         [BindProperty]
         public Employee Employee { get; set; }
 
-        public IEnumerable<Leader> Leaders { get; set; }
-        public IEnumerable<Employee> Employees { get; set; }
-        public LeaderProgramme LeaderProgramme { get; set; }
-        public DbService<LeaderProgramme> dbService { get; set; }
-        public DbService<Leader> dbService2 { get; set; }
-        public DbService<Employee> dbService3 { get; set; }
+        public List<Leader> Leaders
+        {
+            get
+            {
+                if (_leaders == null) _leaders = userService.GetUsersByType(Models.User.UserType.Leader).Cast<Leader>().ToList();
+                return _leaders;
+            }
+            set { _leaders = value; }
+        }
+        public List<Employee> Employees
+        {
+            get
+            {
+                if (_employees == null) _employees = userService.GetUsersByType(Models.User.UserType.Employee).Cast<Employee>().ToList();
+                return _employees;
+            }
+            set { _employees = value; }
+        }
+        
+        [BindProperty]
+        public Programme Programme { get; set; }
+        public DbService<Programme> dbService { get; set; }
         public UserService userService { get; set; }
 
-        public EditSettingsProgramme2Model(UserService userservice, DbService<LeaderProgramme> dbservice, DbService<Leader> dbservice2, DbService<Employee> dbservice3)
+        public EditSettingsProgramme2Model(UserService userservice, DbService<Programme> dbservice)
         {
             dbService = dbservice;
-            dbService2 = dbservice2;
-            dbService3 = dbservice3;
             userService = userservice;
 
         }
         public async void OnGet(int id)
         {
             //LeaderProgramme = MockData.MockLeaderProgrammes.CreateMockDataOneObj();
-            LeaderProgramme = await dbService.GetObjectByIdAsync(id);
-            Leaders = await dbService2.GetObjectsAsync();
-            Employees = await dbService3.GetObjectsAsync();
-            //Employees = MockData.MockLeaderProgrammes
-            //Leaders = MockData.MockLeaderProgrammes.GetMockLeaders();
+            //LeaderProgramme = await dbService.GetObjectByIdAsync(id);
+            //Leaders = await dbService2.GetObjectsAsync();
+            //Employees = await dbService3.GetObjectsAsync();
+            Programme = userService.GetProgrammeByID(id);
         }
 
-        public void OnPost()
+        public async void OnPostEdit()
         {
-            LeaderProgramme.Leader = Leader;
-            LeaderProgramme.Programme.Name = ProgrammeName;
-            dbService.UpdateObjectAsync(LeaderProgramme);
+            Programme.Name = ProgrammeName;
+            Programme.LeaderProgrammes.Add(new LeaderProgramme {Leader = Leader, Programme = Programme});
+            await dbService.UpdateObjectAsync(Programme);
         }
 
-        public void OnPostAddEmployee()
+        public async void OnPostAddEmployee()
         {
-            LeaderProgramme.Programme.Users.Add(Employee);
-            dbService.UpdateObjectAsync(LeaderProgramme);
+            Programme.EmployeeProgrammes.Add(new EmployeeProgramme{Employee = Employee, Programme = Programme});
+            await dbService.UpdateObjectAsync(Programme);
         }
     }
 }

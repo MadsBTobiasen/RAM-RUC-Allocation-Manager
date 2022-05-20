@@ -19,8 +19,10 @@ namespace RAM___RUC_Allocation_Manager.Services
         #region Properties
         public List<User> Users { get; set; }
         public List<Employee> Employees  { get; set; }
+        public List<Leader> Leaders { get; set; }
         public List<EmployeeCourse> EmployeeCourses { get; set; }
         public Employee Employee { get; set; }
+        public ICollection<Programme> Programmes { get; set; }
 
         #endregion
 
@@ -33,7 +35,9 @@ namespace RAM___RUC_Allocation_Manager.Services
             Users = MockData.MockUsers.GetUsers();
             //Users = dbService.GetObjectsAsync().Result.ToList();
             Users = Users.OrderBy(u => u.Name).ToList();
-
+            FalkesMockdata falkesMockdata = new FalkesMockdata();
+            falkesMockdata.CreateMockData();
+            Programmes = falkesMockdata.GetProgrammes();
         }
         #endregion
 
@@ -46,6 +50,12 @@ namespace RAM___RUC_Allocation_Manager.Services
         {
             return Users;
         }
+
+        public Programme GetProgrammeByID(int id)
+        {
+            return Programmes.Where(p => p.Id == id).Select(p => p).FirstOrDefault();
+        }
+
 
         /// <summary>
         /// Method that returns a List of all users, with the given UserType.
@@ -170,6 +180,5 @@ namespace RAM___RUC_Allocation_Manager.Services
         }
 
         #endregion
-
     }
 }

@@ -35,7 +35,7 @@ namespace RAM___RUC_Allocation_Manager.MockData
         {
             CreateMockData();
         }
-        private void CreateMockData()
+        public void CreateMockData()
         {
             //Users
             Employee Falke = new Employee();
@@ -73,17 +73,18 @@ namespace RAM___RUC_Allocation_Manager.MockData
             Simon.IsAdmin = false;
 
             //Programmes
-            //Programme ComputerScience = new Programme();
-            //ComputerScience.Name = "Computer science";
+            Programme ComputerScience = new Programme();
+            ComputerScience.Name = "Computer science";
+            ComputerScience.Id = 1;
 
-            //Programme Sociology = new Programme();
-            //Sociology.Name = "Sociology";
+            Programme Sociology = new Programme();
+            Sociology.Name = "Sociology";
 
-            //Programme Medicine = new Programme();
-            //Medicine.Name = "Medicine";
+            Programme Medicine = new Programme();
+            Medicine.Name = "Medicine";
 
-            //Programme MultimediaDesign = new Programme();
-            //MultimediaDesign.Name = "Multimedia Design";
+            Programme MultimediaDesign = new Programme();
+            MultimediaDesign.Name = "Multimedia Design";
 
             //WorkAssignments
             CustomCommittee CustomCommittee = new CustomCommittee();
@@ -155,10 +156,10 @@ namespace RAM___RUC_Allocation_Manager.MockData
             //employeeList.Add(Mads);
             //leaderList.Add(Martin);
             //leaderList.Add(Simon);
-            //programmesList.Add(ComputerScience);
-            //programmesList.Add(Sociology);
-            //programmesList.Add(MultimediaDesign);
-            //programmesList.Add(Medicine);
+            programmesList.Add(ComputerScience);
+            programmesList.Add(Sociology);
+            programmesList.Add(MultimediaDesign);
+            programmesList.Add(Medicine);
             customCommitteesList.Add(CustomCommittee);
             promotionCommitteeTasksList.Add(promotionCommitteeTask);
             hiringCommitteeList.Add(hiringCommittee);

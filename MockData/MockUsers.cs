@@ -16,6 +16,7 @@ namespace RAM___RUC_Allocation_Manager.MockData
         private static int miscStartId = 30000;
         private static PasswordHasher<string> hasher = new PasswordHasher<string>();
         private static List<User> users;
+        private static List<Leader> leaders;
 
         public static List<User> GetUsers()
         {
