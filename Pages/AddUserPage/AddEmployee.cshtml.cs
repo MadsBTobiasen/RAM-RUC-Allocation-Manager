@@ -6,31 +6,25 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using RAM___RUC_Allocation_Manager.MockData;
 using RAM___RUC_Allocation_Manager.Models;
-using RAM___RUC_Allocation_Manager.Models.DbConnections;
-using RAM___RUC_Allocation_Manager.Models.WorkAssigments;
 using RAM___RUC_Allocation_Manager.Services;
 using static RAM___RUC_Allocation_Manager.Models.Employee;
 
-namespace RAM___RUC_Allocation_Manager.Pages.EditEmployeePage
+namespace RAM___RUC_Allocation_Manager.Pages.AddUser
 {
-    public class EditEmployeePageModel : PageModel
+    public class AddEmployeeModel : PageModel
     {
 
         #region Fields
-        public UserService userService;
-        private bool _debug = true;
+        private UserService userService;
         #endregion
 
         #region Properties
-        public Employee EmployeeToEdit { get; set; }
-        public Employee EmployeeEdited { get; set; }
+        public List<User> Users { get; set; }
+        public Employee Employee { get; set; }
         public List<SelectListItem> TitleSelectList { get; set; }
 
-        #region Update User Properties
-        [BindProperty] [Required]
-        public int Id { get; set; }
+        #region New Employee Properties
         [BindProperty] [Required] [StringLength(30, MinimumLength = 5)]
         public string Name { get; set; }
         /// <summary>
@@ -49,22 +43,23 @@ namespace RAM___RUC_Allocation_Manager.Pages.EditEmployeePage
         [BindProperty] [Required] [StringLength(20, MinimumLength = 5)]
         public string Username { get; set; }
 
-        [BindProperty] [Display(Name = "Nyt Password")]
+        [BindProperty] [Required]
         public string Password { get; set; }
-        [BindProperty] [Compare("Password", ErrorMessage = "Nyt password er ikke ens. Prøv igen.")]
+        [BindProperty] [Required] [Compare("Password", ErrorMessage = "Password er ikke ens. Prøv igen.")]
         public string ConfirmPassword { get; set; }
         #endregion
 
         #endregion
 
         #region Constructor
-        public EditEmployeePageModel(UserService userService)
+        public AddEmployeeModel(UserService userService)
         {
             
             this.userService = userService;
 
             TitleSelectList = new List<SelectListItem>()
             {
+                new SelectListItem() { Value = $"", Text = $"Vælg en title for ny ansat.." },
                 new SelectListItem() { Value = $"{(int)EmployeeTitle.Professor}", Text = $"{EmployeeTitle.Professor}" },
                 new SelectListItem() { Value = $"{(int)EmployeeTitle.AssociateProfessor}", Text = $"{EmployeeTitle.AssociateProfessor}" },
                 new SelectListItem() { Value = $"{(int)EmployeeTitle.AssistantProfessor}", Text = $"{EmployeeTitle.AssistantProfessor}" },
@@ -75,72 +70,40 @@ namespace RAM___RUC_Allocation_Manager.Pages.EditEmployeePage
 
         #region Methods
         /// <summary>
-        /// Meethod that returns the Page();
+        /// Method that returns the Page().
         /// </summary>
-        public IActionResult OnGet(int id)
+        /// <returns></returns>
+        public IActionResult OnGet()
         {
-
-            EmployeeToEdit = (Employee)userService.GetUserByID(id);
-            Title = EmployeeToEdit.Title.ToString();
-
-            if (EmployeeToEdit == null)
-                return RedirectToPage("/NotFound");
-
+            Users = userService.GetUsers();
             return Page();
         }
 
         /// <summary>
-        /// Method that updates the user object.
+        /// Method that validates the page, and if successfull, the added user gets added.
         /// </summary>
-        public IActionResult OnPost(int id)
+        public IActionResult OnPost()
         {
-
-            EmployeeToEdit = (Employee)userService.GetUserByID(id);
-
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            EmployeeEdited = new Employee()
+            Employee = new Employee()
             {
-                Id = Id,
                 Name = Name,
                 Email = Email,
                 Title = (EmployeeTitle)Convert.ToInt32(Title),
                 Username = Username
             };
 
-            //If password is not an empty string, apply the new password.
-            if (!string.IsNullOrEmpty(Password))
-            {
-                EmployeeEdited.SetPassword(Password);
-            }
-            else
-            {
-                EmployeeEdited.Password = EmployeeToEdit.Password;
-            }
+            Employee.SetPassword(Password);
 
-            //Debug showing edits & differences:
-            if (_debug)
-            {
-                Console.WriteLine("to edit:     " + EmployeeToEdit);
-                Console.WriteLine("edited:      " + EmployeeEdited);
-            }
-
-            EmployeeEdited = (Employee)userService.EditUser(EmployeeEdited);
-
-            if (EmployeeEdited.Id != EmployeeToEdit.Id)
-            {
-                throw new Exception("Error in updating user.");
-            }
-
-            //Debug showing edits & differences:
-            if (_debug) Console.WriteLine("after edit:  " + EmployeeEdited);
-
+            userService.CreateUser(Employee);
             return RedirectToPage("/LeaderLandingPage/LeaderLandingPage");
 
         }
         #endregion
     }
 }
+

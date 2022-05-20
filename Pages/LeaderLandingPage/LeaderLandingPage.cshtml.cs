@@ -11,9 +11,19 @@ using RAM___RUC_Allocation_Manager.Services;
 
 namespace RAM___RUC_Allocation_Manager.Pages.LeaderLandingPage
 {
-    [Authorize(Roles = "Adminstrator")]
+    [Authorize(Roles = "Leader")]
     public class LeaderLandingPageModel : PageModel
     {
+
+        #region Enumerations
+        public enum PageSections
+        {
+            None,
+            ProgrammeEmployees,
+            AllEmployees,
+            AllLeaders
+        }
+        #endregion
 
         #region Fields
         private UserService userService;
@@ -31,6 +41,11 @@ namespace RAM___RUC_Allocation_Manager.Pages.LeaderLandingPage
         [BindProperty] public User CreatedUser { get; set; }
         [BindProperty] public Employee Employee { get; set; }
         public bool IsLeader { get; set; }
+
+        /// <summary>
+        /// This property is used, to indicate which section of the page, the request should lead to.
+        /// </summary>
+        [BindProperty] public PageSections PageSection { get; set; } = PageSections.None;
 
         #region Search Options
         [BindProperty] public string AllEmployeesSearchString { get; set; }
@@ -122,15 +137,11 @@ namespace RAM___RUC_Allocation_Manager.Pages.LeaderLandingPage
         /// </summary>
         public IActionResult OnGet()
         {
-        
+
             IsLeader = false;
-
-            Searching();
-            Sorting();
-            Pagination();
-
+            Console.WriteLine(Leader.Id);
             return Page();
-            
+
         }
 
         /// <summary>
@@ -139,47 +150,25 @@ namespace RAM___RUC_Allocation_Manager.Pages.LeaderLandingPage
         public IActionResult OnPostPaginatedResult()
         {
 
-            Searching();
-            Sorting();
-            Pagination();
+            Console.WriteLine("PageSection: " + PageSection);
 
             return Page();
 
         }
 
-        public IActionResult OnPostCreateUser()
+        /// <summary>
+        /// Method that ensures that the Pagination, Sorting and Searching happens before the Page is returned.
+        /// </summary>
+        /// <returns></returns>
+        public override PageResult Page()
         {
 
             Searching();
             Sorting();
             Pagination();
 
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
+            return base.Page();
 
-            userService.CreateUser(CreatedUser);
-            return RedirectToPage("/AddUserPage/AllUsers");
-
-        }
-
-        public void OnPostCheckType()
-        {
-
-            Searching();
-            Sorting();
-            Pagination();
-
-            if (CreatedUser.Type == Models.User.UserType.Employee)
-            {
-                IsLeader = false;
-            }
-
-            else
-            {
-                IsLeader = true;
-            }
         }
 
         #region Searching Methods
@@ -188,10 +177,6 @@ namespace RAM___RUC_Allocation_Manager.Pages.LeaderLandingPage
         /// </summary>
         private void Searching()
         {
-
-            Console.WriteLine("empssearch: " + AllEmployeesSearchString);
-            Console.WriteLine("empssearch2: " + ProgrammeEmployeesSearchString);
-            Console.WriteLine("leadsearch: " + AllLeadersSearchString);
 
             if (string.IsNullOrEmpty(AllEmployeesSearchString)) AllEmployeesSearchString = "";
             if (string.IsNullOrEmpty(ProgrammeEmployeesSearchString)) ProgrammeEmployeesSearchString = "";
@@ -211,12 +196,12 @@ namespace RAM___RUC_Allocation_Manager.Pages.LeaderLandingPage
         private void Sorting()
         {
 
-            switch(AllEmployeesSortingOption)
+            switch (AllEmployeesSortingOption)
             {
 
                 case Employee.SortingOptions.NameASC: Employees = Employees.OrderBy(e => e.Name).ToList(); break;
                 case Employee.SortingOptions.NameDESC: Employees = Employees.OrderByDescending(e => e.Name).ToList(); break;
-                
+
                 case Employee.SortingOptions.TitleASC: Employees = Employees.OrderBy(e => e.Title).ToList(); break;
                 case Employee.SortingOptions.TitleDESC: Employees = Employees.OrderByDescending(e => e.Title).ToList(); break;
 

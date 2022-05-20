@@ -31,7 +31,8 @@
                         }
                         @if (Context.User.HasClaim(System.Security.Claims.ClaimTypes.Role, Models.User.UserType.Employee.ToString()))
                         {
-                            <li><a asp-page="/EmployeeLandingPage/EmployeeLandingPage">Employee</a></li>
+                            <li><a asp-route-id="-1" asp-page="/EmployeeLandingPage/EmployeeLandingPage">Employee</a></li>
+                            <li><a asp-page="/ComplaintPage/ComplaintPage">Complaint</a></li>
                         }
                         @if (Context.User.HasClaim(System.Security.Claims.ClaimTypes.Role, Models.User.UserType.Adminstrator.ToString()))
                         {

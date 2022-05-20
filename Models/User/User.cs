@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -20,6 +21,10 @@ namespace RAM___RUC_Allocation_Manager.Models
         }
         #endregion
 
+        #region Fields
+        private static PasswordHasher<string> hasher = new PasswordHasher<string>();
+        #endregion
+
         #region Properties
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
@@ -29,8 +34,13 @@ namespace RAM___RUC_Allocation_Manager.Models
         [Required]
         [StringLength(20)]
         public string Username { get; set; }
+        /// <summary>
+        /// If you wish to set a new password, be it through the update form, or when adding a new user.
+        /// Use the SetPassword() Method. 
+        /// </summary>
         [Required]
         public string Password { get; set; }
+
         [Required]
         public string Email { get; set; }
         [NotMapped]
@@ -51,6 +61,15 @@ namespace RAM___RUC_Allocation_Manager.Models
             throw new Exception("Method must be overriden.");
         }
 
+        /// <summary>
+        /// Method that sets the password. This is needed, so that everytime a password has to be changed,
+        /// it can be done so using a passwordHasher.
+        /// </summary>
+        public void SetPassword(string password)
+        {
+            Password = hasher.HashPassword(null, password);
+        }
+
         public override int GetHashCode()
         {
             return base.GetHashCode();
@@ -61,14 +80,8 @@ namespace RAM___RUC_Allocation_Manager.Models
         }
         public override string ToString()
         {
-            return base.ToString();
+            return $"User: ({Id}) {Name} {Username} {Email}";
         }
-
-        internal static bool HasClaim(object role, string v)
-        {
-            throw new NotImplementedException();
-        }
-
         #endregion
 
     }

@@ -38,9 +38,14 @@ namespace RAM___RUC_Allocation_Manager.Models
 
                 List<Employee> users = new List<Employee>();
                 
-                foreach(Programme p in Programmes)
+                if(Programmes != null)
                 {
-                    users.AddRange(p.Users.Cast<Employee>());
+
+                    foreach (Programme p in Programmes)
+                    {
+                        users.AddRange(p.Users.Cast<Employee>());
+                    }
+
                 }
 
                 return users;
@@ -53,6 +58,7 @@ namespace RAM___RUC_Allocation_Manager.Models
         public Leader()
         {
             Type = UserType.Leader;
+            Email = "RAM-Leader-Test@Tier1TCG.dk";
         }
         #endregion
 
@@ -90,6 +96,7 @@ namespace RAM___RUC_Allocation_Manager.Models
 
             foreach(User u in ProgrammeUsers)
             {
+
                 if(u.Id == id)
                 {
                     return true;

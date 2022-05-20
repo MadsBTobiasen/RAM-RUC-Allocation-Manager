@@ -1,11 +1,6 @@
-﻿body {
+﻿body, header, .modal-content {
     background-color: var(--ram-background) !important;
 }
-
-header {
-    background-color: var(--ram-background) !important;
-}
-
 a span {
     vertical-align: middle;
 }
@@ -32,17 +27,31 @@ hr {
 .btn-primary, .btn-primary i, .btn-outline-primary, .btn-outline-primary i {
     transition: all 0.5s ease;
     color: var(--ram-white);
-    border-color: var(--ram-gold);
+    border-color: var(--ram-white-secondary) !important;
     background-color: var(--ram-element-background);
 }
 
 .btn-primary:hover, .btn-primary i:hover, .btn-outline-primary:hover, .btn-outline-primary i:hover {
     color: var(--ram-gold);
-    border-color: var(--ram-gold);
+    border-color: var(--ram-white-secondary) !important;
     background-color: var(--ram-element-background);
 }
 
-.border, .border-top, .border-right, .border-left, .border-bottom, .input-group input, input-group input:focus {
+.btn-danger, .btn-danger i, .btn-outline-danger, .btn-outline-danger i {
+    transition: all 0.5s ease;
+    color: var(--ram-white);
+    border-color: var(--ram-danger) !important;
+    background-color: var(--ram-element-background);
+}
+
+.btn-danger:hover, .btn-danger i:hover, .btn-outline-danger:hover, .btn-outline-danger i:hover {
+    color: var(--ram-gold);
+    border-color: var(--ram-danger) !important;
+    background-color: var(--ram-element-background);
+}
+
+.border, .border-top, .border-right, .border-left, .border-bottom,
+.modal-header, .modal-body, .modal-footer {
     border-color: var(--ram-gold) !important;
 }
 
@@ -62,13 +71,32 @@ h1, h2, h3, h4, h5, h6, p, span, i, a, table, label {
     color: var(--ram-white);
 }
 
-.input-group input {
+.input-group-prepend span,
+.input-group input,
+.input-group textarea,
+.form-group input,
+.form-group select,
+span.form-control {
     border-radius: .25rem !important;
     background-color: var(--ram-element-background);
     color: var(--ram-white);
+    border-color: var(--ram-white-secondary) !important;
 }
 
-.input-group input:focus {
+.input-group input:focus,
+.input-group textarea:focus,
+.form-group input:focus,
+.form-group select:focus,
+span.form-control:focus {
     background-color: rgba(255,255,255, .15);
     color: var(--ram-white);
+    border-color: var(--ram-white-secondary) !important;
+}
+
+.form-control:disabled, .form-control[readonly] {
+    background-color: rgba(255,255,255, .25);
+}
+
+.text-muted {
+    color: var(--ram-white-secondary) !important;
 }

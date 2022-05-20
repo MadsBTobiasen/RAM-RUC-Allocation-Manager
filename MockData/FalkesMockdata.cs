@@ -42,7 +42,7 @@ namespace RAM___RUC_Allocation_Manager.MockData
             Falke.Name = "Falke";
             Falke.Email = "Falke@mail.dk";
             Falke.Username = "FalkeUsername";
-            Falke.Password = "FalkePassword";
+            Falke.SetPassword("FalkePassword");
             Falke.Title = Employee.EmployeeTitle.Professor;
             Falke.IsGroupLeader = true;
             Falke.Balance = 0;
@@ -52,7 +52,7 @@ namespace RAM___RUC_Allocation_Manager.MockData
             Mads.Name = "Mads";
             Mads.Email = "Mads@mail.dk";
             Mads.Username = "MadsUsername";
-            Mads.Password = "MadsPassword";
+            Mads.SetPassword("MadsPassword");
             Mads.Title = Employee.EmployeeTitle.AssistantProfessor;
             Mads.IsGroupLeader = false;
             Mads.Balance = 60;
@@ -62,14 +62,14 @@ namespace RAM___RUC_Allocation_Manager.MockData
             Martin.Name = "Martin";
             Martin.Email = "Martin@Mail.dk";
             Martin.Username = "MatinUsername";
-            Martin.Password = "MartinPassword";
+            Martin.SetPassword("MartinPassword");
             Martin.IsAdmin = true;
 
             Leader Simon = new Leader();
             Simon.Name = "Simon";
             Simon.Email = "Simon@mail.dk";
             Simon.Username = "SimonUsername";
-            Simon.Password = "SimonPassword";
+            Simon.SetPassword("SimonPassword");
             Simon.IsAdmin = false;
 
             //Programmes

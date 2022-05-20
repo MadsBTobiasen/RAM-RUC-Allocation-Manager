@@ -86,6 +86,7 @@ namespace RAM___RUC_Allocation_Manager.Models
         public Employee()
         {
             Type = UserType.Employee;
+            Email = "RAM-Employee-Test@Tier1TCG.dk";
         }
         #endregion
 
@@ -171,10 +172,10 @@ namespace RAM___RUC_Allocation_Manager.Models
                             totalMinutes += baseSettings.SupervisionOfGroupHourFourMemberMasters;
                             break;
                         case 5:
-                            totalMinutes += baseSettings.SupervisionOfGroupHourFiveMembersMasters;
+                            totalMinutes += baseSettings.SupervisionOfGroupHourFiveMemberMasters;
                             break;
                         case 6:
-                            totalMinutes += baseSettings.SupervisionOfGroupHourSixMembersMasters;
+                            totalMinutes += baseSettings.SupervisionOfGroupHourSixMemberMasters;
                             break;
                     }
                 }
@@ -295,7 +296,7 @@ namespace RAM___RUC_Allocation_Manager.Models
         }
         public override string ToString()
         {
-            return $"[Employee] ({Id}) {Name} {Password} {Email}";
+            return $"[Employee] ({Id}) {Name} {Password} {Email} {Title}";
         }
         #endregion
 
