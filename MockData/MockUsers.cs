@@ -70,12 +70,12 @@ namespace RAM___RUC_Allocation_Manager.MockData
 
             Employee employee = new Employee()
             {
-                Id = 300,
+                Id = 299,
                 Name = "Employee1000",
                 Username = "Employee1000"
             };
 
-            employee.SetPassword(hasher.HashPassword(null, "Password"));
+            employee.SetPassword("Password");
 
             Group Group = new Group();
 

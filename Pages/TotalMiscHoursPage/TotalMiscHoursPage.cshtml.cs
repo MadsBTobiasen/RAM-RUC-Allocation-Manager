@@ -41,6 +41,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.TotalMiscHoursPage
         {
             this.userService = userService;
             this.settingsService = settingsService;
+            this.loginService = loginService;
             BaseSettings = settingsService.GetSettings();
         }
 
@@ -49,13 +50,18 @@ namespace RAM___RUC_Allocation_Manager.Pages.TotalMiscHoursPage
         #region Methods
         public IActionResult OnGet(int id)
         {
+
             loginService.HttpContext = HttpContext;
+
             if (!loginService.AssessUser(id, LoggedInUserId))
             {
                 return Redirect("/Index");
             }
 
             if (id == -1) id = LoggedInUserId;
+
+            Employee = (Employee)userService.GetUserByID(id);
+
             TotalHiringCommitteeMinutes = Employee.EmployeeHiringCommittees.Select(ehc =>
                 ehc.HiringCommittee.PeopleToBeAssessed * BaseSettings.HourPerPersonHiringCommittee).Sum();
             TotalPhdCommitteeMinutes = Employee.PhdCommittees * BaseSettings.PhdCommitteeHourValue;
