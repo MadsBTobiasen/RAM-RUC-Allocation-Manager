@@ -107,8 +107,10 @@
                                 </button>
                             </span>
                         </th>
+
                         <th style="width:10%" scope="col" class="text-center">Se</th>
                         <th style="width:10%" scope="col" class="text-center">Redigér</th>
+                        <th style="width:10%" scope="col" class="text-center">Allokér Timer</th>
 
                     </tr>
 
@@ -124,6 +126,7 @@
                         <td class="text-left">@((Model.PaginatedProgrammeEmployees[i] as Models.Employee).Title)</td>
                         <td style="width:10%" class="text-center"><a data-toggle="tooltip" title="Se Underviser" asp-route-id="@(Model.PaginatedProgrammeEmployees[i].Id)" asp-page="/EmployeeLandingPage/EmployeeLandingPage"><i class="fa-solid fa-circle-info"></i></a></td>
                         <td style="width:10%" class="text-center"><a data-toggle="tooltip" title="Redigér Underviser" asp-route-id="@(Model.PaginatedProgrammeEmployees[i].Id)" asp-page="/EditEmployeePage/EditEmployeePage"><i class="fa-solid fa-pen"></i></a></td>
+                        <td style="width:10%" class="text-center"><a data-toggle="tooltip" title="Allokér Timer" asp-route-id="@(Model.PaginatedProgrammeEmployees[i].Id)" asp-page="/EditEmployeePage/AllocateHoursPage"><i class="fa-solid fa-clock"></i></a></td>
                     </tr>
                     }
 

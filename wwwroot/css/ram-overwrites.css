@@ -9,7 +9,7 @@ a {
     transition: all 0.5s ease;
 }
 
-a:hover {
+a:hover, .ram-navbar li a:hover {
     color: var(--ram-gold);
     text-decoration: none;
 }
@@ -67,12 +67,16 @@ hr {
     color: var(--ram-gold) !important;
 }
 
-h1, h2, h3, h4, h5, h6, p, span, i, a, table, label {
+h1, h2, h3, h4, h5, h6, p, span, i, a, table, label, .ram-navbar li a {
     color: var(--ram-white);
 }
 
 h1, h2, h3, h4, h5, h6 {
     font-weight: 600;
+}
+
+ul.ram-navbar li {
+    margin-right: 0.25rem;
 }
 
 .input-group-prepend span,
@@ -112,6 +116,7 @@ span.form-control:focus {
 .font-weight-normal tr td {
     font-weight: normal !important;
 }
+
 
 .employee-landing-page thead tr th:nth-child(1) {
     width: 35%;
