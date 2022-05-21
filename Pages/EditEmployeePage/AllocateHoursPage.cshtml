@@ -199,9 +199,9 @@
                     <td></td>
                     <td>@course.Name</td>
                     <td>@course.Type.ToString()</td>
+                    <td>@course.LectureAmount</td>
                     <input type="hidden" name="addId" value="@course.Id" />
-                    <td><input name="hours" pattern="[0-9]+" size="1" /> timer for kursus</td>
-                    <td><input name="minutes" pattern="([1-5][0-9]|[1-9])" size="1" /> minutter for kursus</td>
+                    <td><input name="relativeLectureAmount" pattern="[0-9]+" size="1" /> Uddel antal lektioner</td>
                     <input type="hidden" name="userId" value="@Model.Employee.Id" />
                     <td><input asp-page-handler="AddCourse" type="submit" value="Tilføj kursus" /></td>
                 </tr>

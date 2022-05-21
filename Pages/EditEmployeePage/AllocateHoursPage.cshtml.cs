@@ -50,7 +50,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.EditEmployeePage
             }
         }
 
-        public AllocateHoursPageModel(DbService<PromotionCommitteeTask> pctDbService, DbService<EmployeeHiringCommittee> ehcDbService, DbService<HiringCommittee> hcDbService, DbService<EmployeeCustomCommittee> eccDbService, DbService<CustomCommittee> ccDbService, DbService<PhdTasks> phdDbService, DbService<GroupFacilitationTask> gftDbService, DbService<Group> groupDbService, DbService<EmployeeGroup> egDbService, UserService userService, DbService<Course> courseDbService, LoginService loginService, SettingsService settingsService, DbService<Employee> empDbService, DbService<Redemption> redemptionDbService, DbService<EmployeeCourse> ecDbService)
+        public AllocateHoursPageModel(UserService userService, DbService<Course> courseDbService, LoginService loginService, SettingsService settingsService, DbService<Employee> empDbService, DbService<Redemption> redemptionDbService, DbService<EmployeeCourse> ecDbService, DbService<EmployeeGroup> egDbService, DbService<Group> groupDbService, DbService<GroupFacilitationTask> gftDbService, DbService<PhdTasks> phdDbService, DbService<CustomCommittee> ccDbService, DbService<EmployeeCustomCommittee> eccDbService, DbService<HiringCommittee> hcDbService, DbService<EmployeeHiringCommittee> ehcDbService, DbService<PromotionCommitteeTask> pctDbService)
         {
             this.userService = userService;
             this.courseDbService = courseDbService;
@@ -65,7 +65,9 @@ namespace RAM___RUC_Allocation_Manager.Pages.EditEmployeePage
             this.phdDbService = phdDbService;
             this.ccDbService = ccDbService;
             this.eccDbService = eccDbService;
+            this.hcDbService = hcDbService;
             this.ehcDbService = ehcDbService;
+            this.pctDbService = pctDbService;
         }
 
         public IActionResult OnGet(/*int id*/)
@@ -139,12 +141,12 @@ namespace RAM___RUC_Allocation_Manager.Pages.EditEmployeePage
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAddCourse(int userId, int addId, int minutes, int hours)
+        public async Task<IActionResult> OnPostAddCourse(int userId, int addId, int relativeLectureAmount)
         {
             GetProperties(userId);
             Employee.EmployeeCourses.Add(new EmployeeCourse
             {
-                Employee = Employee, RelativeLectureAmount = hours * 60 + minutes,
+                Employee = Employee, RelativeLectureAmount = relativeLectureAmount,
                 Course = Courses.Where(c => c.Id == addId).Select(c => c).FirstOrDefault()
             });
             await empDbService.UpdateObjectAsync(Employee);
