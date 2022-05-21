@@ -15,10 +15,20 @@
 
         <table class="employee-landing-page allocated-hours-table">
 
+            <thead style="width: 0; height: 0;">
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+
             <tbody>
 
                 <tr>
                     <td>Bedømmelse af skriftlige opgaver:</td>
+                    <td></td>
                     <td>@Model.TotalWrittenAssignmentAssessments</td>
                     <td>@Model.ConvertMinutesToHours(Model.TotalWrittenAssignmentsAssessmentsMinutes)</td>
                 </tr>
@@ -36,6 +46,8 @@
                 </tr>
                 <tr>
                     <td>Intern censor:</td>
+                    <td></td>
+                    <td></td>
                     <td>@Model.TotalProjectAssesmentHours</td>
                 </tr>
                 @foreach (EmployeeGroup eg in Model.Employee.EmployeeGroups.Where(eg => eg.RoleOfEmployee == EmployeeGroup.EmployeeRole.InternalCensor).Select(eg => eg))

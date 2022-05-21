@@ -14,35 +14,50 @@
 
         <table class="employee-landing-page allocated-hours-table">
 
+            <thead style="width: 0; height: 0;">
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+
             <tbody>
 
                 <tr>
                     <td>Slutevaluering af PhD:</td>
-                    <td>@Model.Employee.PhdsTasks.Where(phd => phd.RoleOfEmployee == PhdTasks.EmployeeRole.EndEvaluator).Count() PhD'er</td>
+                    <td></td>
+                    <td></td>
+                    <td>@Model.Employee.PhdsTasks.Where(phd => phd.RoleOfEmployee == PhdTasks.EmployeeRole.EndEvaluator).Count() PhD(er)</td>
                 </tr>
+
                 <tr>
-                    <td>Bedømmelsesudvalg:</td>
-                    <td>@Model.TotalCommittees udvalg</td>
+                    <td><b>Bedømmelsesudvalg:</b></td>
+                    <td></td>
+                    <td></td>
+                    <td>@Model.TotalCommittees Udvalg</td>
                 </tr>
-                <tr>
+
+                <tr class="font-weight-normal">
                     <td></td>
                     <td>Ansættelsesudvalg</td>
                     <td>@Model.Employee.EmployeeHiringCommittees.Count()</td>
                     <td>@Model.ConvertMinutesToHours(Model.TotalHiringCommitteeMinutes)</td>
                 </tr>
-                <tr>
+                <tr class="font-weight-normal">
                     <td></td>
                     <td>Forfremmelsesudvalg</td>
                     <td>@Model.Employee.PromotionCommittees.Count()</td>
                     <td>@Model.ConvertMinutesToHours(Model.TotalPromotionCommitteeMinutes)</td>
                 </tr>
-                <tr>
+                <tr class="font-weight-normal">
                     <td></td>
                     <td>PhD bedømmelsesudvalg</td>
                     <td>@Model.Employee.PhdCommittees</td>
                     <td>@Model.ConvertMinutesToHours(Model.TotalPhdCommitteeMinutes)</td>
                 </tr>
-                <tr>
+                <tr class="font-weight-normal">
                     <td></td>
                     <td>Andre udvalg</td>
                     <td>@Model.Employee.EmployeeCustomCommittees.Count()</td>
@@ -50,10 +65,14 @@
                 </tr>
                 <tr>
                     <td>Pædagogisk kvalificering:</td>
+                    <td></td>
+                    <td></td>
                     <td>@Model.ConvertMinutesToHours(Model.BaseSettings.PedagogicalQualification)</td>
                 </tr>
                 <tr>
                     <td>Gruppeleder:</td>
+                    <td></td>
+                    <td></td>
                     @if (Model.Employee.IsGroupLeader)
                     {
                         <td>@Model.ConvertMinutesToHours(Model.BaseSettings.GroupLeaderMinuteValue)</td>

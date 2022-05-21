@@ -14,32 +14,50 @@
 
         <table class="employee-landing-page allocated-hours-table">
 
+            <thead style="width: 0; height: 0;">
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+
             <tbody>
 
-            <tr>
-                <td>Kursusansvar:</td>
-                <td>@Model.CoordinationHours</td>
-            </tr>
-            @foreach (Course course in Model.Employee.CoordinatorOfCourses)
-            {
                 <tr>
+                    <td>Kursusansvar:</td>
                     <td></td>
-                    <td>@course.Name</td>
+                    <td></td>
+                    <td>@Model.CoordinationHours</td>
                 </tr>
-            }
+                @foreach (Course course in Model.Employee.CoordinatorOfCourses)
+                {
+                    <tr>
+                        <td></td>
+                        <td>@course.Name</td>
+                        <td></td>
+                        <td></td>
 
-            <tr>
-                <td>Kursusundervisning</td>
-                <td>@Model.TeachingHours</td>
-            </tr>
-            @foreach (EmployeeCourse ep in Model.Employee.EmployeeCourses)
-            {
+                    </tr>
+                }
+
                 <tr>
+                    <td>Kursusundervisning</td>
                     <td></td>
-                    <td>@ep.Course.Name</td>
-                    <td>@Model.ConvertMinutesToHours(Model.GetRelativeLectureAmountMinutes(ep.RelativeLectureAmount))</td>
+                    <td></td>
+                    <td>@Model.TeachingHours</td>
                 </tr>
-            }
+
+                @foreach (EmployeeCourse ep in Model.Employee.EmployeeCourses)
+                {
+                    <tr>
+                        <td></td>
+                        <td>@ep.Course.Name</td>
+                        <td></td>
+                        <td>@Model.ConvertMinutesToHours(Model.GetRelativeLectureAmountMinutes(ep.RelativeLectureAmount))</td>
+                    </tr>
+                }
 
             </tbody>
 
