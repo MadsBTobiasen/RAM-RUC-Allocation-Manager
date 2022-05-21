@@ -63,7 +63,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.TotalSupervisionHoursPage
                  BaseSettings.PhdMainSupervisionHourWorth) +
                 (Employee.PhdsTasks.Where(phd => phd.RoleOfEmployee == PhdTasks.EmployeeRole.SecondarySupervisor).Select(phd => phd).Count() *
                  BaseSettings.PhdSecondarySupervisionHourWorth));
-            AssistantProfessorSupervison = ConvertMinutesToHours(Employee.AssistantProfessorSupervisions.Count() *
+            AssistantProfessorSupervison = ConvertMinutesToHours(Employee.AssistantProfessorSupervisions *
                                                                  BaseSettings.AssistantProfessorSupervisonMinuteValue);
             return Page();
 

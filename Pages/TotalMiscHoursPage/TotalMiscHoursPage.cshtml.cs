@@ -58,12 +58,12 @@ namespace RAM___RUC_Allocation_Manager.Pages.TotalMiscHoursPage
             if (id == -1) id = LoggedInUserId;
             TotalHiringCommitteeMinutes = Employee.EmployeeHiringCommittees.Select(ehc =>
                 ehc.HiringCommittee.PeopleToBeAssessed * BaseSettings.HourPerPersonHiringCommittee).Sum();
-            TotalPhdCommitteeMinutes = Employee.PhdCommittees.Count * BaseSettings.PhdCommitteeHourValue;
+            TotalPhdCommitteeMinutes = Employee.PhdCommittees * BaseSettings.PhdCommitteeHourValue;
             TotalPromotionCommitteeMinutes = Employee.PromotionCommittees.Select(pc =>
                 pc.PeopleToBeAssessed * BaseSettings.HourPerPersonPromotionCommittee).Sum();
             TotalCustomCommitteeMinutes = Employee.EmployeeCustomCommittees.Select(ecc => ecc.CustomCommittee.MinuteWorth).Sum();
             TotalCommittees = Employee.EmployeeHiringCommittees.Count + Employee.PromotionCommittees.Count() +
-                              Employee.PhdCommittees.Count() + Employee.EmployeeCustomCommittees.Count();
+                              Employee.PhdCommittees + Employee.EmployeeCustomCommittees.Count();
             return Page();
 
         }

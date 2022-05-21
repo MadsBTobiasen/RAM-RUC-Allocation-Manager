@@ -1,0 +1,46 @@
+﻿@page
+@model RAM___RUC_Allocation_Manager.Pages.EditSettingsProgramme.EditSettingsProgramme2Model
+@{
+}
+<h2>Edit @Model.LeaderProgramme.Programme.Name</h2>
+<div class="container" style="display: flex; justify-content: left;">
+    <div>
+    </div>
+    <form method="post">
+        <div class="form-group">
+            <label asp-for="LeaderProgramme.Programme.Name" class="col-form-label" style="color:white"></label>
+            <div>
+                <input asp-for="LeaderProgramme.Programme.Name" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Leader">Choose a Leader:</label>
+            <select id="Leader" name="Leaders">
+                @foreach (var l in @Model.Leaders)
+                {
+                    <option asp-for="@l">@l.Name</option>
+                }
+            </select>
+        </div>
+
+        <div class="form-group">
+            <button class="btn btn-outline-light">Edit Programme</button>
+        </div>
+
+    </form>
+    <form method="post" asp-handler="AddEmployee">
+        <div class="form-group">
+            <label asp-for="Employee">Choose an Employee:</label>
+            <select id="Employee" name="Employees">
+                @foreach (var l in @Model.Employees)
+                {
+                    <option asp-for="@l">@l.Name</option>
+                }
+            </select>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-outline-light">Add Employee</button>
+        </div>
+    </form>
+    <a asp-page="/EditSettingsProgramme/EditSettingsProgramme"><button class="btn btn-outline-light">Back</button></a>
+</div>

@@ -1,9 +1,6 @@
 ﻿@page "{id:int}"
 @using RAM___RUC_Allocation_Manager.Models
-@using RAM___RUC_Allocation_Manager.Models.DbConnections
-@using RAM___RUC_Allocation_Manager.Models.WorkAssigments
-@using RAM___RUC_Allocation_Manager.MockData
-@model RAM___RUC_Allocation_Manager.Pages.EditEmployeePage.EditEmployeePageModel
+@model RAM___RUC_Allocation_Manager.Pages.EditLeaderPage.EditLeaderPageModel
 @{
 }
 
@@ -32,41 +29,44 @@
 <div class="modal" id="myModal">
     <div class="modal-dialog">
         <div class="modal-content">
+
             <div class="modal-header">
-                <h2 class="modal-title">Redigér Ansat</h2>
+                <h2 class="modal-title">Redigér Leder</h2>
                 <span><a asp-page="../LeaderLandingPage/LeaderLandingPage"><i class="fa-solid fa-lg fa-xmark"></i></a></span>
             </div>
+
             <form method="post">
+
                 <div class="modal-body">
 
-                    <span>Redigéring af brugeren: <b>@Model.EmployeeToEdit.Name (@Model.EmployeeToEdit.Username)</b></span>
+                    <span>Redigéring af brugeren: <b>@Model.UserToEdit.Name (@Model.UserToEdit.Username)</b></span>
 
                     <hr />
 
                     <div hidden="@true">
                         <div class="form-group">
                             <label asp-for="@Model.Id" class="control-label"></label>
-                            <input asp-for="@Model.Id" value="@Model.EmployeeToEdit.Id" readonly class="form-control" />
+                            <input asp-for="@Model.Id" value="@Model.UserToEdit.Id" readonly class="form-control" />
                         </div>
                     </div>
 
                     <div class="form-group">
                         <span class="text-danger">*</span><label asp-for="@Model.Name" class="control-label"></label>
                         <span class="text-danger ml-1" asp-validation-for="@Model.Name"></span>
-                        <input asp-for="@Model.Name" value="@Model.EmployeeToEdit.Name" class="form-control" placeholder="Indtast navn på ansat.." />
+                        <input asp-for="@Model.Name" value="@Model.UserToEdit.Name" class="form-control" placeholder="Indtast navn på ansat.." />
                     </div>
 
                     <div class="form-group">
                         <span class="text-danger">*</span><label asp-for="@Model.Email" class="control-label"></label>
                         <span class="text-danger ml-1" asp-validation-for="@Model.Email"></span>
-                        <input asp-for="@Model.Email" value="@Model.EmployeeToEdit.Email" type="email" readonly class="form-control" placeholder="Indtast email for ny ansat.." />
+                        <input asp-for="@Model.Email" value="@Model.UserToEdit.Email" type="email" readonly class="form-control" placeholder="Indtast email for ny ansat.." />
                     </div>
 
                     <div class="form-group">
-                        <span class="text-danger">*</span><label asp-for="@Model.Title" class="control-label"></label>
-                        <span class="text-danger ml-1" asp-validation-for="@Model.Title"></span>
-                        <select class="form-control" asp-for="@Model.Title"
-                                asp-items="@Model.TitleSelectList">
+                        <span class="text-danger">*</span><label asp-for="@Model.Type" class="control-label"></label>
+                        <span class="text-danger ml-1" asp-validation-for="@Model.Type"></span>
+                        <select class="form-control" readonly asp-for="@Model.Type"
+                                asp-items="@Model.TypeSelectList">
                         </select>
                     </div>
 
@@ -75,7 +75,7 @@
                     <div class="form-group">
                         <span class="text-danger">*</span><label asp-for="@Model.Username" class="control-label"></label>
                         <span class="text-danger ml-1" asp-validation-for="@Model.Username"></span>
-                        <input asp-for="@Model.Username" value="@Model.EmployeeToEdit.Username" class="form-control" placeholder="Indtast brugernavn for ny ansat.." />
+                        <input asp-for="@Model.Username" value="@Model.UserToEdit.Username" class="form-control" placeholder="Indtast brugernavn for ny ansat.." />
                     </div>
 
                     <div class="form-group">
@@ -102,6 +102,8 @@
                     </div>
 
                 </div>
+
+
 
             </form>
 

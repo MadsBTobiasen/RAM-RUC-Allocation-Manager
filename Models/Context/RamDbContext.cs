@@ -22,24 +22,22 @@ namespace RAM___RUC_Allocation_Manager.Models
         public DbSet<Group> Groups { get; set; }
         public DbSet<Programme> Programmes { get; set; }
         public DbSet<Course> Courses { get; set; }
-        public DbSet<AssistantProfessorSupervision> AssistantProfessorSupervisions { get; set; }
         public DbSet<EmployeeCourse> EmployeeCourses { get; set; }
         public DbSet<GroupFacilitationTask> GroupFacilitationTasks { get; set; }
         public DbSet<PhdTasks> Phds { get; set; }
-        public DbSet<Portfolio> Portfolios { get; set; }
-        public DbSet<Synopsis> Synopses { get; set; }
         public DbSet<CustomCommittee> CustomCommittees { get; set; }
         public DbSet<HiringCommittee> HiringCommittees { get; set; }
-        public DbSet<PhdCommittee> PhdCommittees { get; set; }
         public DbSet<PromotionCommitteeTask> PromotionCommittees { get; set; }
         public DbSet<EmployeeProgramme> EmployeeProgrammes { get; set; }
         public DbSet<LeaderProgramme> LeaderProgrammes { get; set; }
         public DbSet<EmployeeHiringCommittee> EmployeeHiringCommittees { get; set; }
         public DbSet<EmployeeCustomCommittee> EmployeeCustomCommittees { get; set; }
         public DbSet<Redemption> Redemptions { get; set; }
+        public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //Composite key configuration
             modelBuilder.Entity<EmployeeCourse>()
                 .HasKey(employeeCourse => new { employeeCourse.CourseId, employeeCourse.EmployeeId });
             modelBuilder.Entity<EmployeeCustomCommittee>()
@@ -51,6 +49,10 @@ namespace RAM___RUC_Allocation_Manager.Models
             modelBuilder.Entity<LeaderProgramme>()
                 .HasKey(leaderProgramme => new { leaderProgramme.ProgrammeId, leaderProgramme.LeaderId });
             modelBuilder.Entity<EmployeeGroup>().HasKey(eg => new {eg.EmployeeId, eg.GroupId});
+
+            //Inheritance mapping configuration
+            modelBuilder.Entity<Employee>().ToTable("Employees");
+            modelBuilder.Entity<Leader>().ToTable("Leaders");
         }
     }
 }

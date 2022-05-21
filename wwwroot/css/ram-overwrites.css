@@ -1,11 +1,6 @@
-﻿body {
+﻿body, header, .modal-content {
     background-color: var(--ram-background) !important;
 }
-
-header {
-    background-color: var(--ram-background) !important;
-}
-
 a span {
     vertical-align: middle;
 }
@@ -42,7 +37,21 @@ hr {
     background-color: var(--ram-element-background);
 }
 
-.border, .border-top, .border-right, .border-left, .border-bottom {
+.btn-danger, .btn-danger i, .btn-outline-danger, .btn-outline-danger i {
+    transition: all 0.5s ease;
+    color: var(--ram-white);
+    border-color: var(--ram-danger) !important;
+    background-color: var(--ram-element-background);
+}
+
+.btn-danger:hover, .btn-danger i:hover, .btn-outline-danger:hover, .btn-outline-danger i:hover {
+    color: var(--ram-gold);
+    border-color: var(--ram-danger) !important;
+    background-color: var(--ram-element-background);
+}
+
+.border, .border-top, .border-right, .border-left, .border-bottom,
+.modal-header, .modal-body, .modal-footer {
     border-color: var(--ram-gold) !important;
 }
 
@@ -62,8 +71,10 @@ h1, h2, h3, h4, h5, h6, p, span, i, a, table, label {
     color: var(--ram-white);
 }
 
-.input-group input, 
+.input-group-prepend span,
+.input-group input,
 .input-group textarea,
+.form-group input,
 .form-group select,
 span.form-control {
     border-radius: .25rem !important;
@@ -74,6 +85,7 @@ span.form-control {
 
 .input-group input:focus,
 .input-group textarea:focus,
+.form-group input:focus,
 .form-group select:focus,
 span.form-control:focus {
     background-color: rgba(255,255,255, .15);

@@ -23,5 +23,9 @@ namespace RAM___RUC_Allocation_Manager.Models
         public List<User> Users { get; set; }
         #endregion
 
+        public Programme()
+        {
+            
+        }
     }
 }

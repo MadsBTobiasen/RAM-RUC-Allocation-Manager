@@ -43,8 +43,8 @@ namespace RAM___RUC_Allocation_Manager.Models
         public int SupervisionOfGroupHourTwoMemberMasters { get; set; } = 0;
         public int SupervisionOfGroupHourThreeMemberMasters { get; set; } = 0;
         public int SupervisionOfGroupHourFourMemberMasters { get; set; } = 0;
-        public int SupervisionOfGroupHourFiveMembersMasters { get; set; } = 0;
-        public int SupervisionOfGroupHourSixMembersMasters { get; set; } = 0;
+        public int SupervisionOfGroupHourFiveMemberMasters { get; set; } = 0;
+        public int SupervisionOfGroupHourSixMemberMasters { get; set; } = 0;
         #endregion
 
     }

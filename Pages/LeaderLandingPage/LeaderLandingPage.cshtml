@@ -23,9 +23,9 @@
 
 <hr />
 
-<div class="row">
+<form method="post" class="w-100" id="professorsAndLeadersForm" asp-page-handler="PaginatedResult">
 
-    <form method="post" class="w-100" id="professorsAndLeadersForm" asp-page-handler="PaginatedResult">
+    <div class="row">
 
         <input type="hidden" id="pageSectionInput" asp-for="@Model.PageSection" value="@Model.PageSection" />
         <a hidden="@true" id="pageSectionAchor" href="#@Model.PageSection.ToString().ToLower()"></a>
@@ -45,10 +45,10 @@
                         <input type="hidden" id="progEmpSearchASP" asp-for="@Model.ProgrammeEmployeesSearchString" value="@Model.ProgrammeEmployeesSearchString" />
                         <input type="text" class="form-control" id="progEmpSearchHTML" value="@Model.ProgrammeEmployeesSearchString" />
 
-                        <button type="button" class="btn btn-outline-primary ml-1" onclick="copyValue('progEmpSearchHTML', 'progEmpSearchASP', setValue('pageSectionInput', '@LeaderLandingPageModel.PageSections.ProgrammeEmployees', submitForm('professorsAndLeadersForm')))">
+                        <button type="button" class="btn btn-outline-primary ml-1" title="Tryk her for at søge" onclick="copyValue('progEmpSearchHTML', 'progEmpSearchASP', setValue('pageSectionInput', '@LeaderLandingPageModel.PageSections.ProgrammeEmployees', submitForm('professorsAndLeadersForm')))">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </button>
-
+                        
                     </div>
 
                 </div>
@@ -57,13 +57,13 @@
 
                     <input type="hidden" id="progEmpPageIndex" asp-for="@Model.PageIndexProgrammeEmployees" value="@Model.PageIndexProgrammeEmployees" />
 
-                    <button type="button" class="btn btn-primary" onclick="decrementOne('progEmpPageIndex', 0, setValue('pageSectionInput', '@LeaderLandingPageModel.PageSections.ProgrammeEmployees', submitForm('professorsAndLeadersForm')))">
+                    <button type="button" class="btn btn-primary" title="Forrige side" onclick="decrementOne('progEmpPageIndex', 0, setValue('pageSectionInput', '@LeaderLandingPageModel.PageSections.ProgrammeEmployees', submitForm('professorsAndLeadersForm')))">
                         <i class="fa-solid fa-arrow-left"></i>
                     </button>
 
                     <span class="h5 vertical-align-md mb-0">@(Model.PageIndexProgrammeEmployees+1) | @(Model.PageMaxProgrammeEmployees+1)</span>
 
-                    <button type="button" class="btn btn-primary" onclick="incrementOne('progEmpPageIndex', '@(Model.PageMaxProgrammeEmployees)', setValue('pageSectionInput', '@LeaderLandingPageModel.PageSections.ProgrammeEmployees', submitForm('professorsAndLeadersForm')))">
+                    <button type="button" class="btn btn-primary" title="Næste side" onclick="incrementOne('progEmpPageIndex', '@(Model.PageMaxProgrammeEmployees)', setValue('pageSectionInput', '@LeaderLandingPageModel.PageSections.ProgrammeEmployees', submitForm('professorsAndLeadersForm')))">
                         <i class="fa-solid fa-arrow-right"></i>
                     </button>
 
@@ -109,6 +109,7 @@
                         </th>
                         <th style="width:10%" scope="col" class="text-center">Se</th>
                         <th style="width:10%" scope="col" class="text-center">Redigér</th>
+                        <th style="width:10%" scope="col" class="text-center">Slet</th>
 
                     </tr>
 
@@ -118,13 +119,14 @@
 
                     @for (int i = 0; i < Model.PaginatedProgrammeEmployees.Count; i++)
                     {
-                        <tr style="height: 1rem;">
-                            <th style="width:10%" scope="row" class="text-center">@(i + 1 + (Model.MaxItemsProgrammeEmployees * Model.PageIndexProgrammeEmployees))</th>
-                            <td class="text-left">@((Model.PaginatedProgrammeEmployees[i] as Models.Employee).Name)</td>
-                            <td class="text-left">@((Model.PaginatedProgrammeEmployees[i] as Models.Employee).Title)</td>
-                            <td style="width:10%" class="text-center"><a data-toggle="tooltip" title="Se Proffessor" asp-route-id="@(Model.PaginatedProgrammeEmployees[i].Id)" asp-page="/EmployeeLandingPage/EmployeeLandingPage"><i class="fa-solid fa-circle-info"></i></a></td>
-                            <td style="width:10%" class="text-center"><a data-toggle="tooltip" title="Redigér Proffessor" asp-route-id="@(Model.PaginatedProgrammeEmployees[i].Id)" asp-page=""><i class="fa-solid fa-pen"></i></a></td>
-                        </tr>
+                    <tr style="height: 1rem;">
+                        <th style="width:10%" scope="row" class="text-center">@(i + 1 + (Model.MaxItemsProgrammeEmployees * Model.PageIndexProgrammeEmployees))</th>
+                        <td class="text-left">@((Model.PaginatedProgrammeEmployees[i] as Models.Employee).Name)</td>
+                        <td class="text-left">@((Model.PaginatedProgrammeEmployees[i] as Models.Employee).Title)</td>
+                        <td style="width:10%" class="text-center"><a data-toggle="tooltip" title="Se Underviser" asp-route-id="@(Model.PaginatedProgrammeEmployees[i].Id)" asp-page="/EmployeeLandingPage/EmployeeLandingPage"><i class="fa-solid fa-circle-info"></i></a></td>
+                        <td style="width:10%" class="text-center"><a data-toggle="tooltip" title="Redigér Underviser" asp-route-id="@(Model.PaginatedProgrammeEmployees[i].Id)" asp-page="/EditEmployeePage/EditEmployeePage"><i class="fa-solid fa-pen"></i></a></td>
+                        <td style="width:10%" class="text-center"><a data-toggle="tooltip" title="Slet Underviser" asp-route-id="@(Model.PaginatedProgrammeEmployees[i].Id)" asp-page="/DeleteUserPage/DeleteUser"><i class="fa-solid fa-trash-can"></i></a></td>
+                    </tr>
                     }
 
                 </tbody>
@@ -151,9 +153,10 @@
                         <input type="hidden" id="allEmpSearchASP" asp-for="@Model.AllEmployeesSearchString" value="@Model.AllEmployeesSearchString" />
                         <input type="text" class="form-control" id="allEmpSearchHTML" value="@Model.AllEmployeesSearchString" />
 
-                        <button type="button" class="btn btn-outline-primary ml-1" onclick="copyValue('allEmpSearchHTML', 'allEmpSearchASP', setValue('pageSectionInput', '@LeaderLandingPageModel.PageSections.AllEmployees', submitForm('professorsAndLeadersForm')))">
+                        <button type="button" class="btn btn-outline-primary ml-1" title="Tryk her for at søge" onclick="copyValue('allEmpSearchHTML', 'allEmpSearchASP', setValue('pageSectionInput', '@LeaderLandingPageModel.PageSections.AllEmployees', submitForm('professorsAndLeadersForm')))">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </button>
+                        <span class="ml-1"><a class="btn btn-primary" data-toggle="Tilføj Underviser" asp-page="/AddUserPage/AddEmployee"><i class="fa-solid fa-plus"></i></a></span>
 
                     </div>
 
@@ -163,13 +166,13 @@
 
                     <input type="hidden" id="allEmpPageIndex" asp-for="@Model.PageIndexAllEmployees" value="@Model.PageIndexAllEmployees" />
 
-                    <button type="button" class="btn btn-primary" onclick="decrementOne('allEmpPageIndex', '0', setValue('pageSectionInput', '@LeaderLandingPageModel.PageSections.AllEmployees', submitForm('professorsAndLeadersForm')))">
+                    <button type="button" class="btn btn-primary" title="Forrige side" onclick="decrementOne('allEmpPageIndex', '0', setValue('pageSectionInput', '@LeaderLandingPageModel.PageSections.AllEmployees', submitForm('professorsAndLeadersForm')))">
                         <i class="fa-solid fa-arrow-left"></i>
                     </button>
 
                     <span class="h5 vertical-align-md mb-0">@(Model.PageIndexAllEmployees+1) | @(Model.PageMaxAllEmployees+1)</span>
 
-                    <button type="button" class="btn btn-primary" onclick="incrementOne('allEmpPageIndex', '@(Model.PageMaxAllEmployees)', setValue('pageSectionInput', '@LeaderLandingPageModel.PageSections.AllEmployees', submitForm('professorsAndLeadersForm')))">
+                    <button type="button" class="btn btn-primary" title="Næste side" onclick="incrementOne('allEmpPageIndex', '@(Model.PageMaxAllEmployees)', setValue('pageSectionInput', '@LeaderLandingPageModel.PageSections.AllEmployees', submitForm('professorsAndLeadersForm')))">
                         <i class="fa-solid fa-arrow-right"></i>
                     </button>
 
@@ -215,6 +218,8 @@
                         </th>
                         <th style="width:10%" scope="col" class="text-center">Se</th>
                         <th style="width:10%" scope="col" class="text-center">Redigér</th>
+                        <th style="width:10%" scope="col" class="text-center">Slet</th>
+
                     </tr>
 
                 </thead>
@@ -258,9 +263,10 @@
                             <input type="hidden" id="allLeadsSearchASP" asp-for="@Model.AllLeadersSearchString" value="@Model.AllLeadersSearchString" />
                             <input type="text" class="form-control" id="allLeadsSearchHTML" value="@Model.AllLeadersSearchString" />
 
-                            <button type="button" class="btn btn-outline-primary ml-1" onclick="copyValue('allLeadsSearchHTML', 'allLeadsSearchASP', setValue('pageSectionInput', '@LeaderLandingPageModel.PageSections.AllLeaders', submitForm('professorsAndLeadersForm')))">
+                            <button type="button" class="btn btn-outline-primary ml-1" title="Tryk her for at søge" onclick="copyValue('allLeadsSearchHTML', 'allLeadsSearchASP', setValue('pageSectionInput', '@LeaderLandingPageModel.PageSections.AllLeaders', submitForm('professorsAndLeadersForm')))">
                                 <i class="fa-solid fa-magnifying-glass"></i>
                             </button>
+                            <span class="ml-1"><a class="btn btn-primary" data-toggle="Tilføj Leder" asp-page="/AddUserPage/AddUser"><i class="fa-solid fa-plus"></i></a></span>
 
                         </div>
 
@@ -270,13 +276,13 @@
 
                         <input type="hidden" id="allLeadsPageIndex" asp-for="@Model.PageIndexAllLeaders" value="@Model.PageIndexAllLeaders" />
 
-                        <button type="button" class="btn btn-primary" onclick="decrementOne('allLeadsPageIndex', '0', setValue('pageSectionInput', '@LeaderLandingPageModel.PageSections.AllLeaders', submitForm('professorsAndLeadersForm')))">
+                        <button type="button" class="btn btn-primary" title="Forrige side" onclick="decrementOne('allLeadsPageIndex', '0', setValue('pageSectionInput', '@LeaderLandingPageModel.PageSections.AllLeaders', submitForm('professorsAndLeadersForm')))">
                             <i class="fa-solid fa-arrow-left"></i>
                         </button>
 
                         <span class="h5 vertical-align-md mb-0">@(Model.PageIndexAllLeaders + 1) | @(Model.PageMaxAllLeaders + 1)</span>
 
-                        <button type="button" class="btn btn-primary" onclick="incrementOne('allLeadsPageIndex', '@(Model.PageMaxAllLeaders)', setValue('pageSectionInput', '@LeaderLandingPageModel.PageSections.AllLeaders', submitForm('professorsAndLeadersForm')))">
+                        <button type="button" class="btn btn-primary" title="Næste side" onclick="incrementOne('allLeadsPageIndex', '@(Model.PageMaxAllLeaders)', setValue('pageSectionInput', '@LeaderLandingPageModel.PageSections.AllLeaders', submitForm('professorsAndLeadersForm')))">
                             <i class="fa-solid fa-arrow-right"></i>
                         </button>
 
@@ -309,6 +315,7 @@
                             </th>
                             <th scope="col" class="text-center">Rolle</th>
                             <th style="width:10%" scope="col" class="text-center">Redigér</th>
+                            <th style="width:10%" scope="col" class="text-center">Slet</th>
 
                         </tr>
 
@@ -322,7 +329,9 @@
                                 <th style="width:10%" scope="row" class="text-center">@(i + 1 + (Model.MaxItemsAllLeaders * Model.PageIndexAllLeaders))</th>
                                 <td class="text-left">@((Model.PaginatedLeaders[i] as Models.Leader).Name)</td>
                                 <td class="text-left">Leader</td>
-                                <td style="width:10%" class="text-center"><a data-toggle="tooltip" title="Redigér Leder" asp-route-id="@(Model.PaginatedLeaders[i].Id)" asp-page=""><i class="fa-solid fa-pen"></i></a></td>
+                                <td style="width:10%" class="text-center"><a data-toggle="tooltip" title="Redigér Leder" asp-route-id="@(Model.PaginatedLeaders[i].Id)" asp-page="/EditLeaderPage/EditLeaderPage"><i class="fa-solid fa-pen"></i></a></td>
+                                <td style="width:10%" class="text-center"><a data-toggle="tooltip" title="Slet Leder" asp-route-id="@(Model.PaginatedLeaders[i].Id)" asp-page="/DeleteUserPage/DeleteUser"><i class="fa-solid fa-trash-can"></i></a></td>
+
                             </tr>
                         }
 
@@ -334,6 +343,6 @@
             <div class="col-1"></div>
         }
 
-    </form>
+    </div>
 
-</div>
+</form>

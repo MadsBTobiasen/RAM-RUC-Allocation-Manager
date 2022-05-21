@@ -8,11 +8,11 @@
         <th>Programmes</th>
     </tr>
 
-    @*@foreach (var p in Model.LeaderProgrammes)
+    @foreach (var p in Model.LeaderProgrammes)
     {
-    <tr>
-        <td><a asp-page="/EditSettingsProgramme/EditSettingsProgramme2" asp-route-id="@//p.Id">@//p.Programme.Name</a></td>
-    </tr>
-    }*@
-    
+        <tr>
+            
+            <td><a asp-page="/EditSettingsProgramme/EditSettingsProgramme2" asp-route-id="@p.LeaderId">@p.Programme.Name</a></td>
+        </tr>
+    }
 </table>

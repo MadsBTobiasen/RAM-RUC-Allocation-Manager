@@ -6,27 +6,23 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using RAM___RUC_Allocation_Manager.MockData;
 using RAM___RUC_Allocation_Manager.Models;
-using RAM___RUC_Allocation_Manager.Models.DbConnections;
-using RAM___RUC_Allocation_Manager.Models.WorkAssigments;
 using RAM___RUC_Allocation_Manager.Services;
-using static RAM___RUC_Allocation_Manager.Models.Employee;
+using static RAM___RUC_Allocation_Manager.Models.User;
 
-namespace RAM___RUC_Allocation_Manager.Pages.EditEmployeePage
+namespace RAM___RUC_Allocation_Manager.Pages.EditLeaderPage
 {
-    public class EditEmployeePageModel : PageModel
+    public class EditLeaderPageModel : PageModel
     {
-
         #region Fields
         public UserService userService;
         private bool _debug = true;
         #endregion
 
         #region Properties
-        public Employee EmployeeToEdit { get; set; }
-        public Employee EmployeeEdited { get; set; }
-        public List<SelectListItem> TitleSelectList { get; set; }
+        public User UserToEdit { get; set; }
+        public Leader UserEdited { get; set; }
+        public List<SelectListItem> TypeSelectList { get; set; }
 
         #region Update User Properties
         [BindProperty] [Required]
@@ -38,13 +34,13 @@ namespace RAM___RUC_Allocation_Manager.Pages.EditEmployeePage
         /// in practice, this will be user submitted.
         /// </summary>
         [BindProperty] [Required]
-        public string Email { get; set; } = "RAM-Employee-Test@Tier1TCG.dk";
+        public string Email { get; set; } = "RAM-Leader-Test@Tier1TCG.dk";
         /// <summary>
         /// Title has a length of minimum, such that a "choose title.." option can be added, with a string as a value, with a length less than one,
         /// such that when a valid title is chosen, it passes the validation, as the string length of value is 1 or higher.
         /// </summary>
         [BindProperty] [Required] [StringLength(100, MinimumLength = 1)]
-        public string Title { get; set; }
+        public string Type { get; set; }
 
         [BindProperty] [Required] [StringLength(20, MinimumLength = 5)]
         public string Username { get; set; }
@@ -58,16 +54,16 @@ namespace RAM___RUC_Allocation_Manager.Pages.EditEmployeePage
         #endregion
 
         #region Constructor
-        public EditEmployeePageModel(UserService userService)
+        public EditLeaderPageModel(UserService userService)
         {
-            
+
             this.userService = userService;
 
-            TitleSelectList = new List<SelectListItem>()
+            //Role Change for Leaders disabled in the Prototype.
+            TypeSelectList = new List<SelectListItem>()
             {
-                new SelectListItem() { Value = $"{(int)EmployeeTitle.Professor}", Text = $"{EmployeeTitle.Professor}" },
-                new SelectListItem() { Value = $"{(int)EmployeeTitle.AssociateProfessor}", Text = $"{EmployeeTitle.AssociateProfessor}" },
-                new SelectListItem() { Value = $"{(int)EmployeeTitle.AssistantProfessor}", Text = $"{EmployeeTitle.AssistantProfessor}" },
+                new SelectListItem() { Value = $"{(int)UserType.Leader}", Text = $"{UserType.Leader}" },
+                //new SelectListItem() { Value = $"{(int)UserType.Adminstrator}", Text = $"{UserType.Adminstrator}" },
             };
 
         }
@@ -75,68 +71,71 @@ namespace RAM___RUC_Allocation_Manager.Pages.EditEmployeePage
 
         #region Methods
         /// <summary>
-        /// Meethod that returns the Page();
+        /// Method that returns the Page().
         /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public IActionResult OnGet(int id)
-        {
+        { 
 
-            EmployeeToEdit = (Employee)userService.GetUserByID(id);
-            Title = EmployeeToEdit.Title.ToString();
+            UserToEdit = userService.GetUserByID(id);
+            Type = UserToEdit.Type.ToString();
 
-            if (EmployeeToEdit == null)
+            if (UserToEdit == null)
                 return RedirectToPage("/NotFound");
 
             return Page();
+
         }
 
         /// <summary>
         /// Method that updates the user object.
         /// </summary>
+        /// <param name="id"></param>
         public IActionResult OnPost(int id)
         {
 
-            EmployeeToEdit = (Employee)userService.GetUserByID(id);
+            UserToEdit = userService.GetUserByID(id);
 
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            EmployeeEdited = new Employee()
+            UserEdited = new Leader()
             {
                 Id = Id,
                 Name = Name,
                 Email = Email,
-                Title = (EmployeeTitle)Convert.ToInt32(Title),
+                Type = (UserType)Convert.ToInt32(Type),
                 Username = Username
             };
 
             //If password is not an empty string, apply the new password.
             if (!string.IsNullOrEmpty(Password))
             {
-                EmployeeEdited.SetPassword(Password);
-            }
-            else
+                UserEdited.SetPassword(Password);
+            } else
             {
-                EmployeeEdited.Password = EmployeeToEdit.Password;
+                UserEdited.Password = UserToEdit.Password;
             }
 
             //Debug showing edits & differences:
             if (_debug)
             {
-                Console.WriteLine("to edit:     " + EmployeeToEdit);
-                Console.WriteLine("edited:      " + EmployeeEdited);
+                Console.WriteLine("to edit:     " + UserToEdit);
+                Console.WriteLine("edited:      " + UserEdited);
             }
 
-            EmployeeEdited = (Employee)userService.EditUser(EmployeeEdited);
+            UserEdited = (Leader)userService.EditUser(UserEdited);
 
-            if (EmployeeEdited.Id != EmployeeToEdit.Id)
+            if (UserEdited.Id != UserToEdit.Id)
             {
                 throw new Exception("Error in updating user.");
             }
 
             //Debug showing edits & differences:
-            if (_debug) Console.WriteLine("after edit:  " + EmployeeEdited);
+            if (_debug) Console.WriteLine("after edit:  " + UserEdited);
 
             return RedirectToPage("/LeaderLandingPage/LeaderLandingPage");
 

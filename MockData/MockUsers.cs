@@ -71,18 +71,17 @@ namespace RAM___RUC_Allocation_Manager.MockData
             {
                 Id = 300,
                 Name = "Employee1000",
-                Username = "Employee1000",
-                Password = hasher.HashPassword(null, "Password")
+                Username = "Employee1000"
             };
+
+            employee.SetPassword(hasher.HashPassword(null, "Password"));
 
             Group Group = new Group();
 
             EmployeeGroup employeeGroupOne = new EmployeeGroup()
             { Employee = employee, Group = Group, RoleOfEmployee = EmployeeGroup.EmployeeRole.Supervisor };
-
             EmployeeGroup employeeGroupTwo = new EmployeeGroup()
             { Employee = employee, Group = Group, RoleOfEmployee = EmployeeGroup.EmployeeRole.Supervisor };
-
             Group.Id = 1;
             Group.RucId = 1;
             Group.EmployeeGroups.Add(employeeGroupOne);
@@ -103,7 +102,10 @@ namespace RAM___RUC_Allocation_Manager.MockData
             for (int i = 0; i < itterations; i++)
             {
 
-                output.Add(new Employee() { Id = ++employeeStartId, Username = $"{namePrefix + i}", Name = $"{namePrefix + i}", Password = hasher.HashPassword(null, "emp") });
+                Employee emp = new Employee() { Id = ++employeeStartId, Username = $"{namePrefix + i}", Name = $"{namePrefix + i}" };
+                emp.SetPassword("emp");
+
+                output.Add(emp);
 
             }
 
@@ -117,9 +119,10 @@ namespace RAM___RUC_Allocation_Manager.MockData
             {
                 Id = 10,
                 Name = "Leader1000",
-                Username = "Leader1000",
-                Password = hasher.HashPassword(null, "Password")
+                Username = "Leader1000"
             };
+
+            leader.SetPassword("Password");
 
             Programme programme1 = new Programme()
             {
@@ -159,7 +162,10 @@ namespace RAM___RUC_Allocation_Manager.MockData
             {
 
                 List<Programme> programmes = new List<Programme>() { new Programme() { Id = ++miscStartId, Name = $"Test Studie_{namePrefix + i}", Users = new List<User>() } };
-                output.Add(new Leader() { Id = ++leaderStartId, Username = $"{namePrefix + i}", Name = $"{namePrefix + i}", Password = hasher.HashPassword(null, "lea"), Programmes = programmes });
+                Leader lead = new Leader() { Id = ++leaderStartId, Username = $"{namePrefix + i}", Name = $"{namePrefix + i}", Programmes = programmes };
+                lead.SetPassword("lea");
+
+                output.Add(lead);
 
             }
 

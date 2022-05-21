@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Security.Claims;
@@ -26,11 +27,13 @@ namespace RAM___RUC_Allocation_Manager.Models
 
         [Required]public bool IsAdmin { get; set; }
         //This is test list. Remove once DB is running.
-        public List<Programme> Programmes { get; set; } = new List<Programme>();
+        [NotMapped]
+        public List<Programme> Programmes { get; set; }
          /// <summary>
         /// Returns a list of all the Users from the Users in Programme' list of Users.
         /// </summary>
-        public List<Employee> ProgrammeUsers { get
+         [NotMapped]
+         public List<Employee> ProgrammeUsers { get
             {
 
                 List<Employee> users = new List<Employee>();
