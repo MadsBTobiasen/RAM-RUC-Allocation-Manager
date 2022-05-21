@@ -1,17 +1,13 @@
-﻿@page
+﻿@page "{id:int}"
 @model RAM___RUC_Allocation_Manager.Pages.EditSettingsProgramme.EditSettingsProgramme2Model
 @{
 }
-<h2>Edit @Model.LeaderProgramme.Programme.Name</h2>
+<h2>Edit @Model.Programme.Name</h2>
 <div class="container" style="display: flex; justify-content: left;">
-    <div>
-    </div>
     <form method="post">
         <div class="form-group">
-            <label asp-for="LeaderProgramme.Programme.Name" class="col-form-label" style="color:white"></label>
-            <div>
-                <input asp-for="LeaderProgramme.Programme.Name" />
-            </div>
+            <label asp-for="@Model.Programme.Name" class="col-form-label" style="color:white"></label>
+            <input asp-for="@Model.Programme.Name" />
         </div>
         <div class="form-group">
             <label asp-for="Leader">Choose a Leader:</label>
@@ -24,11 +20,11 @@
         </div>
 
         <div class="form-group">
-            <button class="btn btn-outline-light">Edit Programme</button>
+            <button class="btn btn-outline-light" asp-page-handler="Edit">Edit Programme</button>
         </div>
 
     </form>
-    <form method="post" asp-handler="AddEmployee">
+    <form method="post" asp-page-handler="AddEmployee">
         <div class="form-group">
             <label asp-for="Employee">Choose an Employee:</label>
             <select id="Employee" name="Employees">
@@ -36,11 +32,12 @@
                 {
                     <option asp-for="@l">@l.Name</option>
                 }
+                <div class="form-group">
+                    <button class="btn btn-outline-light">Add Employee</button>
+                </div>
             </select>
-        </div>
-        <div class="form-group">
-            <button class="btn btn-outline-light">Add Employee</button>
+          
         </div>
     </form>
-    <a asp-page="/EditSettingsProgramme/EditSettingsProgramme"><button class="btn btn-outline-light">Back</button></a>
 </div>
+<a asp-page="/EditSettingsProgramme/EditSettingsProgramme"><button class="btn btn-outline-light">Back</button></a>

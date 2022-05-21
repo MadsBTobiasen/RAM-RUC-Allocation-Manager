@@ -2,9 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using RAM___RUC_Allocation_Manager.Models;
+using RAM___RUC_Allocation_Manager.Models.DbConnections;
 using RAM___RUC_Allocation_Manager.Services;
 
 namespace RAM___RUC_Allocation_Manager.Pages.SettingsPage
@@ -14,6 +16,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.SettingsPage
 
     public class SettingsPageModel : PageModel
     {
+        private List<Leader> _leaders;
         
         public Programme NewProgramme { get; set; }
         [BindProperty]
@@ -25,7 +28,16 @@ namespace RAM___RUC_Allocation_Manager.Pages.SettingsPage
       
         private SettingsService settingsService;
 
-        public IEnumerable<Leader> Leaders { get; set; }
+        public List<Leader> Leaders
+        {
+            get
+            {
+                if (_leaders == null) _leaders = userService.GetUsersByType(Models.User.UserType.Leader).Cast<Leader>().ToList();
+                return _leaders;
+            }
+            set { _leaders = value; }
+        }
+        public List<User> Users { get; set; }
 
         public DbService<LeaderProgramme> dbService { get; set; }
         public DbService<Leader> dbService2 { get; set; }
@@ -36,22 +48,39 @@ namespace RAM___RUC_Allocation_Manager.Pages.SettingsPage
         [BindProperty]
         public BaseSettings BaseSettings { get; set; }
 
-        public SettingsPageModel(SettingsService settingsService)
-        public SettingsPageModel(DbService<LeaderProgramme> dbservice, DbService<Leader> dbservice2, UserService userservice)
+
+        public SettingsPageModel(SettingsService settingsService, UserService userService, DbService<LeaderProgramme> dbService, DbService<Leader> dbService2)
         {
             this.settingsService = settingsService;
-            dbService = dbservice;
-            dbService2 = dbservice2;
-            userService = userservice;
+            this.dbService = dbService;
+            this.dbService2 = dbService2;
+            this.userService = userService;
         }
 
-        public void OnGet()
-        public IActionResult OnPost()
+        public async void OnGet()
         {
+            //Leaders = userService.GetLeaders();
             BaseSettings = settingsService.GetSettings(); 
             BaseSettingsList = settingsService.LoadSettings();
-
+            //Leaders = await dbService2.GetObjectsAsync();
+            //Users = userService.GetUsers();
+           // Leaders = userService.GetUsers();
+            //Leaders = userService.GetUsersByType(Models.User.UserType.Leader).Cast<Leader>().ToList();
         }
+
+        public IActionResult OnPostSettings()
+        {
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+
+            settingsService.ApplySetting(BaseSettings);
+            return RedirectToPage("/LeaderLandingPage/LeaderLandingPage");
+        }
+
+        public IActionResult OnPostLeaderProgramme()
+        {
             NewProgramme = new Programme();
             NewLeaderProgramme = new LeaderProgramme();
             NewEmployeeProgramme = new EmployeeProgramme();
@@ -69,22 +98,8 @@ namespace RAM___RUC_Allocation_Manager.Pages.SettingsPage
             
             dbService.AddObjectAsync(NewLeaderProgramme);
 
-
-            return Page();
-        }
-        public async void OnGet()
-        {
-            Leaders = await dbService2.GetObjectsAsync();
-            //Leaders = userService.GetUsersByType(Models.User.UserType.Leader).Cast<Leader>().ToList();
-        public IActionResult OnPost()
-        {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
-
-            settingsService.ApplySetting(BaseSettings);
             return RedirectToPage("/LeaderLandingPage/LeaderLandingPage");
+            return Page();
         }
     }
 }

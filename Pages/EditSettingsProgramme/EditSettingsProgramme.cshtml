@@ -1,4 +1,4 @@
-﻿@page
+﻿@page 
 @model RAM___RUC_Allocation_Manager.Pages.EditSettingsProgramme.EditSettingsProgrammeModel
 @{
 }
@@ -8,11 +8,10 @@
         <th>Programmes</th>
     </tr>
 
-    @foreach (var p in Model.LeaderProgrammes)
+    @foreach (var p in Model.Programmes)
     {
         <tr>
-            
-            <td><a asp-page="/EditSettingsProgramme/EditSettingsProgramme2" asp-route-id="@p.LeaderId">@p.Programme.Name</a></td>
+            <td><a asp-page="/EditSettingsProgramme/EditSettingsProgramme2" asp-route-id="@p.Id">@p.Name</a></td>
         </tr>
     }
 </table>
