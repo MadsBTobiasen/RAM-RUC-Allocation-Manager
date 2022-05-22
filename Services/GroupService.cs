@@ -37,7 +37,7 @@ namespace RAM___RUC_Allocation_Manager.Services
 
 
       
-        public Group GetCourseById(int id)
+        public Group GetGroupById(int id)
         {
             return Groups.FirstOrDefault(x => x.Id == id);
         }

@@ -370,7 +370,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.EditEmployeePage
 
         public void GetProperties(int userId)
         {
-            Employee = (Employee)userService.GetUserWithNavPropById(1).Result;
+            Employee = (Employee) userService.GetUserWithNavPropById(1).Result;
             Courses = courseService.GetCourses();
             Groups = groupService.GetGroups();
             EmployeeGroups = egDbService.GetObjectsAsync().Result.ToList();

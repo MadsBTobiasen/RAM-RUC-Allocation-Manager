@@ -19,10 +19,6 @@ namespace RAM___RUC_Allocation_Manager.Services
 
         #region Properties
         public List<User> Users { get; set; }
-        public List<Employee> Employees  { get; set; }
-        public List<Leader> Leaders { get; set; }
-        public List<EmployeeCourse> EmployeeCourses { get; set; }
-        public Employee Employee { get; set; }
         public ICollection<Programme> Programmes { get; set; }
 
         #endregion
@@ -33,6 +29,7 @@ namespace RAM___RUC_Allocation_Manager.Services
 
             this.userDbService = userDbService;
             //TODO: Retrieve Users from DB-Service.
+            //Users = userDbService.GetEmployeesWithNavPropsAsync().Result.ToList().Concat(userDbService.GetLeadersWithNavProps().Result.ToList()).ToList();
             Users = userDbService.GetObjectsAsync().Result.ToList();
             Users = Users.OrderBy(u => u.Name).ToList();
         }
@@ -46,12 +43,6 @@ namespace RAM___RUC_Allocation_Manager.Services
         public List<User> GetUsers()
         {
             return Users;
-        }
-
-        //Todo Move to another service????
-        public Programme GetProgrammeByID(int id)
-        {
-            return Programmes.Where(p => p.Id == id).Select(p => p).FirstOrDefault();
         }
 
 
@@ -176,6 +167,7 @@ namespace RAM___RUC_Allocation_Manager.Services
             await userDbService.DeleteObjectAsync(userToDelete);
             return deletedUser;
         }
+
 
         /// <summary>
         /// Method that gets all the Leaders that a given employee has.
