@@ -16,6 +16,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.EditSettingsProgramme
     {
         private List<Leader> _leaders;
         private List<Employee> _employees;
+        private ProgrammeService programmeService;
 
         [BindProperty]
         public Leader Leader { get; set; }
@@ -48,10 +49,11 @@ namespace RAM___RUC_Allocation_Manager.Pages.EditSettingsProgramme
         public DbService<Programme> dbService { get; set; }
         public UserService userService { get; set; }
 
-        public EditSettingsProgramme2Model(UserService userservice, DbService<Programme> dbservice)
+        public EditSettingsProgramme2Model(UserService userservice, DbService<Programme> dbservice, ProgrammeService programmeService)
         {
             dbService = dbservice;
             userService = userservice;
+            this.programmeService = programmeService;
 
         }
         public async void OnGet(int id)
@@ -60,7 +62,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.EditSettingsProgramme
             //LeaderProgramme = await dbService.GetObjectByIdAsync(id);
             //Leaders = await dbService2.GetObjectsAsync();
             //Employees = await dbService3.GetObjectsAsync();
-            Programme = userService.GetProgrammeByID(id);
+            Programme = programmeService.GeProgrammeWithNavPropById(id).Result;
         }
 
         public async void OnPostEdit()
