@@ -20,6 +20,7 @@ namespace RAM___RUC_Allocation_Manager.Models
         public virtual ICollection<LeaderProgramme> LeaderProgrammes { get; set; } = new List<LeaderProgramme>();
 
         //This is test list. Remove after db go vroom
+        [NotMapped]
         public List<User> Users { get; set; }
         #endregion
 

@@ -43,9 +43,10 @@ namespace RAM___RUC_Allocation_Manager.Pages.SettingsPage
             set { _leaders = value; }
         }
         public List<User> Users { get; set; }
-
         public DbService<LeaderProgramme> dbService { get; set; }
-        public DbService<Leader> dbService2 { get; set; }
+        public DbService<Programme> dbService2 { get; set; }
+        public DbService<EmployeeProgramme> dbService3 { get; set; }
+        public DbService<Leader> dbService4 { get; set; }
         public UserService userService { get; set; }
 
         public List<BaseSettings> BaseSettingsList { get; set; }
@@ -54,13 +55,17 @@ namespace RAM___RUC_Allocation_Manager.Pages.SettingsPage
         public BaseSettings BaseSettings { get; set; }
 
 
-        public SettingsPageModel(SettingsService settingsService, UserService userService, DbService<LeaderProgramme> dbService, DbService<Leader> dbService2)
+        public SettingsPageModel(SettingsService settingsService, UserService userService, DbService<LeaderProgramme> dbService, DbService<Programme> dbservice2, DbService<EmployeeProgramme> dbservice3, DbService<Leader> dbService4)
         {
+
             this.settingsService = settingsService;
-            this.dbService = dbService;
-            this.dbService2 = dbService2;
             this.userService = userService;
-           
+
+            this.dbService = dbService;
+            this.dbService2 = dbservice2;
+            this.dbService3 = dbservice3;
+            this.dbService4 = dbService4;
+
         }
 
         public async void OnGet()
@@ -74,13 +79,14 @@ namespace RAM___RUC_Allocation_Manager.Pages.SettingsPage
             Programmes = falkesMockdata.GetProgrammes();
             //Leaders = await dbService2.GetObjectsAsync();
             //Users = userService.GetUsers();
-            // Leaders = userService.GetUsers();
+            //Leaders = userService.GetUsers();
             //Leaders = userService.GetUsersByType(Models.User.UserType.Leader).Cast<Leader>().ToList();
 
         }
 
         public IActionResult OnPostSettings()
         {
+        
             settingsService.ApplySetting(BaseSettings);
             return RedirectToPage("/LeaderLandingPage/LeaderLandingPage");
 
@@ -93,14 +99,15 @@ namespace RAM___RUC_Allocation_Manager.Pages.SettingsPage
             NewProgramme = new Programme();
             
             NewProgramme.Name = ProgrammeName;
+
             NewProgramme.LeaderProgrammes.Add(new LeaderProgramme(){Leader = Leader, Programme = NewProgramme});
+
             NewProgramme.Users = new List<User>();
 
             //dbService.AddObjectAsync(NewProgramme);
 
             Programmes.Add(NewProgramme);
             return RedirectToPage("/LeaderLandingPage/LeaderLandingPage");
-            return Page();
 
         }
     }

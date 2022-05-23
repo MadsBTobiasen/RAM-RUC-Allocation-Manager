@@ -18,6 +18,7 @@ using RAM___RUC_Allocation_Manager.Models.DbConnections;
 using RAM___RUC_Allocation_Manager.Models.Email;
 using RAM___RUC_Allocation_Manager.Models.WorkAssigments;
 using RAM___RUC_Allocation_Manager.Models.WorkAssigments.Committee;
+using RAM___RUC_Allocation_Manager.Services.DbServices;
 
 namespace RAM___RUC_Allocation_Manager
 {
@@ -89,6 +90,13 @@ namespace RAM___RUC_Allocation_Manager
             services.AddSingleton<SettingsService, SettingsService>();
             services.AddSingleton<LoginService, LoginService>();
             services.AddSingleton<EmailService, EmailService>();
+            services.AddSingleton<UserDbService, UserDbService>();
+            services.AddSingleton<CourseDbService, CourseDbService>();
+            services.AddSingleton<CourseService, CourseService>();
+            services.AddSingleton<GroupDbService, GroupDbService>();
+            services.AddSingleton<GroupService, GroupService>();
+            services.AddSingleton<ProgrammeDbService, ProgrammeDbService>();
+            services.AddSingleton<ProgrammeService, ProgrammeService>();
 
             services.AddTransient<PaginationService<Leader>, PaginationService<Leader>>();
             services.AddTransient<PaginationService<Employee>, PaginationService<Employee>>();

@@ -49,6 +49,8 @@ namespace RAM___RUC_Allocation_Manager.Pages.EditLeaderPage
         public string Password { get; set; }
         [BindProperty] [Compare("Password", ErrorMessage = "Nyt password er ikke ens. Prøv igen.")]
         public string ConfirmPassword { get; set; }
+        [BindProperty]
+        public bool IsAdmin { get; set; }
         #endregion
 
         #endregion
@@ -108,7 +110,8 @@ namespace RAM___RUC_Allocation_Manager.Pages.EditLeaderPage
                 Name = Name,
                 Email = Email,
                 Type = (UserType)Convert.ToInt32(Type),
-                Username = Username
+                Username = Username,
+                IsAdmin = IsAdmin
             };
 
             //If password is not an empty string, apply the new password.
@@ -127,7 +130,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.EditLeaderPage
                 Console.WriteLine("edited:      " + UserEdited);
             }
 
-            UserEdited = (Leader)userService.EditUser(UserEdited);
+            UserEdited = (Leader)userService.EditUser(UserEdited).Result;
 
             if (UserEdited.Id != UserToEdit.Id)
             {

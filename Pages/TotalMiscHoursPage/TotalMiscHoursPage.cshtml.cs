@@ -56,6 +56,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.TotalMiscHoursPage
             }
 
             if (id == -1) id = LoggedInUserId;
+            Employee = (Employee) userService.GetUserWithNavPropById(id).Result;
             TotalHiringCommitteeMinutes = Employee.EmployeeHiringCommittees.Select(ehc =>
                 ehc.HiringCommittee.PeopleToBeAssessed * BaseSettings.HourPerPersonHiringCommittee).Sum();
             TotalPhdCommitteeMinutes = Employee.PhdCommittees * BaseSettings.PhdCommitteeHourValue;

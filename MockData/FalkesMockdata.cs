@@ -152,10 +152,10 @@ namespace RAM___RUC_Allocation_Manager.MockData
             leaderProgramme.Leader = Martin;
 
             ////ListGenerating
-            //employeeList.Add(Falke);
-            //employeeList.Add(Mads);
-            //leaderList.Add(Martin);
-            //leaderList.Add(Simon);
+            employeeList.Add(Falke);
+            employeeList.Add(Mads);
+            leaderList.Add(Martin);
+            leaderList.Add(Simon);
             programmesList.Add(ComputerScience);
             programmesList.Add(Sociology);
             programmesList.Add(MultimediaDesign);
