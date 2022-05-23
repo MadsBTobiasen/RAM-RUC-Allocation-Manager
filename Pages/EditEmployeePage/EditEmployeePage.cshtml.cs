@@ -53,6 +53,20 @@ namespace RAM___RUC_Allocation_Manager.Pages.EditEmployeePage
         public string Password { get; set; }
         [BindProperty] [Compare("Password", ErrorMessage = "Nyt password er ikke ens. Prøv igen.")]
         public string ConfirmPassword { get; set; }
+        [BindProperty]
+        public int AssistantProfessorSupervisions { get; set; }
+        [BindProperty]
+        public int SynopsisExaminations { get; set; }
+        [BindProperty]
+        public int PorfolioExaminations { get; set; }
+        [BindProperty]
+        public int PhdCommittees { get; set; }
+        [BindProperty]
+        public int Balance { get; set; }
+        [BindProperty]
+        public bool IsGroupLeader { get; set; }
+        [BindProperty]
+        public EmployeeSavings Savings { get; set; }
         #endregion
 
         #endregion
@@ -108,7 +122,14 @@ namespace RAM___RUC_Allocation_Manager.Pages.EditEmployeePage
                 Name = Name,
                 Email = Email,
                 Title = (EmployeeTitle)Convert.ToInt32(Title),
-                Username = Username
+                Username = Username,
+                AssistantProfessorSupervisions = AssistantProfessorSupervisions,
+                SynopsisExaminations = SynopsisExaminations,
+                PortfolioExaminations = PorfolioExaminations,
+                PhdCommittees = PhdCommittees,
+                Balance = Balance,
+                IsGroupLeader = IsGroupLeader,
+                Savings = Savings
             };
 
             //If password is not an empty string, apply the new password.
