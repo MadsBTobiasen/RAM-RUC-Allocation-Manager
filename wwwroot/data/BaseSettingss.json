@@ -5,7 +5,8 @@
     "BaseHoursForProfessor": 0,
     "BaseHoursForAssociateProfessor": 0,
     "BaseHoursForAssistantProfessor": 0,
-    "LessonHourValue": 0,
+    "LessonHourValue": 2,
+    "CoordinatorOfCourseMinuteValue": 0,
     "SabLessonHourValue": 0,
     "SibLessonHourValue": 0,
     "HourPerPersonHiringCommittee": 0,
@@ -16,6 +17,9 @@
     "PhdEndEvalHourWorth": 0,
     "PhdMainSupervisionHourWorth": 0,
     "PhdSecondarySupervisionHourWorth": 0,
+    "AssistantProfessorSupervisonMinuteValue": 0,
+    "InternalCensorMinuteValue": 0,
+    "GroupLeaderMinuteValue": 0,
     "PortfolioHourWorth": 0,
     "SynopsisHourWorth": 0,
     "SupervisionOfGroupHourOneMember": 0,
@@ -23,11 +27,12 @@
     "SupervisionOfGroupHourThreeMember": 0,
     "SupervisionOfGroupHourFourMember": 0,
     "SupervisionOfGroupHourFiveMember": 0,
+    "SupervisionOfGroupHourSixMember": 0,
     "SupervisionOfGroupHourOneMemberMasters": 0,
     "SupervisionOfGroupHourTwoMemberMasters": 0,
     "SupervisionOfGroupHourThreeMemberMasters": 0,
     "SupervisionOfGroupHourFourMemberMasters": 0,
-    "SupervisionOfGroupHourFiveMembersMasters": 0,
-    "SupervisionOfGroupHourSixMembersMasters": 0
+    "SupervisionOfGroupHourFiveMemberMasters": 0,
+    "SupervisionOfGroupHourSixMemberMasters": 0
   }
 ]

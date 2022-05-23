@@ -33,6 +33,7 @@ namespace RAM___RUC_Allocation_Manager.Services
             //Users = userDbService.GetEmployeesWithNavPropsAsync().Result.ToList().Concat(userDbService.GetLeadersWithNavProps().Result.ToList()).ToList();
             Users = userDbService.GetObjectsAsync().Result.ToList();
             Users = Users.OrderBy(u => u.Name).ToList();
+
         }
         #endregion
 
@@ -46,6 +47,10 @@ namespace RAM___RUC_Allocation_Manager.Services
             return Users;
         }
 
+        public Programme GetProgrammeByID(int id)
+        {
+            return Programmes.Where(p => p.Id == id).Select(p => p).FirstOrDefault();
+        }
 
         /// <summary>
         /// Method that returns a List of all users, with the given UserType.
@@ -96,10 +101,10 @@ namespace RAM___RUC_Allocation_Manager.Services
         public async Task<User> CreateUser(User userToAdd)
         {
             Users.Add(userToAdd);
+
             await userDbService.AddObjectAsync(userToAdd);
             return userToAdd;
         }
-
 
         /// <summary>
         /// Method that edits a user object, by trying to match an incoming user-id with one in the list of Users,
@@ -151,8 +156,9 @@ namespace RAM___RUC_Allocation_Manager.Services
 
             }
 
-            await userDbService.UpdateObjectAsync(editedUser);
 
+            await userDbService.UpdateObjectAsync(editedUser);
+          
             return userToEdit;
 
         }
@@ -180,6 +186,7 @@ namespace RAM___RUC_Allocation_Manager.Services
 
             await userDbService.DeleteObjectAsync(userToDelete);
             return deletedUser;
+            //dbService.DeleteObjectAsync(userToDelete);
         }
 
 

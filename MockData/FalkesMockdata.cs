@@ -145,11 +145,11 @@ namespace RAM___RUC_Allocation_Manager.MockData
 
             EmployeeProgramme employeeProgramme = new EmployeeProgramme();
             employeeProgramme.Employee = Falke;
-            //employeeProgramme.Programme = ComputerScience;
+            employeeProgramme.Programme = ComputerScience;
 
-            //LeaderProgramme leaderProgramme = new LeaderProgramme();
-            //leaderProgramme.Programme = ComputerScience;
-            //leaderProgramme.Leader = Martin;
+            LeaderProgramme leaderProgramme = new LeaderProgramme();
+            leaderProgramme.Programme = ComputerScience;
+            leaderProgramme.Leader = Martin;
 
             ////ListGenerating
             employeeList.Add(Falke);
@@ -173,6 +173,8 @@ namespace RAM___RUC_Allocation_Manager.MockData
             employeeGroupsList.Add(employeeGroup);
             employeeHiringCommitteesList.Add(employeeHiringCommittee);
             employeeProgrammesList.Add(employeeProgramme);
+            leaderList.Add(Martin);
+            leaderList.Add(Simon);
             //leaderProgrammesList.Add(leaderProgramme);
         }
 

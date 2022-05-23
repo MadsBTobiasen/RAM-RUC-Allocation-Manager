@@ -40,7 +40,6 @@ namespace RAM___RUC_Allocation_Manager.Pages.LeaderLandingPage
         public Leader Leader => (Leader)userService.GetUserByID(Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier)));
         [BindProperty] public User CreatedUser { get; set; }
         [BindProperty] public Employee Employee { get; set; }
-        public bool IsLeader { get; set; }
 
         /// <summary>
         /// This property is used, to indicate which section of the page, the request should lead to.
@@ -137,11 +136,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.LeaderLandingPage
         /// </summary>
         public IActionResult OnGet()
         {
-
-            IsLeader = false;
-            Console.WriteLine(Leader.Id);
             return Page();
-
         }
 
         /// <summary>
