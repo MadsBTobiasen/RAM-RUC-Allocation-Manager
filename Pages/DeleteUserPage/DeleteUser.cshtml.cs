@@ -19,7 +19,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.EditUser
         public List<User> Users { get; set; }
 
         [BindProperty]
-        public Models.User User { get; set; }
+        public User User { get; set; }
 
         #endregion
 
@@ -30,6 +30,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.EditUser
 
         public void OnGet(int id)
         {
+
             Users = userService.GetUsers();
             User = userService.GetUserByID(id);
 
@@ -38,8 +39,8 @@ namespace RAM___RUC_Allocation_Manager.Pages.EditUser
         {
          
             userService.DeleteUser(User);
-
             return RedirectToPage("/LeaderLandingPage/LeaderLandingPage");
+
         }
     }
 }

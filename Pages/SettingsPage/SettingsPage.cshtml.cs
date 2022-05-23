@@ -64,6 +64,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.SettingsPage
         public SettingsPageModel(DbService<LeaderProgramme> dbservice, DbService<Programme> dbservice2, DbService<EmployeeProgramme> dbservice3)
         public async void OnGet()
         {
+
             //Leaders = userService.GetLeaders();
             BaseSettings = settingsService.GetSettings(); 
             BaseSettingsList = settingsService.LoadSettings();
@@ -71,13 +72,16 @@ namespace RAM___RUC_Allocation_Manager.Pages.SettingsPage
             //Users = userService.GetUsers();
            // Leaders = userService.GetUsers();
             //Leaders = userService.GetUsersByType(Models.User.UserType.Leader).Cast<Leader>().ToList();
+
         }
 
         public IActionResult OnPostSettings()
         {
+        
             dbService = dbservice;
             dbService2 = dbservice2;
             dbService3 = dbservice3;
+            
             if (!ModelState.IsValid)
             {
                 return Page();
@@ -85,10 +89,12 @@ namespace RAM___RUC_Allocation_Manager.Pages.SettingsPage
 
             settingsService.ApplySetting(BaseSettings);
             return RedirectToPage("/LeaderLandingPage/LeaderLandingPage");
+
         }
 
         public IActionResult OnPostLeaderProgramme()
         {
+
             NewProgramme = new Programme();
             NewLeaderProgramme = new LeaderProgramme();
             NewEmployeeProgramme = new EmployeeProgramme();
@@ -117,6 +123,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.SettingsPage
 
             return RedirectToPage("/LeaderLandingPage/LeaderLandingPage");
             return Page();
+
         }
     }
 }

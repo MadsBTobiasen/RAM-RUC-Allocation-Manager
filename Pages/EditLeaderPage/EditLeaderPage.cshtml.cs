@@ -127,7 +127,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.EditLeaderPage
                 Console.WriteLine("edited:      " + UserEdited);
             }
 
-            UserEdited = (Leader)userService.EditUser(UserEdited);
+            UserEdited = (Leader)userService.EditUser(UserEdited).Result;
 
             if (UserEdited.Id != UserToEdit.Id)
             {

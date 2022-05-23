@@ -232,9 +232,8 @@
                             <th style="width:10%" scope="row" class="text-center">@(i + 1 + (Model.MaxItemsAllEmployees * Model.PageIndexAllEmployees))</th>
                             <td class="text-left">@((Model.PaginatedEmployees[i] as Models.Employee).Name)</td>
                             <td class="text-left">@((Model.PaginatedEmployees[i] as Models.Employee).Title)</td>
-                            <td style="width:10%" class="text-center"><a data-toggle="tooltip" title="Se Underviser" asp-route-id="@(Model.PaginatedEmployees[i].Id)" asp-page="/EmployeeLandingPage/EmployeeLandingPage"><i class="fa-solid fa-circle-info"></i></a></td>
-                            <td style="width:10%" class="text-center"><a data-toggle="tooltip" title="Redigér Underviser" asp-route-id="@(Model.PaginatedEmployees[i].Id)" asp-page="/EditEmployeePage/EditEmployeePage"><i class="fa-solid fa-pen"></i></a></td>
-                            <td style="width:10%" class="text-center"><a data-toggle="tooltip" title="Slet Underviser" asp-route-id="@(Model.PaginatedEmployees[i].Id)" asp-page="/DeleteUserPage/DeleteUser"><i class="fa-solid fa-trash-can"></i></a></td>
+                            <td style="width:10%" class="text-center"><a data-toggle="tooltip" title="Se Professor" asp-route-id="@(Model.PaginatedEmployees[i].Id)" asp-page="/EmployeeLandingPage/EmployeeLandingPage"><i class="fa-solid fa-circle-info"></i></a></td>
+                            <td style="width:10%" class="text-center"><a data-toggle="tooltip" title="Redigér Proffessor" asp-route-id="@(Model.PaginatedEmployees[i].Id)" asp-page=""><i class="fa-solid fa-pen"></i></a></td>
                         </tr>
                     }
 
@@ -332,6 +331,7 @@
                                 <td class="text-left">Leader</td>
                                 <td style="width:10%" class="text-center"><a data-toggle="tooltip" title="Redigér Leder" asp-route-id="@(Model.PaginatedLeaders[i].Id)" asp-page="/EditLeaderPage/EditLeaderPage"><i class="fa-solid fa-pen"></i></a></td>
                                 <td style="width:10%" class="text-center"><a data-toggle="tooltip" title="Slet Leder" asp-route-id="@(Model.PaginatedLeaders[i].Id)" asp-page="/DeleteUserPage/DeleteUser"><i class="fa-solid fa-trash-can"></i></a></td>
+
                             </tr>
                         }
 

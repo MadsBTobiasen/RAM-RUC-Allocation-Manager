@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace RAM___RUC_Allocation_Manager.Models
 {
-    public abstract class User
+    public class User
     {
 
         #region Enumerations
