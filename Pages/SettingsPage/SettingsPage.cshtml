@@ -18,10 +18,10 @@
             <label asp-for="Leader" class="col-form-label" style="color:white"></label>
             <div class="form-group">
             <label asp-for="Leader">Choose a Leader:</label>
-            <select id="Leader" name="Leaders">
+            <select name="userId" id="Leader" name="Leaders">
                 @foreach (var l in @Model.Leaders)
                 {
-                    <option asp-for="@l">@l.Name</option>
+                    <option value="@l.Id" asp-for="@l">@l.Name</option>
                 }
             </select>
         </div>

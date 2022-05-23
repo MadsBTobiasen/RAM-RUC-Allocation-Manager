@@ -19,15 +19,16 @@ namespace RAM___RUC_Allocation_Manager.Pages.SettingsPage
     public class SettingsPageModel : PageModel
     {
         private List<Leader> _leaders;
-        
-        [BindProperty]
-        public Programme NewProgramme { get; set; }
+        private ProgrammeService programmeService;
+
+        //[BindProperty]
+        //public Programme NewProgramme { get; set; }
         [BindProperty]
         public string ProgrammeName { get; set; }
         public LeaderProgramme NewLeaderProgramme { get; set; }
         public EmployeeProgramme NewEmployeeProgramme { get; set; }
         [BindProperty]
-        public Leader Leader { get; set; }
+        public User Leader { get; set; }
       
         public ICollection<Programme> Programmes { get; set; }
 
@@ -55,7 +56,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.SettingsPage
         public BaseSettings BaseSettings { get; set; }
 
 
-        public SettingsPageModel(SettingsService settingsService, UserService userService, DbService<LeaderProgramme> dbService, DbService<Programme> dbservice2, DbService<EmployeeProgramme> dbservice3, DbService<Leader> dbService4)
+        public SettingsPageModel(ProgrammeService programmeService, SettingsService settingsService, UserService userService, DbService<LeaderProgramme> dbService, DbService<Programme> dbservice2, DbService<EmployeeProgramme> dbservice3, DbService<Leader> dbService4)
         {
 
             this.settingsService = settingsService;
@@ -65,18 +66,19 @@ namespace RAM___RUC_Allocation_Manager.Pages.SettingsPage
             this.dbService2 = dbservice2;
             this.dbService3 = dbservice3;
             this.dbService4 = dbService4;
+            this.programmeService = programmeService;
 
         }
 
         public async void OnGet()
         {
 
-            //Leaders = userService.GetLeaders();
-            BaseSettings = settingsService.GetSettings(); 
-            BaseSettingsList = settingsService.LoadSettings();
-            FalkesMockdata falkesMockdata = new FalkesMockdata();
-            falkesMockdata.CreateMockData();
-            Programmes = falkesMockdata.GetProgrammes();
+            Leaders = userService.GetUsersByType(Models.User.UserType.Leader).Cast<Leader>().ToList();
+            //BaseSettings = settingsService.GetSettings(); 
+            //BaseSettingsList = settingsService.LoadSettings();
+            //FalkesMockdata falkesMockdata = new FalkesMockdata();
+            //falkesMockdata.CreateMockData();
+            //Programmes = falkesMockdata.GetProgrammes();
             //Leaders = await dbService2.GetObjectsAsync();
             //Users = userService.GetUsers();
             //Leaders = userService.GetUsers();
@@ -94,19 +96,20 @@ namespace RAM___RUC_Allocation_Manager.Pages.SettingsPage
 
        
 
-        public IActionResult OnPostLeaderProgramme()
+        public async Task<IActionResult> OnPostLeaderProgramme(int userId)
         {
-            NewProgramme = new Programme();
+            Programme NewProgramme = new Programme();
+
+            Console.WriteLine(userId);
             
             NewProgramme.Name = ProgrammeName;
 
-            NewProgramme.LeaderProgrammes.Add(new LeaderProgramme(){Leader = Leader, Programme = NewProgramme});
+            await programmeService.CreateProgramme(NewProgramme);
 
-            NewProgramme.Users = new List<User>();
+            await dbService.AddObjectAsync(new LeaderProgramme
+            { LeaderId = userService.GetUserByID(userId).Id, ProgrammeId = NewProgramme.Id });
 
-            //dbService.AddObjectAsync(NewProgramme);
 
-            Programmes.Add(NewProgramme);
             return RedirectToPage("/LeaderLandingPage/LeaderLandingPage");
 
         }

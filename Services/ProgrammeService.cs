@@ -55,7 +55,33 @@ namespace RAM___RUC_Allocation_Manager.Services
             return programme;
         }
 
+        public async Task<Programme> EditProgramme(Programme editedProgramme)
+        {
 
+            Programme programmeToEdit = null;
+
+            foreach (Programme p in Programmes)
+            {
+                if (p.Id == editedProgramme.Id)
+                {
+
+                    programmeToEdit = p;
+                    break;
+
+                }
+            }
+
+            if (programmeToEdit != null)
+            {
+                programmeToEdit.Name = editedProgramme.Name;
+            }
+
+
+            await programmeDbService.UpdateObjectAsync(editedProgramme);
+
+            return programmeToEdit;
+
+        }
 
 
         public async Task<Programme> DeleteProgramme(Programme programmeToDelete)

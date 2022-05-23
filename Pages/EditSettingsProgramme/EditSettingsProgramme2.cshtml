@@ -6,17 +6,9 @@
 <div class="container" style="display: flex; justify-content: left;">
     <form method="post">
         <div class="form-group">
-            <label asp-for="@Model.Programme.Name" class="col-form-label" style="color:white"></label>
-            <input asp-for="@Model.Programme.Name" />
-        </div>
-        <div class="form-group">
-            <label asp-for="Leader">Choose a Leader:</label>
-            <select id="Leader" name="Leaders">
-                @foreach (var l in @Model.Leaders)
-                {
-                    <option asp-for="@l">@l.Name</option>
-                }
-            </select>
+            <input hidden="" name="programmeId" value="@Model.Programme.Id" />
+            <label asp-for="@Model.Programme.Name" class="col-form-label" style="color: white"></label>
+            <input asp-for="@Model.ProgrammeName" />
         </div>
 
         <div class="form-group">
@@ -24,19 +16,33 @@
         </div>
 
     </form>
-    <form method="post" asp-page-handler="AddEmployee">
+    <form method="post">
         <div class="form-group">
-            <label asp-for="Employee">Choose an Employee:</label>
-            <select id="Employee" name="Employees">
+            <label>Vælg en underviser:</label>
+            <select id="Employee" name="employeeId">
+                <option value="-1">Ingen nye</option>
                 @foreach (var l in @Model.Employees)
                 {
-                    <option asp-for="@l">@l.Name</option>
+                    <option value="@l.Id" asp-for="@l">@l.Name</option>
                 }
                 <div class="form-group">
                     <button class="btn btn-outline-light">Add Employee</button>
                 </div>
             </select>
-          
+
+        </div>
+        <div class="form-group">
+            <label>vælg en leder</label>
+            <select id="Leader" name="leaderId">
+                <option value="-1">Ingen nye</option>
+                @foreach (var l in @Model.Leaders)
+                {
+                    <option value="@l.Id" asp-for="@l">@l.Name</option>
+                }
+            </select>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-outline-light" asp-page-handler="AddUsers">Tilføj til studie</button>
         </div>
     </form>
 </div>
