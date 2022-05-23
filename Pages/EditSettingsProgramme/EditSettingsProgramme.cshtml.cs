@@ -25,11 +25,12 @@ namespace RAM___RUC_Allocation_Manager.Pages.EditSettingsProgramme
             dbService = dbservice;
             this.userService = userService;
         }
-        public void OnGet()
+        public IActionResult OnGet()
         {
             FalkesMockdata falkesMockdata = new FalkesMockdata();
             falkesMockdata.CreateMockData();
             Programmes = falkesMockdata.GetProgrammes();
+            return Page();
 
         }
     }

@@ -37,7 +37,6 @@ namespace RAM___RUC_Allocation_Manager.Services
             Users = Users.OrderBy(u => u.Name).ToList();
             FalkesMockdata falkesMockdata = new FalkesMockdata();
             falkesMockdata.CreateMockData();
-            Programmes = falkesMockdata.GetProgrammes();
         }
         #endregion
 
@@ -54,6 +53,13 @@ namespace RAM___RUC_Allocation_Manager.Services
         public Programme GetProgrammeByID(int id)
         {
             return Programmes.Where(p => p.Id == id).Select(p => p).FirstOrDefault();
+        }
+
+        public Programme CreateProgramme(Programme userToAdd)
+        {
+            Programmes.Add(userToAdd);
+            //dbService.AddObjectAsync(userToAdd);
+            return userToAdd;
         }
 
 
@@ -91,12 +97,14 @@ namespace RAM___RUC_Allocation_Manager.Services
         public User CreateUser(User userToAdd)
         {
             Users.Add(userToAdd);
+            dbService.AddObjectAsync(userToAdd);
             return userToAdd;
         }
 
         public Employee CreateEmployee(Employee employeeToAdd)
         {
             Users.Add(employeeToAdd);
+            dbService.AddObjectAsync(employeeToAdd);
             return employeeToAdd;
         }
 
@@ -137,6 +145,7 @@ namespace RAM___RUC_Allocation_Manager.Services
 
             }
 
+            dbService.UpdateObjectAsync(editedUser);
             return userToEdit;
 
         }
@@ -162,6 +171,7 @@ namespace RAM___RUC_Allocation_Manager.Services
                 }
             }
             return deletedUser;
+            //dbService.DeleteObjectAsync(userToDelete);
         }
 
         /// <summary>

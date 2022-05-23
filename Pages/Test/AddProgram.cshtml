@@ -1,0 +1,72 @@
+﻿@page
+@model RAM___RUC_Allocation_Manager.Pages.Test.AddProgramModel
+@{
+}
+
+<table class="leader-landing-page table-dark table-striped">
+    <tr>
+        <th>Programmes</th>
+    </tr>
+
+    @foreach (var p in @Model.Programmes)
+    {
+        <tr>
+            <td><a asp-page="/EditSettingsProgramme/EditSettingsProgramme2" asp-route-id="@p.Id">@p.Name</a></td>
+        </tr>
+    }
+</table>
+
+<form method="post">
+    
+    <div class="container" style="display: flex; justify-content: left;">
+        <div>
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.Programme.Name" class="col-form-label" style="color:white"></label>
+            <div>
+                <input asp-for="@Model.Programme.Name" />
+            </div>
+        </div>
+        
+        @*<div class="form-group">
+            <label asp-for="EmployeeProgrammes" class="col-form-label" style="color:white"></label>
+            <div class="form-group">
+                <label asp-for="EmployeeProgrammes">Choose a EmployeeProgram:</label>
+                <select id="EmployeeProgrammes" name="Leaders" class="form-control">
+                    @foreach (var l in @Model.EmployeeProgrammes)
+                    {
+                        <option asp-for="@l"></option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="LeaderProgrammes" class="col-form-label" style="color:white"></label>
+            <div class="form-group">
+                <label asp-for="LeaderProgrammes">Choose a LeaderProgram:</label>
+                <select id="LeaderProgrammes" name="Leaders" class="form-control">
+                    @foreach (var l in @Model.LeaderProgrammes)
+                    {
+                        <option asp-for="@l"></option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Leader" class="col-form-label" style="color:white"></label>
+            <div class="form-group">
+                <label asp-for="Leader">Choose a Leader:</label>
+                <select id="Leader" name="Leaders" class="form-control">
+                    @foreach (var l in @Model.Leaders)
+                    {
+                        <option asp-for="@l"></option>
+                    }
+                </select>
+            </div>
+        </div>*@
+        <div class="form-group">
+            <a class="btn btn-danger" asp-page="../EditSettingsProgramme/EditSettingsProgramme">Edit Settings Programe</a>
+            <input type="submit" asp-page-handler="LeaderProgramme" value="Create Programme" class="btn btn-primary" />
+        </div>
+    </div>
+</form>

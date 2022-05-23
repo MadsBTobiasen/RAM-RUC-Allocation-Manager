@@ -20,6 +20,9 @@ namespace RAM___RUC_Allocation_Manager.Pages.EditUser
 
         [BindProperty]
         public User User { get; set; }
+        [BindProperty]
+        public Employee Employee { get; set; }
+
 
         #endregion
 
@@ -35,12 +38,10 @@ namespace RAM___RUC_Allocation_Manager.Pages.EditUser
             User = userService.GetUserByID(id);
 
         }
-        public IActionResult OnPostDeleteUser()
+        public IActionResult OnPost()
         {
-         
             userService.DeleteUser(User);
             return RedirectToPage("/LeaderLandingPage/LeaderLandingPage");
-
         }
     }
 }

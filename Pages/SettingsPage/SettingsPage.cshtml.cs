@@ -5,8 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using RAM___RUC_Allocation_Manager.MockData;
 using RAM___RUC_Allocation_Manager.Models;
 using RAM___RUC_Allocation_Manager.Models.DbConnections;
+using RAM___RUC_Allocation_Manager.Models.Email;
 using RAM___RUC_Allocation_Manager.Services;
 
 namespace RAM___RUC_Allocation_Manager.Pages.SettingsPage
@@ -18,6 +20,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.SettingsPage
     {
         private List<Leader> _leaders;
         
+        [BindProperty]
         public Programme NewProgramme { get; set; }
         [BindProperty]
         public string ProgrammeName { get; set; }
@@ -26,6 +29,8 @@ namespace RAM___RUC_Allocation_Manager.Pages.SettingsPage
         [BindProperty]
         public Leader Leader { get; set; }
       
+        public ICollection<Programme> Programmes { get; set; }
+
         private SettingsService settingsService;
 
         public List<Leader> Leaders
@@ -55,6 +60,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.SettingsPage
             this.dbService = dbService;
             this.dbService2 = dbService2;
             this.userService = userService;
+           
         }
 
         public async void OnGet()
@@ -63,46 +69,36 @@ namespace RAM___RUC_Allocation_Manager.Pages.SettingsPage
             //Leaders = userService.GetLeaders();
             BaseSettings = settingsService.GetSettings(); 
             BaseSettingsList = settingsService.LoadSettings();
+            FalkesMockdata falkesMockdata = new FalkesMockdata();
+            falkesMockdata.CreateMockData();
+            Programmes = falkesMockdata.GetProgrammes();
             //Leaders = await dbService2.GetObjectsAsync();
             //Users = userService.GetUsers();
-           // Leaders = userService.GetUsers();
+            // Leaders = userService.GetUsers();
             //Leaders = userService.GetUsersByType(Models.User.UserType.Leader).Cast<Leader>().ToList();
 
         }
 
         public IActionResult OnPostSettings()
         {
-
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
-
             settingsService.ApplySetting(BaseSettings);
             return RedirectToPage("/LeaderLandingPage/LeaderLandingPage");
 
         }
 
+       
+
         public IActionResult OnPostLeaderProgramme()
         {
-
             NewProgramme = new Programme();
-            NewLeaderProgramme = new LeaderProgramme();
-            NewEmployeeProgramme = new EmployeeProgramme();
-
+            
             NewProgramme.Name = ProgrammeName;
-            NewProgramme.EmployeeProgrammes.Add(NewEmployeeProgramme);
-            NewProgramme.LeaderProgrammes.Add(NewLeaderProgramme);
+            NewProgramme.LeaderProgrammes.Add(new LeaderProgramme(){Leader = Leader, Programme = NewProgramme});
             NewProgramme.Users = new List<User>();
 
-            NewEmployeeProgramme.Programme = NewProgramme;
-            NewEmployeeProgramme.Employee = new Employee();
+            //dbService.AddObjectAsync(NewProgramme);
 
-            NewLeaderProgramme.Leader = Leader;
-            NewLeaderProgramme.Programme = NewProgramme;
-            
-            dbService.AddObjectAsync(NewLeaderProgramme);
-
+            Programmes.Add(NewProgramme);
             return RedirectToPage("/LeaderLandingPage/LeaderLandingPage");
             return Page();
 

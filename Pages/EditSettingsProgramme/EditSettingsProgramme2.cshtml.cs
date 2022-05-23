@@ -67,7 +67,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.EditSettingsProgramme
         {
             Programme.Name = ProgrammeName;
             Programme.LeaderProgrammes.Add(new LeaderProgramme {Leader = Leader, Programme = Programme});
-            await dbService.UpdateObjectAsync(Programme);
+            //await dbService.UpdateObjectAsync(Programme);
         }
 
         public async void OnPostAddEmployee()
