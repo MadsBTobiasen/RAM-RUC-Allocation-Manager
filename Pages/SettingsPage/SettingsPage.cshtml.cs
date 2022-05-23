@@ -74,7 +74,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.SettingsPage
         {
 
             Leaders = userService.GetUsersByType(Models.User.UserType.Leader).Cast<Leader>().ToList();
-            //BaseSettings = settingsService.GetSettings(); 
+            BaseSettings = settingsService.GetSettings(); 
             //BaseSettingsList = settingsService.LoadSettings();
             //FalkesMockdata falkesMockdata = new FalkesMockdata();
             //falkesMockdata.CreateMockData();

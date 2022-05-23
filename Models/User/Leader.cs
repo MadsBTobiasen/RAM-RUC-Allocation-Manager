@@ -29,23 +29,24 @@ namespace RAM___RUC_Allocation_Manager.Models
         //This is test list. Remove once DB is running.
         [NotMapped]
         public List<Programme> Programmes { get; set; }
-         /// <summary>
+        /// <summary>
         /// Returns a list of all the Users from the Users in Programme' list of Users.
         /// </summary>
-         [NotMapped]
-         public List<Employee> ProgrammeUsers { get
+        [NotMapped]
+        public List<Employee> ProgrammeUsers
+        {
+            get
             {
 
                 List<Employee> users = new List<Employee>();
-                
-                if(Programmes != null)
+
+                if (LeaderProgrammes != null)
                 {
-
-                    foreach (Programme p in Programmes)
+                    var result = LeaderProgrammes.Select(lp => lp.Programme);
+                    foreach (Programme p in result)
                     {
-                        users.AddRange(p.Users.Cast<Employee>());
+                        users.AddRange(p.EmployeeProgrammes.Select(ep => ep.Employee));
                     }
-
                 }
 
                 return users;

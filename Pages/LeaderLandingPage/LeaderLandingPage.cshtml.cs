@@ -37,7 +37,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.LeaderLandingPage
         #endregion
 
         #region Properties
-        public Leader Leader => (Leader)userService.GetUserByID(Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier)));
+        public Leader Leader => (Leader)userService.GetUserWithNavPropById(Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier))).Result;
         [BindProperty] public User CreatedUser { get; set; }
         [BindProperty] public Employee Employee { get; set; }
 
