@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using RAM___RUC_Allocation_Manager.MockData;
 using RAM___RUC_Allocation_Manager.Models.DbConnections;
 using RAM___RUC_Allocation_Manager.Models.WorkAssigments;
+using Employee = RAM___RUC_Allocation_Manager.Models.Employee;
 
 namespace RAM___RUC_Allocation_Manager.Services
 {
@@ -133,6 +134,19 @@ namespace RAM___RUC_Allocation_Manager.Services
                 if(userToEdit is Employee)
                 {
                     (userToEdit as Employee).Title = (editedUser as Employee).Title;
+                    (userToEdit as Employee).AssistantProfessorSupervisions =
+                        (editedUser as Employee).AssistantProfessorSupervisions;
+                    (userToEdit as Employee).SynopsisExaminations = (editedUser as Employee).SynopsisExaminations;
+                    (userToEdit as Employee).PortfolioExaminations = (editedUser as Employee).PortfolioExaminations;
+                    (userToEdit as Employee).PhdCommittees = (editedUser as Employee).PhdCommittees;
+                    (userToEdit as Employee).Balance = (editedUser as Employee).Balance;
+                    (userToEdit as Employee).IsGroupLeader = (editedUser as Employee).IsGroupLeader;
+                    (userToEdit as Employee).Savings = (editedUser as Employee).Savings;
+                }
+
+                if (userToEdit is Leader)
+                {
+                    (userToEdit as Leader).IsAdmin = (userToEdit as Leader).IsAdmin;
                 }
 
             }
