@@ -25,25 +25,18 @@ namespace RAM___RUC_Allocation_Manager.Models
         #region Properties
         public virtual ICollection<LeaderProgramme> LeaderProgrammes { get; set; } = new List<LeaderProgramme>();
 
-        [Required]public bool IsAdmin { get; set; }
-        //This is test list. Remove once DB is running.
-        [NotMapped]
-        public List<Programme> Programmes { get; set; }
-         /// <summary>
-        /// Returns a list of all the Users from the Users in Programme' list of Users.
-        /// </summary>
-         [NotMapped]
-         public List<Employee> ProgrammeUsers { get
+        [Required] public bool IsAdmin { get; set; }
+        [NotMapped] public List<Employee> ProgrammeUsers { get
             {
+            
+                List<Employee> users = new List<Employee>();         
 
-                List<Employee> users = new List<Employee>();
-                
-                if(Programmes != null)
+                if(LeaderProgrammes != null)
                 {
 
-                    foreach (Programme p in Programmes)
+                    foreach(LeaderProgramme lp in LeaderProgrammes)
                     {
-                        users.AddRange(p.Users.Cast<Employee>());
+                        users.AddRange(lp.Programme.Users.Cast<Employee>());
                     }
 
                 }
@@ -52,6 +45,32 @@ namespace RAM___RUC_Allocation_Manager.Models
 
             }
         }
+        //This is test list. Remove once DB is running.
+        //[NotMapped]
+        //public List<Programme> Programmes { get; set; }
+        // /// <summary>
+        ///// Returns a list of all the Users from the Users in Programme' list of Users.
+        ///// </summary>
+        // [NotMapped]
+        // public List<Employee> ProgrammeUsers { get
+        //    {
+
+        //        List<Employee> users = new List<Employee>();
+                
+        //        if(Programmes != null)
+        //        {
+
+        //            foreach (Programme p in Programmes)
+        //            {
+        //                users.AddRange(p.Users.Cast<Employee>());
+        //            }
+
+        //        }
+
+        //        return users;
+
+        //    }
+        //}
         #endregion
 
         #region Constructors

@@ -51,6 +51,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.EditEmployeePage
 
         public AllocateHoursPageModel(UserService userService, CourseService courseService, LoginService loginService, SettingsService settingsService, DbService<Redemption> redemptionDbService, DbService<EmployeeCourse> ecDbService, DbService<EmployeeGroup> egDbService, GroupService groupService, DbService<GroupFacilitationTask> gftDbService, DbService<PhdTasks> phdDbService, DbService<CustomCommittee> ccDbService, DbService<EmployeeCustomCommittee> eccDbService, DbService<HiringCommittee> hcDbService, DbService<EmployeeHiringCommittee> ehcDbService, DbService<PromotionCommitteeTask> pctDbService)
         {
+
             this.userService = userService;
             this.courseService = courseService;
             this.loginService = loginService;
@@ -66,21 +67,27 @@ namespace RAM___RUC_Allocation_Manager.Pages.EditEmployeePage
             this.hcDbService = hcDbService;
             this.ehcDbService = ehcDbService;
             this.pctDbService = pctDbService;
+
         }
 
-        public IActionResult OnGet(/*int id*/)
+        public IActionResult OnGet(int id)
         {
+
             //loginService.HttpContext = HttpContext;
+
             //if (!loginService.AssessUser(id, LoggedInUserId))
             //{
             //    return Redirect("/Index");
             //}
+            
             //if (id == -1) id = LoggedInUserId;
 
             GetProperties(1);
             
             return Page();
         }
+
+        #region OnPost
 
         public async Task<IActionResult> OnPostSavings(int userId, Employee.EmployeeSavings savings)
         {
@@ -204,8 +211,6 @@ namespace RAM___RUC_Allocation_Manager.Pages.EditEmployeePage
             await userService.EditUser(Employee);
             return Page();
         }
-
-        
 
         public async Task<IActionResult> OnPostRemovePhdSupervision(int userId, int phdId)
         {
@@ -378,5 +383,8 @@ namespace RAM___RUC_Allocation_Manager.Pages.EditEmployeePage
             HiringCommittees = hcDbService.GetObjectsAsync().Result.ToList();
             BaseSettings = settingsService.GetSettings();
         }
+
+        #endregion
+
     }
 }
