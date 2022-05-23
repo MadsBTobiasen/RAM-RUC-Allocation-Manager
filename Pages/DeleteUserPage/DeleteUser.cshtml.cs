@@ -38,9 +38,10 @@ namespace RAM___RUC_Allocation_Manager.Pages.EditUser
             User = userService.GetUserByID(id);
 
         }
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPost(int userId)
         {
-            userService.DeleteUser(User);
+            User = userService.GetUserByID(userId);
+            await userService.DeleteUser(User);
             return RedirectToPage("/LeaderLandingPage/LeaderLandingPage");
         }
     }

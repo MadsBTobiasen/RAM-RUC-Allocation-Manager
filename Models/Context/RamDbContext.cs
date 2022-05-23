@@ -41,7 +41,7 @@ namespace RAM___RUC_Allocation_Manager.Models
             modelBuilder.Entity<EmployeeCourse>()
                 .HasKey(employeeCourse => new { employeeCourse.CourseId, employeeCourse.EmployeeId });
             modelBuilder.Entity<EmployeeCustomCommittee>()
-                .HasKey(employeeCustomCommittee => new { employeeCustomCommittee.CustomCommitteeId, employeeCustomCommittee.EmpployeeId });
+                .HasKey(employeeCustomCommittee => new { employeeCustomCommittee.CustomCommitteeId, employeeCustomCommittee.EmployeeId });
             modelBuilder.Entity<EmployeeHiringCommittee>()
                 .HasKey(employeeHiringCommittee => new { employeeHiringCommittee.EmployeeId, employeeHiringCommittee.HiringCommitteeId });
             modelBuilder.Entity<EmployeeProgramme>()

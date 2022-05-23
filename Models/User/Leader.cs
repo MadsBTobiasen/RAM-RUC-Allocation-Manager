@@ -88,7 +88,7 @@ namespace RAM___RUC_Allocation_Manager.Models
         }
 
         /// <summary>
-        /// Method that checks if the Leader has the employee in one of it's courses.
+        /// Method that checks if the Leader has the employee in one of it's Programmes.
         /// </summary>
         /// <param name="id">Employee id to check for.</param>
         /// <returns>Returns true, if the Leader has the Employee in one of it's courses, and false if not.</returns>
@@ -100,6 +100,7 @@ namespace RAM___RUC_Allocation_Manager.Models
 
                 if(u.Id == id)
                 {
+                    Console.WriteLine(u);
                     return true;
                 }
             }
