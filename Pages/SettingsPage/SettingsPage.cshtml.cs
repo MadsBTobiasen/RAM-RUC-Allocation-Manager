@@ -39,7 +39,11 @@ namespace RAM___RUC_Allocation_Manager.Pages.SettingsPage
         }
         public List<User> Users { get; set; }
 
+        public EmployeeProgramme NewEmployeeProgramme { get; set; }
+
         public DbService<LeaderProgramme> dbService { get; set; }
+        public DbService<Programme> dbService2 { get; set; }
+        public DbService<EmployeeProgramme> dbService3 { get; set; }
         public DbService<Leader> dbService2 { get; set; }
         public UserService userService { get; set; }
 
@@ -57,6 +61,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.SettingsPage
             this.userService = userService;
         }
 
+        public SettingsPageModel(DbService<LeaderProgramme> dbservice, DbService<Programme> dbservice2, DbService<EmployeeProgramme> dbservice3)
         public async void OnGet()
         {
 
@@ -72,7 +77,11 @@ namespace RAM___RUC_Allocation_Manager.Pages.SettingsPage
 
         public IActionResult OnPostSettings()
         {
-
+        
+            dbService = dbservice;
+            dbService2 = dbservice2;
+            dbService3 = dbservice3;
+            
             if (!ModelState.IsValid)
             {
                 return Page();
@@ -91,6 +100,15 @@ namespace RAM___RUC_Allocation_Manager.Pages.SettingsPage
             NewEmployeeProgramme = new EmployeeProgramme();
 
             NewProgramme.Name = ProgrammeName;
+            
+            NewProgramme.LeaderProgrammes.Add(NewLeaderProgramme);
+            dbService2.AddObjectAsync(NewProgramme);
+
+            NewEmployeeProgramme = new EmployeeProgramme();
+            NewEmployeeProgramme.Programme = NewProgramme;
+            dbService3.AddObjectAsync(NewEmployeeProgramme);
+
+            NewLeaderProgramme = new LeaderProgramme();
             NewProgramme.EmployeeProgrammes.Add(NewEmployeeProgramme);
             NewProgramme.LeaderProgrammes.Add(NewLeaderProgramme);
             NewProgramme.Users = new List<User>();
