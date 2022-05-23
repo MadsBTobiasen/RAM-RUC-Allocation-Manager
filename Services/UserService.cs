@@ -13,31 +13,25 @@ namespace RAM___RUC_Allocation_Manager.Services
     {
 
         #region Fields
-        private DbService<User> dbService;
+
+        private UserDbService userDbService;
         #endregion
 
         #region Properties
         public List<User> Users { get; set; }
-        public List<Employee> Employees  { get; set; }
-        public List<Leader> Leaders { get; set; }
-        public List<EmployeeCourse> EmployeeCourses { get; set; }
-        public Employee Employee { get; set; }
         public ICollection<Programme> Programmes { get; set; }
 
         #endregion
 
         #region Constructor
-        public UserService(/*DbService<User> dbService*/)
+        public UserService(UserDbService userDbService)
         {
 
-            //this.dbService = dbService;
+            this.userDbService = userDbService;
             //TODO: Retrieve Users from DB-Service.
-            Users = MockData.MockUsers.GetUsers();
-            //Users = dbService.GetObjectsAsync().Result.ToList();
+            //Users = userDbService.GetEmployeesWithNavPropsAsync().Result.ToList().Concat(userDbService.GetLeadersWithNavProps().Result.ToList()).ToList();
+            Users = userDbService.GetObjectsAsync().Result.ToList();
             Users = Users.OrderBy(u => u.Name).ToList();
-            FalkesMockdata falkesMockdata = new FalkesMockdata();
-            falkesMockdata.CreateMockData();
-            Programmes = falkesMockdata.GetProgrammes();
         }
         #endregion
 
@@ -49,11 +43,6 @@ namespace RAM___RUC_Allocation_Manager.Services
         public List<User> GetUsers()
         {
             return Users;
-        }
-
-        public Programme GetProgrammeByID(int id)
-        {
-            return Programmes.Where(p => p.Id == id).Select(p => p).FirstOrDefault();
         }
 
 
@@ -82,23 +71,34 @@ namespace RAM___RUC_Allocation_Manager.Services
             return (from user in Users where user.Id == id select user).SingleOrDefault();
         }
 
+        public async Task<User> GetUserWithNavPropById(int id)
+        {
+            User user;
+            if (Users.Where(u => u.Id == id).Select(u => u.Type).FirstOrDefault() == User.UserType.Employee)
+            { 
+                user = await userDbService.GetEmployeeById(id);
+            }
+            else
+            {
+                user = await userDbService.GetLeaderById(id);
+            }
+
+            return user;
+        }
+
 
         /// <summary>
         /// Method that adds a given user to the List.
         /// </summary>
         /// <param name="userToAdd">User object to add.</param>
         /// <returns>The added user object.</returns>
-        public User CreateUser(User userToAdd)
+        public async Task<User> CreateUser(User userToAdd)
         {
             Users.Add(userToAdd);
+            await userDbService.AddObjectAsync(userToAdd);
             return userToAdd;
         }
 
-        public Employee CreateEmployee(Employee employeeToAdd)
-        {
-            Users.Add(employeeToAdd);
-            return employeeToAdd;
-        }
 
         /// <summary>
         /// Method that edits a user object, by trying to match an incoming user-id with one in the list of Users,
@@ -106,7 +106,7 @@ namespace RAM___RUC_Allocation_Manager.Services
         /// </summary>
         /// <param name="userToEdit">User object to update with.</param>
         /// <returns>Returns a user-object, the object is null if the edit failed, and the updated user if the update was succesfull.</returns>
-        public User EditUser(User editedUser)
+        public async Task<User> EditUser(User editedUser)
         {
 
             User userToEdit = null;
@@ -137,6 +137,8 @@ namespace RAM___RUC_Allocation_Manager.Services
 
             }
 
+            await userDbService.UpdateObjectAsync(editedUser);
+
             return userToEdit;
 
         }
@@ -147,7 +149,7 @@ namespace RAM___RUC_Allocation_Manager.Services
         /// </summary>
         /// <param name="userToEdit">User object to delete with.</param>
         /// <returns>Returns a user-object, the object is null if the delete failed, and the deletedUser if the update was succesfull.</returns>
-        public User DeleteUser(User userToDelete)
+        public async Task<User> DeleteUser(User userToDelete)
         {
             User deletedUser = null;
 
@@ -161,8 +163,11 @@ namespace RAM___RUC_Allocation_Manager.Services
 
                 }
             }
+
+            await userDbService.DeleteObjectAsync(userToDelete);
             return deletedUser;
         }
+
 
         /// <summary>
         /// Method that gets all the Leaders that a given employee has.
