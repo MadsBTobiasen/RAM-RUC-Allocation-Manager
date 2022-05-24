@@ -56,7 +56,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.TotalCourseHoursPage
             }
 
             if (id == -1) id = LoggedInUserId;
-            Employee = (Employee)userService.GetUserByID(id);
+            Employee = (Employee)userService.GetUserWithNavPropById(id).Result;
             CoordinationHours =
                 ConvertMinutesToHours(Employee.CoordinatorOfCourses.Count() *
                                       BaseSettings.CoordinatorOfCourseMinuteValue);

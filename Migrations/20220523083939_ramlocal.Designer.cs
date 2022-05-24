@@ -10,8 +10,8 @@ using RAM___RUC_Allocation_Manager.Models;
 namespace RAM___RUC_Allocation_Manager.Migrations
 {
     [DbContext(typeof(RamDbContext))]
-    [Migration("20220519203420_RAM___RUC_Allocation_Manager")]
-    partial class RAM___RUC_Allocation_Manager
+    [Migration("20220523083939_ramlocal")]
+    partial class ramlocal
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -205,17 +205,12 @@ namespace RAM___RUC_Allocation_Manager.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ProgrammeId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Username")
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ProgrammeId");
 
                     b.ToTable("Users");
                 });
@@ -492,13 +487,6 @@ namespace RAM___RUC_Allocation_Manager.Migrations
                     b.Navigation("Employee");
                 });
 
-            modelBuilder.Entity("RAM___RUC_Allocation_Manager.Models.User", b =>
-                {
-                    b.HasOne("RAM___RUC_Allocation_Manager.Models.Programme", null)
-                        .WithMany("Users")
-                        .HasForeignKey("ProgrammeId");
-                });
-
             modelBuilder.Entity("RAM___RUC_Allocation_Manager.Models.WorkAssigments.Committee.PromotionCommitteeTask", b =>
                 {
                     b.HasOne("RAM___RUC_Allocation_Manager.Models.Employee", null)
@@ -571,8 +559,6 @@ namespace RAM___RUC_Allocation_Manager.Migrations
                     b.Navigation("EmployeeProgrammes");
 
                     b.Navigation("LeaderProgrammes");
-
-                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("RAM___RUC_Allocation_Manager.Models.WorkAssigments.Committee.CustomCommittee", b =>

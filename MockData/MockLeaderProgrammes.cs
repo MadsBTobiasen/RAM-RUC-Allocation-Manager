@@ -46,7 +46,6 @@ namespace RAM___RUC_Allocation_Manager.MockData
             Programme Matematik = new Programme();
             Matematik.Name = "Matematik";
             Simon.Name = "Simon";
-            Simon.Programmes.Add(Matematik);
             
             Simon.ProgrammeUsers.Add(Frank);
             leaderProgramme1.LeaderId = 1;

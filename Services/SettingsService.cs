@@ -45,6 +45,7 @@ namespace RAM___RUC_Allocation_Manager.Services
                     b.HourPerPersonHiringCommittee = baseSettings.HourPerPersonHiringCommittee;
                     b.HourPerPersonPromotionCommittee = baseSettings.HourPerPersonHiringCommittee;
                     b.SupervisionOfGroupHourSixMemberMasters = baseSettings.SupervisionOfGroupHourSixMemberMasters;
+                    b.SupervisionOfGroupHourSixMember = baseSettings.SupervisionOfGroupHourSixMember;
                     b.SupervisionOfGroupHourFiveMember = baseSettings.SupervisionOfGroupHourFiveMember;
                     b.SupervisionOfGroupHourFiveMemberMasters = baseSettings.SupervisionOfGroupHourFiveMemberMasters;
                     b.SupervisionOfGroupHourFourMember = baseSettings.SupervisionOfGroupHourFourMember;
@@ -71,6 +72,10 @@ namespace RAM___RUC_Allocation_Manager.Services
                     b.SynopsisHourWorth = baseSettings.SynopsisHourWorth;
                     b.SabLessonHourValue = baseSettings.SabLessonHourValue;
                     b.SibLessonHourValue = baseSettings.SibLessonHourValue;
+                    b.AssistantProfessorSupervisonMinuteValue = baseSettings.AssistantProfessorSupervisonMinuteValue;
+                    b.GroupLeaderMinuteValue = baseSettings.GroupLeaderMinuteValue;
+                    b.InternalCensorMinuteValue = baseSettings.InternalCensorMinuteValue;
+                    b.CoordinatorOfCourseMinuteValue = baseSettings.CoordinatorOfCourseMinuteValue;
                 }
                 jsonFileService.SaveJsonObjects(BaseSettings);
             }

@@ -71,18 +71,11 @@ namespace RAM___RUC_Allocation_Manager.Migrations
                     Name = table.Column<string>(type: "nvarchar(35)", maxLength: 35, nullable: false),
                     Username = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ProgrammeId = table.Column<int>(type: "int", nullable: true)
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Users_Programmes_ProgrammeId",
-                        column: x => x.ProgrammeId,
-                        principalTable: "Programmes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -154,13 +147,12 @@ namespace RAM___RUC_Allocation_Manager.Migrations
                 name: "EmployeeCustomCommittees",
                 columns: table => new
                 {
-                    EmpployeeId = table.Column<int>(type: "int", nullable: false),
-                    CustomCommitteeId = table.Column<int>(type: "int", nullable: false),
-                    EmployeeId = table.Column<int>(type: "int", nullable: true)
+                    EmployeeId = table.Column<int>(type: "int", nullable: false),
+                    CustomCommitteeId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_EmployeeCustomCommittees", x => new { x.CustomCommitteeId, x.EmpployeeId });
+                    table.PrimaryKey("PK_EmployeeCustomCommittees", x => new { x.CustomCommitteeId, x.EmployeeId });
                     table.ForeignKey(
                         name: "FK_EmployeeCustomCommittees_CustomCommittees_CustomCommitteeId",
                         column: x => x.CustomCommitteeId,
@@ -172,7 +164,7 @@ namespace RAM___RUC_Allocation_Manager.Migrations
                         column: x => x.EmployeeId,
                         principalTable: "Employees",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -295,7 +287,7 @@ namespace RAM___RUC_Allocation_Manager.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PeopleToBeAssessed = table.Column<int>(type: "int", nullable: false),
-                    EmployeeId = table.Column<int>(type: "int", nullable: true)
+                    EmployeeId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -305,7 +297,7 @@ namespace RAM___RUC_Allocation_Manager.Migrations
                         column: x => x.EmployeeId,
                         principalTable: "Employees",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -433,11 +425,6 @@ namespace RAM___RUC_Allocation_Manager.Migrations
                 name: "IX_Redemptions_EmployeeId",
                 table: "Redemptions",
                 column: "EmployeeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Users_ProgrammeId",
-                table: "Users",
-                column: "ProgrammeId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -488,13 +475,13 @@ namespace RAM___RUC_Allocation_Manager.Migrations
                 name: "Leaders");
 
             migrationBuilder.DropTable(
+                name: "Programmes");
+
+            migrationBuilder.DropTable(
                 name: "Employees");
 
             migrationBuilder.DropTable(
                 name: "Users");
-
-            migrationBuilder.DropTable(
-                name: "Programmes");
         }
     }
 }

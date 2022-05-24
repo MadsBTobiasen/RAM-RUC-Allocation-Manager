@@ -10,7 +10,7 @@ namespace RAM___RUC_Allocation_Manager.Models.DbConnections
 {
     public class EmployeeCustomCommittee
     {
-        public int EmpployeeId { get; set; }
+        public int EmployeeId { get; set; }
         public Employee Employee { get; set; }
         public int CustomCommitteeId { get; set; }
         public CustomCommittee CustomCommittee { get; set; }

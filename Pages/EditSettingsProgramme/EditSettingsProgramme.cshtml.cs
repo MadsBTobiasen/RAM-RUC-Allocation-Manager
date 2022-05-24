@@ -17,19 +17,20 @@ namespace RAM___RUC_Allocation_Manager.Pages.EditSettingsProgramme
     {
 
         private UserService userService;
+        private ProgrammeService programmeService;
         public DbService<LeaderProgramme> dbService { get; set; }
         public ICollection<Programme> Programmes { get; set; }
 
-        public EditSettingsProgrammeModel(DbService<LeaderProgramme> dbservice, UserService userService)
+        public EditSettingsProgrammeModel(ProgrammeService programmeService, DbService<LeaderProgramme> dbservice, UserService userService)
         {
             dbService = dbservice;
             this.userService = userService;
+            this.programmeService = programmeService;
         }
-        public void OnGet()
+        public IActionResult OnGet()
         {
-            FalkesMockdata falkesMockdata = new FalkesMockdata();
-            falkesMockdata.CreateMockData();
-            Programmes = falkesMockdata.GetProgrammes();
+            Programmes = programmeService.GetProgrammes();
+            return Page();
 
         }
     }

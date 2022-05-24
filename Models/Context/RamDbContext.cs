@@ -13,8 +13,9 @@ namespace RAM___RUC_Allocation_Manager.Models
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(
-                @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=RamDB; Integrated Security=True; Connect Timeout=30; Encrypt=False");
+            //optionsBuilder.UseSqlServer(
+            //  @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=RamDB; Integrated Security=True; Connect Timeout=30; Encrypt=False");
+            optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-R1NEBSS\SQLEXPRESS;Initial Catalog=RAMDB; Integrated Security=True; Connect Timeout=30; Encrypt=False");
         }
 
         public DbSet<Employee> Employees { get; set; }
@@ -41,7 +42,7 @@ namespace RAM___RUC_Allocation_Manager.Models
             modelBuilder.Entity<EmployeeCourse>()
                 .HasKey(employeeCourse => new { employeeCourse.CourseId, employeeCourse.EmployeeId });
             modelBuilder.Entity<EmployeeCustomCommittee>()
-                .HasKey(employeeCustomCommittee => new { employeeCustomCommittee.CustomCommitteeId, employeeCustomCommittee.EmpployeeId });
+                .HasKey(employeeCustomCommittee => new { employeeCustomCommittee.CustomCommitteeId, employeeCustomCommittee.EmployeeId });
             modelBuilder.Entity<EmployeeHiringCommittee>()
                 .HasKey(employeeHiringCommittee => new { employeeHiringCommittee.EmployeeId, employeeHiringCommittee.HiringCommitteeId });
             modelBuilder.Entity<EmployeeProgramme>()

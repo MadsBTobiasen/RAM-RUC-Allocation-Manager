@@ -51,7 +51,8 @@
                             <a class="w-100 btn btn-primary" asp-page="../LeaderLandingPage/LeaderLandingPage">Annullér</a>
                         </div>
                         <div class="col-6">
-                            <button type="submit" asp-page-handler="DeleteUser" class="w-100 btn btn-danger">Acceptér</button>
+                            <input type="hidden" name="userId" value="@Model.User.Id"/>
+                            <button type="submit" class="w-100 btn btn-danger">Acceptér</button>
                         </div>
                     </div>
 
