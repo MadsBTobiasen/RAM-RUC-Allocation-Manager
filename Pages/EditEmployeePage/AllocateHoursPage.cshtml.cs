@@ -157,13 +157,14 @@ namespace RAM___RUC_Allocation_Manager.Pages.EditEmployeePage
 
         public async Task<IActionResult> OnPostAddCourse(int userId, int addId, int relativeLectureAmount)
         {
-            GetProperties(userId);
-            Employee.EmployeeCourses.Add(new EmployeeCourse
+            EmployeeCourse ec = new EmployeeCourse
             {
-                Employee = Employee, RelativeLectureAmount = relativeLectureAmount,
-                Course = Courses.Where(c => c.Id == addId).Select(c => c).FirstOrDefault()
-            });
-            await userService.EditUser(Employee);
+                EmployeeId = userId,
+                RelativeLectureAmount = relativeLectureAmount,
+                CourseId = addId
+            };
+            await ecDbService.AddObjectAsync(ec);
+            GetProperties(userId);
             return Page();
         }
         public async Task<IActionResult> OnPostRemoveGroup(int userId, int removeId)
