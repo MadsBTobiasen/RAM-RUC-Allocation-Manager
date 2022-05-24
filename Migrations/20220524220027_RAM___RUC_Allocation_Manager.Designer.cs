@@ -10,8 +10,8 @@ using RAM___RUC_Allocation_Manager.Models;
 namespace RAM___RUC_Allocation_Manager.Migrations
 {
     [DbContext(typeof(RamDbContext))]
-    [Migration("20220523083939_ramlocal")]
-    partial class ramlocal
+    [Migration("20220524220027_RAM___RUC_Allocation_Manager")]
+    partial class RAM___RUC_Allocation_Manager
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,13 +26,10 @@ namespace RAM___RUC_Allocation_Manager.Migrations
                     b.Property<int>("CustomCommitteeId")
                         .HasColumnType("int");
 
-                    b.Property<int>("EmpployeeId")
+                    b.Property<int>("EmployeeId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("EmployeeId")
-                        .HasColumnType("int");
-
-                    b.HasKey("CustomCommitteeId", "EmpployeeId");
+                    b.HasKey("CustomCommitteeId", "EmployeeId");
 
                     b.HasIndex("EmployeeId");
 
@@ -256,7 +253,7 @@ namespace RAM___RUC_Allocation_Manager.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("EmployeeId")
+                    b.Property<int>("EmployeeId")
                         .HasColumnType("int");
 
                     b.Property<int>("PeopleToBeAssessed")
@@ -386,7 +383,9 @@ namespace RAM___RUC_Allocation_Manager.Migrations
 
                     b.HasOne("RAM___RUC_Allocation_Manager.Models.Employee", "Employee")
                         .WithMany("EmployeeCustomCommittees")
-                        .HasForeignKey("EmployeeId");
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("CustomCommittee");
 
@@ -489,9 +488,13 @@ namespace RAM___RUC_Allocation_Manager.Migrations
 
             modelBuilder.Entity("RAM___RUC_Allocation_Manager.Models.WorkAssigments.Committee.PromotionCommitteeTask", b =>
                 {
-                    b.HasOne("RAM___RUC_Allocation_Manager.Models.Employee", null)
+                    b.HasOne("RAM___RUC_Allocation_Manager.Models.Employee", "Employee")
                         .WithMany("PromotionCommittees")
-                        .HasForeignKey("EmployeeId");
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Employee");
                 });
 
             modelBuilder.Entity("RAM___RUC_Allocation_Manager.Models.WorkAssigments.Course", b =>
