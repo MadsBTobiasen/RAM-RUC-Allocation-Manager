@@ -54,19 +54,26 @@ namespace RAM___RUC_Allocation_Manager.Pages.EditSettingsProgramme
             ProgrammeName = Programme.Name;
         }
 
-        public async void OnPostEdit(int programmeId)
+        public async Task<IActionResult> OnPostEdit(int programmeId)
         {
             Programme.Name = ProgrammeName;
             Programme.Id = programmeId;
             await programmeService.EditProgramme(Programme);
+
+            return RedirectToPage("../SettingsPage/SettingsPage");
+
         }
 
-        public async void OnPostAddUsers(int employeeId, int leaderId)
+        public async Task<IActionResult> OnPostAddUsers(int employeeId, int leaderId)
         {
             if(employeeId != -1)
                 await epService.AddObjectAsync(new EmployeeProgramme { EmployeeId = employeeId, ProgrammeId = Programme.Id});
             if(leaderId != -1)
                 await lpService.AddObjectAsync(new LeaderProgramme { LeaderId = leaderId, ProgrammeId = Programme.Id });
+
+            return RedirectToPage("../SettingsPage/SettingsPage");
+
+
         }
     }
 }

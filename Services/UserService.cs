@@ -79,7 +79,9 @@ namespace RAM___RUC_Allocation_Manager.Services
 
         public async Task<User> GetUserWithNavPropById(int id)
         {
+
             User user;
+
             if (Users.Where(u => u.Id == id).Select(u => u.Type).FirstOrDefault() == User.UserType.Employee)
             { 
                 user = await userDbService.GetEmployeeById(id);
@@ -140,7 +142,7 @@ namespace RAM___RUC_Allocation_Manager.Services
                 {
                     (userToEdit as Employee).Title = (editedUser as Employee).Title;
                     (userToEdit as Employee).AssistantProfessorSupervisions =
-                        (editedUser as Employee).AssistantProfessorSupervisions;
+                    (editedUser as Employee).AssistantProfessorSupervisions;
                     (userToEdit as Employee).SynopsisExaminations = (editedUser as Employee).SynopsisExaminations;
                     (userToEdit as Employee).PortfolioExaminations = (editedUser as Employee).PortfolioExaminations;
                     (userToEdit as Employee).PhdCommittees = (editedUser as Employee).PhdCommittees;
@@ -197,7 +199,7 @@ namespace RAM___RUC_Allocation_Manager.Services
         public List<Leader> GetEmployeeLeaders(int employeeId)
         {
 
-            return GetUsersByType(User.UserType.Leader).Cast<Leader>()
+            return userDbService.GetLeadersWithNavProps().Result.ToList()
                 .Where(leader => leader.HasEmployeeInProgrammeById(employeeId))
                 .GroupBy(leader => leader.Id)
                 .Select(leader => leader.First())

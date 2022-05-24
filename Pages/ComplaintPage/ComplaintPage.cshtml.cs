@@ -32,7 +32,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.ComplaintPage
 
         public List<EmailTemplate> Templates => emailService.EmailTemplates;
         public List<Leader> EmployeeLeaders => userService.GetEmployeeLeaders(Employee.Id);
-        public Employee Employee => (Employee)userService.GetUserByID(LoggedInUserId);
+        public Employee Employee => (Employee)userService.GetUserWithNavPropById(LoggedInUserId).Result;
         public int LoggedInUserId => Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
         
         [BindProperty] 

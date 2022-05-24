@@ -3,68 +3,121 @@
 @{
 }
 
+<h2>Indstillinger</h2>
+
+<hr />
+
+<h3>Studier</h3>
+
+<table class="leader-landing-page table-dark table-striped">
+
+    <thead>
+
+        <tr>
+            <th scope="col" style="width:75%" class="text-center">Navn</th>
+            <th scope="col" style="width:25%" class="text-center">Redigér</th>
+        </tr>
+
+    </thead>
+    <tbody>
+
+        @foreach(Models.Programme p in Model.Programmes)
+        {
+        <tr style="height:1rem;">
+            <td style="width:75%" class="text-left pl-xl-5">@p.Name</td>
+            <td style="width:25%" class="text-center"><a data-toggle="tooltip" title="Redigér Studie" asp-route-id="@p.Id" asp-page="/EditSettingsProgramme/EditSettingsProgramme2"><i class="fa-solid fa-pen"></i></a></td>
+        </tr>
+        }
+
+    </tbody>
+
+</table>
+
+<hr />
+
+<h3>Opret Studie</h3>
+
 <form method="post">
     
-    <div class="container" style="display: flex; justify-content: left;">
-        <div>
-        </div>
-        <div class="form-group">
-            <label asp-for="@Model.ProgrammeName" class="col-form-label" style="color:white"></label>
-            <div>
-                <input asp-for="@Model.ProgrammeName" />
+    <div class="form-group">
+
+        <h5 class="control-label mb-2">Studie navn</h5>
+        <input asp-for="@Model.ProgrammeName" class="form-control mb-2" placeholder="Indtast navn på studie.." />
+
+        <h5 class="control-label mb-2">Leder for studie</h5>
+
+        <select name="userId" id="Leader" class="form-control mb-2">
+            @foreach (var l in @Model.Leaders)
+            {
+                <option value="@l.Id" asp-for="@l">@l.Name</option>
+            }
+        </select>
+
+        <div class="row">
+
+            <div class="col-6 form-group pl-0">
+                <a asp-page="/" class="btn btn-danger form-control mb-2">Annullér</a>
             </div>
+
+            <div class="col-6 form-group pr-0">
+                <input type="submit" asp-page-handler="LeaderProgramme" value="Opret studie" class="btn btn-primary form-control mb-2" />
+            </div>
+
         </div>
-        <div class="form-group">
-            <label asp-for="Leader" class="col-form-label" style="color:white"></label>
-            <div class="form-group">
-            <label asp-for="Leader">Choose a Leader:</label>
-            <select name="userId" id="Leader" name="Leaders">
-                @foreach (var l in @Model.Leaders)
-                {
-                    <option value="@l.Id" asp-for="@l">@l.Name</option>
-                }
-            </select>
-        </div>
-        </div>
-        <div class="form-group">
-            <a class="btn btn-danger" asp-page="../EditSettingsProgramme/EditSettingsProgramme">Edit Settings Programe</a>
-            <input type="submit" asp-page-handler="LeaderProgramme" value="Create Programme" class="btn btn-primary" />
-        </div>
+
     </div>
+
 </form>
 
 <hr />
 
 <form method="post">
 
-<h5>Mads put disse input ind de rigtige steder</h5>
+<h5>Minute Values</h5>
 
-<table>
-    <td>
-        <div class="form-group mb-0">
+<table class="table table-dark table-striped leader-landing-page">
 
-            <input asp-for="@Model.BaseSettings.AssistantProfessorSupervisonMinuteValue" class="form-control"/>
-        </div>
-    </td>
-    <td>
-        <div class="form-group mb-0">
-            <input asp-for="@Model.BaseSettings.GroupLeaderMinuteValue" class="form-control"/>
-        </div>
-    </td>
-    <td>
-        <div class="form-group mb-0">
-            <input asp-for="@Model.BaseSettings.InternalCensorMinuteValue" class="form-control"/>
-        </div>
-    </td>
-    <td>
-        <div class="form-group mb-0">
-            <input asp-for="@Model.BaseSettings.CoordinatorOfCourseMinuteValue" class="form-control"/>
-        </div>
-    </td>
+    <thead>
+        <tr>
+            <th scope="col" class="text-center">Assistant professor</th>
+            <th scope="col" class="text-center">Gruppe leder</th>
+            <th scope="col" class="text-center">Intern censor</th>
+            <th scope="col" class="text-center">Kursus koordinator</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="text-center">
+
+            <td>
+                <div class="form-group mb-0">
+
+                    <input asp-for="@Model.BaseSettings.AssistantProfessorSupervisonMinuteValue" class="form-control" />
+                </div>
+            </td>
+            <td>
+                <div class="form-group mb-0">
+                    <input asp-for="@Model.BaseSettings.GroupLeaderMinuteValue" class="form-control" />
+                </div>
+            </td>
+            <td>
+                <div class="form-group mb-0">
+                    <input asp-for="@Model.BaseSettings.InternalCensorMinuteValue" class="form-control" />
+                </div>
+            </td>
+            <td>
+                <div class="form-group mb-0">
+                    <input asp-for="@Model.BaseSettings.CoordinatorOfCourseMinuteValue" class="form-control" />
+                </div>
+            </td>
+
+        </tr>
+
+    </tbody>
+
 </table>
 
 <div class="form-group">
-    <h5 class="vertical-align-md pr-5">Lesson Hour Value</h5>
+    <h5 class="control-label mb-2">Lesson Hour Value</h5>
     <input asp-for="@Model.BaseSettings.LessonHourValue" class="form-control"/>
 </div>
 
@@ -357,8 +410,9 @@
 
 <hr/>
 
-<div class="form-group float-right">
-    <a class="btn btn-danger" asp-page="../LeaderLandingPage/LeaderLandingPage">Annullér</a>
-    <input type="submit" asp-page-handler="Settings" value="Gem Ændringer" class="btn btn-primary"/>
-</div>
+    <div class="form-group float-right">
+        <a class="btn btn-danger" asp-page="../LeaderLandingPage/LeaderLandingPage">Annullér</a>
+        <input type="submit" asp-page-handler="Settings" value="Gem Ændringer" class="btn btn-primary"/>
+    </div>
+
 </form>

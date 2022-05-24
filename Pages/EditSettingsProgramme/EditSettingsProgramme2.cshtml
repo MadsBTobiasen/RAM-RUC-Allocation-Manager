@@ -2,48 +2,57 @@
 @model RAM___RUC_Allocation_Manager.Pages.EditSettingsProgramme.EditSettingsProgramme2Model
 @{
 }
-<h2>Edit @Model.Programme.Name</h2>
-<div class="container" style="display: flex; justify-content: left;">
-    <form method="post">
-        <div class="form-group">
-            <input hidden="" name="programmeId" value="@Model.Programme.Id" />
-            <label asp-for="@Model.Programme.Name" class="col-form-label" style="color: white"></label>
-            <input asp-for="@Model.ProgrammeName" />
-        </div>
 
-        <div class="form-group">
-            <button class="btn btn-outline-light" asp-page-handler="Edit">Edit Programme</button>
-        </div>
+<h2>Redigér Studie - @Model.Programme.Name</h2>
 
-    </form>
-    <form method="post">
-        <div class="form-group">
-            <label>Vælg en underviser:</label>
-            <select id="Employee" name="employeeId">
-                <option value="-1">Ingen nye</option>
-                @foreach (var l in @Model.Employees)
-                {
-                    <option value="@l.Id" asp-for="@l">@l.Name</option>
-                }
-                <div class="form-group">
-                    <button class="btn btn-outline-light">Add Employee</button>
-                </div>
-            </select>
+<hr />
 
-        </div>
-        <div class="form-group">
-            <label>vælg en leder</label>
-            <select id="Leader" name="leaderId">
-                <option value="-1">Ingen nye</option>
-                @foreach (var l in @Model.Leaders)
-                {
-                    <option value="@l.Id" asp-for="@l">@l.Name</option>
-                }
-            </select>
-        </div>
-        <div class="form-group">
-            <button class="btn btn-outline-light" asp-page-handler="AddUsers">Tilføj til studie</button>
-        </div>
-    </form>
-</div>
-<a asp-page="/EditSettingsProgramme/EditSettingsProgramme"><button class="btn btn-outline-light">Back</button></a>
+<form method="post">
+
+    <div class="form-group">
+
+        <h5 class="control-label mb-2">Studie Navn</h5>
+        <input asp-for="@Model.ProgrammeName" value="@Model.Programme.Name" class="form-control mb-2" />
+
+        <input hidden="" name="programmeId" value="@Model.Programme.Id" />
+
+        <a type="button" class="btn btn-danger form-control mb-2" asp-page="../SettingsPage/SettingsPage">Annullér</a>
+        <button class="btn btn-primary form-control mb-2" asp-page-handler="Edit">Gem ændringer</button>
+
+    </div>
+
+</form>
+
+<hr />
+
+<h3>Tilføj til studie</h3>
+
+<form method="post">
+
+    <div class="form-group">
+
+        <h5 class="control-label mb-2">Vælg én ny underviser</h5>
+        <select id="Employee" name="employeeId" class="form-control mb-2">
+            <option value="-1">Ingen nye</option>
+            @foreach (var l in @Model.Employees)
+            {
+                <option value="@l.Id" asp-for="@l">@l.Name</option>
+            }
+        </select>
+
+        <h5 class="control-label mb-2">Vælg én ny leder</h5>
+        <select id="Leader" name="leaderId" class="form-control mb-2">
+            <option value="-1">Ingen nye</option>
+            @foreach (var l in @Model.Leaders)
+            {
+                <option value="@l.Id" asp-for="@l">@l.Name</option>
+            }
+        </select>
+
+        <a type="button" class="btn btn-danger form-control mb-2" asp-page="../SettingsPage/SettingsPage">Annullér</a>
+        <button class="btn btn-primary form-control mb-2" asp-page-handler="AddUsers">Tilføj brugere til studie</button>
+
+    </div>
+
+</form>
+
