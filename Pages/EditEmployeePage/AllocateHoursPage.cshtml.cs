@@ -74,7 +74,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.EditEmployeePage
 
         public IActionResult OnGet(int id)
         {
-            int id = 1;
+            
             loginService.HttpContext = HttpContext;
             if (!loginService.AssessUser(id, LoggedInUserId))
             {
