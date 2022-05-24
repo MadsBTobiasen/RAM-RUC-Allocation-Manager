@@ -59,7 +59,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.TotalExaminationHoursPage
             }
 
             if (id == -1) id = LoggedInUserId;
-            Employee = (Employee)userService.GetUserByID(id);
+            Employee = (Employee)userService.GetUserWithNavPropById(id).Result;
             TotalWrittenAssignmentAssessments = Employee.PortfolioExaminations + Employee.SynopsisExaminations;
             TotalSynopsisMinutes = Employee.SynopsisExaminations * BaseSettings.SynopsisHourWorth;
             TotalPorfolioMinutes = Employee.PortfolioExaminations * BaseSettings.PortfolioHourWorth;

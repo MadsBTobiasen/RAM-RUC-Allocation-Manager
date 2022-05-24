@@ -50,6 +50,55 @@
                         </div>
                     </div>
 
+                    <div hidden="@true">
+                        <div class="form-group">
+                            <label asp-for="@Model.AssistantProfessorSupervisions" class="control-label"></label>
+                            <input asp-for="@Model.AssistantProfessorSupervisions" value="@((Model.EmployeeToEdit as Employee).AssistantProfessorSupervisions)" readonly class="form-control" />
+                        </div>
+                    </div>
+
+                    <div hidden="@true">
+                        <div class="form-group">
+                            <label asp-for="@Model.SynopsisExaminations" class="control-label"></label>
+                            <input asp-for="@Model.SynopsisExaminations" value="@((Model.EmployeeToEdit as Employee).SynopsisExaminations)" readonly class="form-control" />
+                        </div>
+                    </div>
+
+                    <div hidden="@true">
+                        <div class="form-group">
+                            <label asp-for="@Model.PorfolioExaminations" class="control-label"></label>
+                            <input asp-for="@Model.PorfolioExaminations" value="@((Model.EmployeeToEdit as Employee).PortfolioExaminations)" readonly class="form-control" />
+                        </div>
+                    </div>
+
+                    <div hidden="@true">
+                        <div class="form-group">
+                            <label asp-for="@Model.PhdCommittees" class="control-label"></label>
+                            <input asp-for="@Model.PhdCommittees" value="@((Model.EmployeeToEdit as Employee).PhdCommittees)" readonly class="form-control" />
+                        </div>
+                    </div>
+
+                    <div hidden="@true">
+                        <div class="form-group">
+                            <label asp-for="@Model.Balance" class="control-label"></label>
+                            <input asp-for="@Model.Balance" value="@((Model.EmployeeToEdit as Employee).Balance)" readonly class="form-control" />
+                        </div>
+                    </div>
+
+                    <div hidden="@true">
+                        <div class="form-group">
+                            <label asp-for="@Model.IsGroupLeader" class="control-label"></label>
+                            <input asp-for="@Model.IsGroupLeader" value="@((Model.EmployeeToEdit as Employee).IsGroupLeader)" readonly class="form-control" />
+                        </div>
+                    </div>
+
+                    <div hidden="@true">
+                        <div class="form-group">
+                            <label asp-for="@Model.Savings" class="control-label"></label>
+                            <input asp-for="@Model.Savings" value="@((Model.EmployeeToEdit as Employee).Savings)" readonly class="form-control" />
+                        </div>
+                    </div>
+
                     <div class="form-group">
                         <span class="text-danger">*</span><label asp-for="@Model.Name" class="control-label"></label>
                         <span class="text-danger ml-1" asp-validation-for="@Model.Name"></span>
@@ -59,7 +108,7 @@
                     <div class="form-group">
                         <span class="text-danger">*</span><label asp-for="@Model.Email" class="control-label"></label>
                         <span class="text-danger ml-1" asp-validation-for="@Model.Email"></span>
-                        <input asp-for="@Model.Email" value="@Model.EmployeeToEdit.Email" type="email" readonly class="form-control" placeholder="Indtast email for ny ansat.." />
+                        <input asp-for="@Model.Email" value="@Model.EmployeeToEdit.Email" type="email" class="form-control" placeholder="Indtast email for ny ansat.." />
                     </div>
 
                     <div class="form-group">

@@ -50,6 +50,13 @@
                         </div>
                     </div>
 
+                    <div hidden="@true">
+                        <div class="form-group">
+                            <label asp-for="@Model.IsAdmin" class="control-label"></label>
+                            <input asp-for="@Model.IsAdmin" value="@((Model.UserToEdit as Leader).IsAdmin)" readonly class="form-control" />
+                        </div>
+                    </div>
+
                     <div class="form-group">
                         <span class="text-danger">*</span><label asp-for="@Model.Name" class="control-label"></label>
                         <span class="text-danger ml-1" asp-validation-for="@Model.Name"></span>

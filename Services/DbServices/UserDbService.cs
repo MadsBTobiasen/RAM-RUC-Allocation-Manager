@@ -106,6 +106,8 @@ namespace RAM___RUC_Allocation_Manager.Services
                 leader = context.Leaders
                     .Include(l => l.LeaderProgrammes)
                         .ThenInclude(lp => lp.Programme)
+                        .ThenInclude(p => p.EmployeeProgrammes)
+                        .ThenInclude(ep => ep.Employee)
                     .AsNoTracking()
                     .FirstOrDefault(l => l.Id == id);
             }

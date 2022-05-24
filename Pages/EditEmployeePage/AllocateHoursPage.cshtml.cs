@@ -11,6 +11,7 @@ using RAM___RUC_Allocation_Manager.Models.DbConnections;
 using RAM___RUC_Allocation_Manager.Models.WorkAssigments;
 using RAM___RUC_Allocation_Manager.Models.WorkAssigments.Committee;
 using RAM___RUC_Allocation_Manager.Services;
+using RAM___RUC_Allocation_Manager.Services.DbServices;
 
 namespace RAM___RUC_Allocation_Manager.Pages.EditEmployeePage
 {
@@ -37,6 +38,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.EditEmployeePage
         public List<Course> Courses { get; set; }
         public List<CustomCommittee> CustomCommittees { get; set; }
         public List<HiringCommittee> HiringCommittees { get; set; }
+        public List<Employee> AllEmployees { get; set; }
 
         public List<EmployeeGroup> EmployeeGroups { get; set; }
         //public List<EmployeeCourse> EmployeeCourses { get; set; }
@@ -49,7 +51,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.EditEmployeePage
             }
         }
 
-        public AllocateHoursPageModel(UserService userService, CourseService courseService, LoginService loginService, SettingsService settingsService, DbService<Redemption> redemptionDbService, DbService<EmployeeCourse> ecDbService, DbService<EmployeeGroup> egDbService, GroupService groupService, DbService<GroupFacilitationTask> gftDbService, DbService<PhdTasks> phdDbService, DbService<CustomCommittee> ccDbService, DbService<EmployeeCustomCommittee> eccDbService, DbService<HiringCommittee> hcDbService, DbService<EmployeeHiringCommittee> ehcDbService, DbService<PromotionCommitteeTask> pctDbService)
+        public AllocateHoursPageModel(UserService userService, CourseService courseService, LoginService loginService, SettingsService settingsService, DbService<Redemption> redemptionDbService, DbService<EmployeeCourse> ecDbService, DbService<EmployeeGroup> egDbService, GroupService groupService, DbService<GroupFacilitationTask> gftDbService, DbService<PhdTasks> phdDbService, DbService<EmployeeCustomCommittee> eccDbService, DbService<HiringCommittee> hcDbService, DbService<EmployeeHiringCommittee> ehcDbService, DbService<PromotionCommitteeTask> pctDbService, DbService<CustomCommittee> ccDbService)
         {
 
             this.userService = userService;
@@ -72,17 +74,15 @@ namespace RAM___RUC_Allocation_Manager.Pages.EditEmployeePage
 
         public IActionResult OnGet(int id)
         {
+            int id = 1;
+            loginService.HttpContext = HttpContext;
+            if (!loginService.AssessUser(id, LoggedInUserId))
+            {
+                return Redirect("/Index");
+            }
+            if (id == -1) id = LoggedInUserId;
 
-            //loginService.HttpContext = HttpContext;
-
-            //if (!loginService.AssessUser(id, LoggedInUserId))
-            //{
-            //    return Redirect("/Index");
-            //}
-            
-            //if (id == -1) id = LoggedInUserId;
-
-            GetProperties(1);
+            GetProperties(id);
             
             return Page();
         }
@@ -138,6 +138,15 @@ namespace RAM___RUC_Allocation_Manager.Pages.EditEmployeePage
             return Page();
         }
 
+        public async Task<IActionResult> OnPostCreateCourse(int userId, string name, int coordinatorId, int lectures,
+            Course.CourseType type)
+        {
+            await courseService.CreateCourse(new Course
+                {EmployeeId = coordinatorId, Name = name, LectureAmount = lectures, Type = type});
+            GetProperties(userId);
+            return Page();
+        }
+
         public async Task<IActionResult> OnPostRemoveCourse(int userId, int removeId)
         {
             GetProperties(userId);
@@ -167,22 +176,22 @@ namespace RAM___RUC_Allocation_Manager.Pages.EditEmployeePage
 
         public async Task<IActionResult> OnPostAddGroup(int userId, int addId)
         {
-            GetProperties(userId);
-            Employee.EmployeeGroups.Add(new EmployeeGroup
+            EmployeeGroup ep = new EmployeeGroup
             {
-                Employee = Employee,
-                Group = Groups.Where(g => g.Id == addId).Select(g => g).FirstOrDefault(),
+                EmployeeId = userId,
+                GroupId = addId,
                 RoleOfEmployee = EmployeeGroup.EmployeeRole.Supervisor
-            });
-            await userService.EditUser(Employee);
+            };
+            await egDbService.AddObjectAsync(ep);
+            GetProperties(userId);
             return Page();
         }
 
         public async Task<IActionResult> OnPostCreateGroup(int userId, int rucId, bool isMasterThesis, int members)
         {
-            GetProperties(userId);
             await groupService.CreateGroup(new Group
                 {RucId = rucId, IsMasterThesis = isMasterThesis, MemberAmount = members});
+            GetProperties(userId);
             return Page();
         }
 
@@ -255,14 +264,14 @@ namespace RAM___RUC_Allocation_Manager.Pages.EditEmployeePage
 
         public async Task<IActionResult> OnPostAddInternalCensor(int userId, int addId)
         {
-            GetProperties(userId);
-            Employee.EmployeeGroups.Add(new EmployeeGroup
+            EmployeeGroup ep = new EmployeeGroup
             {
-                Employee = Employee,
-                Group = Groups.Where(g => g.Id == addId).Select(g => g).FirstOrDefault(),
+                EmployeeId = userId,
+                GroupId = addId,
                 RoleOfEmployee = EmployeeGroup.EmployeeRole.InternalCensor
-            });
-            await userService.EditUser(Employee);
+            };
+            await egDbService.AddObjectAsync(ep);
+            GetProperties(userId);
             return Page();
         }
 
@@ -293,11 +302,15 @@ namespace RAM___RUC_Allocation_Manager.Pages.EditEmployeePage
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAddCustomCommittee(int userId, int ccId)
+        public async Task<IActionResult> OnPostAddCustomCommittee(int userId, int ccId, string test)
         {
+            EmployeeCustomCommittee ecc = new EmployeeCustomCommittee
+            {
+                CustomCommitteeId = ccId,
+                EmployeeId = userId
+            };
+            await eccDbService.AddObjectAsync(ecc);
             GetProperties(userId);
-            Employee.EmployeeCustomCommittees.Add(new EmployeeCustomCommittee{CustomCommittee = CustomCommittees.Where(cc=>cc.Id == ccId).Select(cc=>cc).FirstOrDefault(), Employee = Employee});
-            await userService.EditUser(Employee);
             return Page();
         }
 
@@ -311,9 +324,9 @@ namespace RAM___RUC_Allocation_Manager.Pages.EditEmployeePage
 
         public async Task<IActionResult> OnPostCreateCustomCommittee(int userId, int minutes, int hours, string name)
         {
-            GetProperties(userId);
             await ccDbService.AddObjectAsync(new CustomCommittee
                 { Name = name, MinuteWorth = hours*60+minutes});
+            GetProperties(userId);
             return Page();
         }
 
@@ -335,9 +348,9 @@ namespace RAM___RUC_Allocation_Manager.Pages.EditEmployeePage
 
         public async Task<IActionResult> OnPostCreateHiringCommittee(int userId, int amount)
         {
-            GetProperties(userId);
             await hcDbService.AddObjectAsync(new HiringCommittee
                 { PeopleToBeAssessed = amount});
+            GetProperties(userId);
             return Page();
         }
 
@@ -351,9 +364,8 @@ namespace RAM___RUC_Allocation_Manager.Pages.EditEmployeePage
 
         public async Task<IActionResult> OnPostAddPromotionCommittee(int userId, int amount)
         {
+            await pctDbService.AddObjectAsync(new PromotionCommitteeTask {PeopleToBeAssessed = amount, EmployeeId = userId});
             GetProperties(userId);
-            Employee.PromotionCommittees.Add(new PromotionCommitteeTask{PeopleToBeAssessed = amount});
-            await userService.EditUser(Employee);
             return Page();
         }
 
@@ -375,12 +387,13 @@ namespace RAM___RUC_Allocation_Manager.Pages.EditEmployeePage
 
         public void GetProperties(int userId)
         {
-            Employee = (Employee) userService.GetUserWithNavPropById(1).Result;
+            Employee = (Employee) userService.GetUserWithNavPropById(userId).Result;
             Courses = courseService.GetCourses();
             Groups = groupService.GetGroups();
             EmployeeGroups = egDbService.GetObjectsAsync().Result.ToList();
             CustomCommittees = ccDbService.GetObjectsAsync().Result.ToList();
             HiringCommittees = hcDbService.GetObjectsAsync().Result.ToList();
+            AllEmployees = userService.GetUsersByType(Models.User.UserType.Employee).Cast<Employee>().ToList();
             BaseSettings = settingsService.GetSettings();
         }
 

@@ -147,13 +147,12 @@ namespace RAM___RUC_Allocation_Manager.Migrations
                 name: "EmployeeCustomCommittees",
                 columns: table => new
                 {
-                    EmpployeeId = table.Column<int>(type: "int", nullable: false),
-                    CustomCommitteeId = table.Column<int>(type: "int", nullable: false),
-                    EmployeeId = table.Column<int>(type: "int", nullable: true)
+                    EmployeeId = table.Column<int>(type: "int", nullable: false),
+                    CustomCommitteeId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_EmployeeCustomCommittees", x => new { x.CustomCommitteeId, x.EmpployeeId });
+                    table.PrimaryKey("PK_EmployeeCustomCommittees", x => new { x.CustomCommitteeId, x.EmployeeId });
                     table.ForeignKey(
                         name: "FK_EmployeeCustomCommittees_CustomCommittees_CustomCommitteeId",
                         column: x => x.CustomCommitteeId,
@@ -165,7 +164,7 @@ namespace RAM___RUC_Allocation_Manager.Migrations
                         column: x => x.EmployeeId,
                         principalTable: "Employees",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -288,7 +287,7 @@ namespace RAM___RUC_Allocation_Manager.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PeopleToBeAssessed = table.Column<int>(type: "int", nullable: false),
-                    EmployeeId = table.Column<int>(type: "int", nullable: true)
+                    EmployeeId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -298,7 +297,7 @@ namespace RAM___RUC_Allocation_Manager.Migrations
                         column: x => x.EmployeeId,
                         principalTable: "Employees",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using RAM___RUC_Allocation_Manager.MockData;
 using RAM___RUC_Allocation_Manager.Models.DbConnections;
 using RAM___RUC_Allocation_Manager.Models.WorkAssigments;
+using Employee = RAM___RUC_Allocation_Manager.Models.Employee;
 
 namespace RAM___RUC_Allocation_Manager.Services
 {
@@ -32,6 +33,7 @@ namespace RAM___RUC_Allocation_Manager.Services
             //Users = userDbService.GetEmployeesWithNavPropsAsync().Result.ToList().Concat(userDbService.GetLeadersWithNavProps().Result.ToList()).ToList();
             Users = userDbService.GetObjectsAsync().Result.ToList();
             Users = Users.OrderBy(u => u.Name).ToList();
+
         }
         #endregion
 
@@ -45,6 +47,10 @@ namespace RAM___RUC_Allocation_Manager.Services
             return Users;
         }
 
+        public Programme GetProgrammeByID(int id)
+        {
+            return Programmes.Where(p => p.Id == id).Select(p => p).FirstOrDefault();
+        }
 
         /// <summary>
         /// Method that returns a List of all users, with the given UserType.
@@ -95,10 +101,10 @@ namespace RAM___RUC_Allocation_Manager.Services
         public async Task<User> CreateUser(User userToAdd)
         {
             Users.Add(userToAdd);
+
             await userDbService.AddObjectAsync(userToAdd);
             return userToAdd;
         }
-
 
         /// <summary>
         /// Method that edits a user object, by trying to match an incoming user-id with one in the list of Users,
@@ -133,12 +139,26 @@ namespace RAM___RUC_Allocation_Manager.Services
                 if(userToEdit is Employee)
                 {
                     (userToEdit as Employee).Title = (editedUser as Employee).Title;
+                    (userToEdit as Employee).AssistantProfessorSupervisions =
+                        (editedUser as Employee).AssistantProfessorSupervisions;
+                    (userToEdit as Employee).SynopsisExaminations = (editedUser as Employee).SynopsisExaminations;
+                    (userToEdit as Employee).PortfolioExaminations = (editedUser as Employee).PortfolioExaminations;
+                    (userToEdit as Employee).PhdCommittees = (editedUser as Employee).PhdCommittees;
+                    (userToEdit as Employee).Balance = (editedUser as Employee).Balance;
+                    (userToEdit as Employee).IsGroupLeader = (editedUser as Employee).IsGroupLeader;
+                    (userToEdit as Employee).Savings = (editedUser as Employee).Savings;
+                }
+
+                if (userToEdit is Leader)
+                {
+                    (userToEdit as Leader).IsAdmin = (userToEdit as Leader).IsAdmin;
                 }
 
             }
 
-            await userDbService.UpdateObjectAsync(editedUser);
 
+            await userDbService.UpdateObjectAsync(editedUser);
+          
             return userToEdit;
 
         }
@@ -166,6 +186,7 @@ namespace RAM___RUC_Allocation_Manager.Services
 
             await userDbService.DeleteObjectAsync(userToDelete);
             return deletedUser;
+            //dbService.DeleteObjectAsync(userToDelete);
         }
 
 

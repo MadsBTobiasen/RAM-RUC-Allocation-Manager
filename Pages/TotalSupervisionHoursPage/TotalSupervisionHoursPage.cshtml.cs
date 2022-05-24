@@ -56,7 +56,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.TotalSupervisionHoursPage
             }
 
             if (id == -1) id = LoggedInUserId;
-            Employee = (Employee)userService.GetUserByID(id);
+            Employee = (Employee)userService.GetUserWithNavPropById(id).Result;
             GroupFacilitationHours = ConvertMinutesToHours(Employee.GroupFacilitationTasks.Count() * BaseSettings.GroupFacilitationBaseHour);
             PhdSupervisionHours = ConvertMinutesToHours(
                 (Employee.PhdsTasks.Where(phd => phd.RoleOfEmployee == PhdTasks.EmployeeRole.MainSupervisor).Select(phd => phd).Count() *

@@ -25,20 +25,29 @@ namespace RAM___RUC_Allocation_Manager.Models
         #region Properties
         public virtual ICollection<LeaderProgramme> LeaderProgrammes { get; set; } = new List<LeaderProgramme>();
 
-        [Required] public bool IsAdmin { get; set; }
-        [NotMapped] public List<Employee> ProgrammeUsers { get
+        [Required]public bool IsAdmin { get; set; }
+        //This is test list. Remove once DB is running.
+        [NotMapped]
+        public List<Programme> Programmes { get; set; }
+        /// <summary>
+        /// Returns a list of all the Users from the Users in Programme' list of Users.
+        /// </summary>
+        [NotMapped]
+        public List<Employee> ProgrammeUsers
+        {
+            get
             {
             
                 List<Employee> users = new List<Employee>();         
 
-                if(LeaderProgrammes != null)
+                if (LeaderProgrammes != null)
                 {
-
-                    foreach(LeaderProgramme lp in LeaderProgrammes)
+                    var result = LeaderProgrammes.Select(lp => lp.Programme);
+                    foreach (Programme p in result)
                     {
-                        users.AddRange(lp.Programme.Users.Cast<Employee>());
-                    }
+                        users.AddRange(p.EmployeeProgrammes.Select(ep => ep.Employee));
 
+                    }
                 }
 
                 return users;
@@ -106,7 +115,7 @@ namespace RAM___RUC_Allocation_Manager.Models
         }
 
         /// <summary>
-        /// Method that checks if the Leader has the employee in one of it's courses.
+        /// Method that checks if the Leader has the employee in one of it's Programmes.
         /// </summary>
         /// <param name="id">Employee id to check for.</param>
         /// <returns>Returns true, if the Leader has the Employee in one of it's courses, and false if not.</returns>
@@ -118,6 +127,7 @@ namespace RAM___RUC_Allocation_Manager.Models
 
                 if(u.Id == id)
                 {
+                    Console.WriteLine(u);
                     return true;
                 }
             }
