@@ -199,7 +199,7 @@ namespace RAM___RUC_Allocation_Manager.Services
         public List<Leader> GetEmployeeLeaders(int employeeId)
         {
 
-            return userDbService.GetLeadersWithNavProps().Result.ToList()
+            return GetUsersByType(User.UserType.Leader).Cast<Leader>()
                 .Where(leader => leader.HasEmployeeInProgrammeById(employeeId))
                 .GroupBy(leader => leader.Id)
                 .Select(leader => leader.First())

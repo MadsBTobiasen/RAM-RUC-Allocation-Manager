@@ -33,6 +33,8 @@ namespace RAM___RUC_Allocation_Manager.Services
                     .Include(e => e.GroupFacilitationTasks)
                     .Include(e => e.EmployeeProgrammes)
                     .ThenInclude(ep => ep.Programme)
+                    .ThenInclude(p => p.LeaderProgrammes)
+                    .ThenInclude(lp => lp.Leader)
                     .Include(e => e.Redemptions)
                     .AsNoTracking();
             }
@@ -84,6 +86,8 @@ namespace RAM___RUC_Allocation_Manager.Services
                     .Include(e => e.GroupFacilitationTasks)
                     .Include(e => e.EmployeeProgrammes)
                     .ThenInclude(ep => ep.Programme)
+                    .ThenInclude(p => p.LeaderProgrammes)
+                    .ThenInclude(lp => lp.Leader)
                     .Include(e => e.Redemptions)
                     .AsNoTracking()
                     .FirstOrDefault(e => e.Id == id);
