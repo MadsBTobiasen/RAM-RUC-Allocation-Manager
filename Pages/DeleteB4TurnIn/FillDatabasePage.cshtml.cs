@@ -67,6 +67,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.DeleteB4TurnIn
             {
                 await employeeDbService.AddObjectAsync(o);
             }
+            //Hvis du får en error her, ved automatisk oprettelse af data. Ignorer dette, og genstart programmet.
             foreach (var o in FalkesMockdata.GetLeaders())
             {
                 await leaderDbService.AddObjectAsync(o);
