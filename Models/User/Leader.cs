@@ -127,7 +127,6 @@ namespace RAM___RUC_Allocation_Manager.Models
 
                 if(u.Id == id)
                 {
-                    Console.WriteLine(u);
                     return true;
                 }
             }

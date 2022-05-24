@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using RAM___RUC_Allocation_Manager.Models;
+using RAM___RUC_Allocation_Manager.Models.DbConnections;
 using RAM___RUC_Allocation_Manager.Models.Email;
 using RAM___RUC_Allocation_Manager.Services;
 
@@ -31,8 +32,28 @@ namespace RAM___RUC_Allocation_Manager.Pages.ComplaintPage
         public Email Email { get; set; }
 
         public List<EmailTemplate> Templates => emailService.EmailTemplates;
-        public List<Leader> EmployeeLeaders => userService.GetEmployeeLeaders(Employee.Id);
-        public Employee Employee => (Employee)userService.GetUserByID(LoggedInUserId);
+        public List<Leader> EmployeeLeaders { get
+            {
+
+                List<Leader> leaders = new List<Leader>();
+
+                foreach(EmployeeProgramme ep in Employee.EmployeeProgrammes)
+                {
+
+                    Console.WriteLine(ep.Employee);
+                    Console.WriteLine(ep.Programme.LeaderProgrammes.Count);
+
+                    foreach(LeaderProgramme lp in ep.Programme.LeaderProgrammes)
+                    {
+                        leaders.Add(lp.Leader);
+                    }
+                }
+                
+                return leaders;
+
+            } 
+        }
+        public Employee Employee => (Employee)userService.GetUserWithNavPropById(LoggedInUserId).Result;
         public int LoggedInUserId => Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
         
         [BindProperty] 
@@ -60,7 +81,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.ComplaintPage
                 if (selectListEmployeeLeaders == null)
                 {
                     selectListEmployeeLeaders = new List<SelectListItem>() { new SelectListItem() { Text = "Vælg en modtager..", Value = "" } };
-                    selectListEmployeeLeaders.AddRange(userService.GetEmployeeLeaders(Employee.Id).Select(leader => new SelectListItem() { Value = $"{leader.Id}:{leader.Email}", Text = leader.Name }).ToList());
+                    selectListEmployeeLeaders.AddRange(EmployeeLeaders.Select(leader => new SelectListItem() { Value = $"{leader.Id}:{leader.Email}", Text = leader.Name }).ToList());
                 }
                 return selectListEmployeeLeaders;
             }

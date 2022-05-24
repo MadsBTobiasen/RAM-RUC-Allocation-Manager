@@ -29,8 +29,8 @@ namespace RAM___RUC_Allocation_Manager.Pages.SettingsPage
         public EmployeeProgramme NewEmployeeProgramme { get; set; }
         [BindProperty]
         public User Leader { get; set; }
-      
-        public ICollection<Programme> Programmes { get; set; }
+
+        public ICollection<Programme> Programmes => programmeService.GetProgrammes();
 
         private SettingsService settingsService;
 
@@ -90,11 +90,10 @@ namespace RAM___RUC_Allocation_Manager.Pages.SettingsPage
         {
         
             settingsService.ApplySetting(BaseSettings);
-            return RedirectToPage("/LeaderLandingPage/LeaderLandingPage");
+            return Page();
 
         }
 
-       
 
         public async Task<IActionResult> OnPostLeaderProgramme(int userId)
         {
@@ -109,8 +108,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.SettingsPage
             await dbService.AddObjectAsync(new LeaderProgramme
             { LeaderId = userService.GetUserByID(userId).Id, ProgrammeId = NewProgramme.Id });
 
-
-            return RedirectToPage("/LeaderLandingPage/LeaderLandingPage");
+            return Page();
 
         }
     }
