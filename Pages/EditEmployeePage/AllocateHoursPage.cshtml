@@ -243,7 +243,7 @@
         <div class="col-2 text-center"><h5>Type</h5></div>
         <div class="col-2 text-center"><h5>Navn</h5></div>
         <div class="col-3 text-center"><h5>Uddel Antal Lektioner</h5></div>
-        <div class="col-2 text-center"><h5>Fjern</h5></div>
+        <div class="col-2 text-center"><h5>Tilføj kursus</h5></div>
 
         @foreach (Course course in Model.Courses.Where(c => !Model.Employee.EmployeeCourses.ToList().Select(ec => ec.CourseId).Contains(c.Id)).Select(c => c))
         {
