@@ -37,8 +37,8 @@ namespace RAM___RUC_Allocation_Manager.Models
         {
             get
             {
-
-                List<Employee> users = new List<Employee>();
+            
+                List<Employee> users = new List<Employee>();         
 
                 if (LeaderProgrammes != null)
                 {
@@ -46,6 +46,7 @@ namespace RAM___RUC_Allocation_Manager.Models
                     foreach (Programme p in result)
                     {
                         users.AddRange(p.EmployeeProgrammes.Select(ep => ep.Employee));
+
                     }
                 }
 
@@ -53,6 +54,32 @@ namespace RAM___RUC_Allocation_Manager.Models
 
             }
         }
+        //This is test list. Remove once DB is running.
+        //[NotMapped]
+        //public List<Programme> Programmes { get; set; }
+        // /// <summary>
+        ///// Returns a list of all the Users from the Users in Programme' list of Users.
+        ///// </summary>
+        // [NotMapped]
+        // public List<Employee> ProgrammeUsers { get
+        //    {
+
+        //        List<Employee> users = new List<Employee>();
+                
+        //        if(Programmes != null)
+        //        {
+
+        //            foreach (Programme p in Programmes)
+        //            {
+        //                users.AddRange(p.Users.Cast<Employee>());
+        //            }
+
+        //        }
+
+        //        return users;
+
+        //    }
+        //}
         #endregion
 
         #region Constructors

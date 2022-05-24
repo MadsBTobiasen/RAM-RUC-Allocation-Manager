@@ -12,55 +12,56 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow">
             <div class="container">
+
                 <a class="navbar-brand p-0 m-0" asp-area="" asp-page="/Index">
                     <img src="~/assets/ram-cut-icon.png" class="ram-icon-sm">
                     <span class="text-white-hover">RAM - RUC Allocation Manager</span>
                 </a>
+
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
 
+                <div class="collapse navbar-collapse pl-3 mt-1" id="navbarNav">
+                    <ul class="navbar-nav ram-navbar">
                         @if (Context.User.HasClaim(System.Security.Claims.ClaimTypes.Role, Models.User.UserType.Leader.ToString()))
                         {
-                            <li><a asp-route-id="-1" asp-page="/LeaderLandingPage/LeaderLandingPage">Leader</a></li>
+                            <li class="nav-item"><a class="nav-link" asp-route-id="-1" asp-page="/LeaderLandingPage/LeaderLandingPage">Forside</a></li>
                         }
                         @if (Context.User.HasClaim(System.Security.Claims.ClaimTypes.Role, Models.User.UserType.Employee.ToString()))
                         {
-                            <li><a asp-route-id="-1" asp-page="/EmployeeLandingPage/EmployeeLandingPage">Employee</a></li>
-                            <li><a asp-page="/ComplaintPage/ComplaintPage">Complaint</a></li>
+                            <li class="nav-item"><a class="nav-link" asp-route-id="-1" asp-page="/EmployeeLandingPage/EmployeeLandingPage">Forside</a></li>
+                            <li class="nav-item"><a class="nav-link" asp-page="/ComplaintPage/ComplaintPage">Send én klage</a></li>
                         }
                         @if (Context.User.HasClaim(System.Security.Claims.ClaimTypes.Role, Models.User.UserType.Adminstrator.ToString()))
                         {
-                            <li><a asp-page="/SettingsPage/SettingsPage">Indstillinger</a></li>
+                            <li class="nav-item"><a class="nav-link" asp-page="/SettingsPage/SettingsPage">Indstillinger</a></li>
                         }
                         @if (!Context.User.Identity.IsAuthenticated)
                         {
-                            <li><a asp-page="/LoginPage/LoginPage">Login</a></li>
+                            <li class="nav-item"><a class="nav-link" asp-page="/LoginPage/LoginPage">Login</a></li>
                         }
                         else
                         {
-                            <li><a asp-page="/LoginPage/LogoutPage">Logout</a></li>
+                            <li class="nav-item"><a class="nav-link" asp-page="/LoginPage/LogoutPage">Logout</a></li>
                         }
-
-                    </ul>
-                    <ul>
-                        <li><a asp-page="/DeleteB4TurnIn/FillDatabasePage">Fill database</a></li>
-                    </ul>
-                    <ul>
-                        <li><a asp-page="/EditEmployeePage/AllocateHoursPage">Allocate hours test</a></li>
+                        @if (true)
+                        {
+                            <li><a asp-page="/EditEmployeePage/AllocateHoursPage">Allocate hours test</a></li>
+                        }
                     </ul>
                     <ul>
                         <li><a asp-page="/Test/AddProgram">Add Program</a></li>
                     </ul>
                 </div>
+
             </div>
         </nav>
     </header>
+
     <div class="container mw-0 pt-3 pb-3">
         <main role="main">
             <div class="row">

@@ -53,6 +53,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.EditEmployeePage
 
         public AllocateHoursPageModel(UserService userService, CourseService courseService, LoginService loginService, SettingsService settingsService, DbService<Redemption> redemptionDbService, DbService<EmployeeCourse> ecDbService, DbService<EmployeeGroup> egDbService, GroupService groupService, DbService<GroupFacilitationTask> gftDbService, DbService<PhdTasks> phdDbService, DbService<EmployeeCustomCommittee> eccDbService, DbService<HiringCommittee> hcDbService, DbService<EmployeeHiringCommittee> ehcDbService, DbService<PromotionCommitteeTask> pctDbService, DbService<CustomCommittee> ccDbService)
         {
+
             this.userService = userService;
             this.courseService = courseService;
             this.loginService = loginService;
@@ -68,9 +69,10 @@ namespace RAM___RUC_Allocation_Manager.Pages.EditEmployeePage
             this.hcDbService = hcDbService;
             this.ehcDbService = ehcDbService;
             this.pctDbService = pctDbService;
+
         }
 
-        public IActionResult OnGet(/*int id*/)
+        public IActionResult OnGet(int id)
         {
             int id = 1;
             loginService.HttpContext = HttpContext;
@@ -84,6 +86,8 @@ namespace RAM___RUC_Allocation_Manager.Pages.EditEmployeePage
             
             return Page();
         }
+
+        #region OnPost
 
         public async Task<IActionResult> OnPostSavings(int userId, Employee.EmployeeSavings savings)
         {
@@ -216,8 +220,6 @@ namespace RAM___RUC_Allocation_Manager.Pages.EditEmployeePage
             await userService.EditUser(Employee);
             return Page();
         }
-
-        
 
         public async Task<IActionResult> OnPostRemovePhdSupervision(int userId, int phdId)
         {
@@ -394,5 +396,8 @@ namespace RAM___RUC_Allocation_Manager.Pages.EditEmployeePage
             AllEmployees = userService.GetUsersByType(Models.User.UserType.Employee).Cast<Employee>().ToList();
             BaseSettings = settingsService.GetSettings();
         }
+
+        #endregion
+
     }
 }

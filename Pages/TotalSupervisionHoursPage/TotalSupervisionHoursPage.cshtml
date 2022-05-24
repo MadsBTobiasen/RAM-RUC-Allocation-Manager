@@ -15,18 +15,30 @@
 
         <table class="employee-landing-page allocated-hours-table">
 
+            <thead style="width: 0; height: 0;">
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+
             <tbody>
 
                 <tr>
                     <td>Total mængde grupper:</td>
+                    <td></td>
+                    <td></td>
                     <td>@Model.Employee.EmployeeGroups.Where(eg => eg.RoleOfEmployee == EmployeeGroup.EmployeeRole.Supervisor).Select(eg => eg).Count()</td>
                 </tr>
+
                 @foreach (EmployeeGroup eg in Model.Employee.EmployeeGroups.Where(eg => eg.RoleOfEmployee == EmployeeGroup.EmployeeRole.Supervisor).Select(eg => eg))
                 {
                     <tr>
                         <td></td>
-                        <td>@eg.Group.RucId</td>
-                        <td>@eg.Group.MemberAmount</td>
+                        <td>Id: @eg.Group.RucId</td>
+                        <td>Størrelse: @eg.Group.MemberAmount</td>
                         @if (eg.Group.IsMasterThesis)
                         {
                             <td>Kandidat opgave</td>
@@ -40,14 +52,20 @@
 
                 <tr>
                     <td>Gruppedannelsesfaciliteringstimer</td>
+                    <td></td>
+                    <td></td>
                     <td>@Model.GroupFacilitationHours</td>
                 </tr>
                 <tr>
                     <td>PhD vejledning:</td>
+                    <td></td>
+                    <td></td>
                     <td>@Model.PhdSupervisionHours</td>
                 </tr>
                 <tr>
                     <td>Adjunktvejledning:</td>
+                    <td></td>
+                    <td></td>
                     <td>@Model.AssistantProfessorSupervison</td>
                 </tr>
 

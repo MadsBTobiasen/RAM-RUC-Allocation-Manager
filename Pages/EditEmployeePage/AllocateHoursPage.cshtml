@@ -8,56 +8,42 @@
 }
 <h1>Timeallokering for @Model.Employee.Name</h1>
 <form method="post">
-    <table>
 
-        <tr>
-            <td>Gruppeleder:</td>
-        </tr>
-        <tr>
-            <td></td>
-            <td>
-                <div class="custom-control custom-switch">
-                    <input asp-for="@Model.Employee.IsGroupLeader" type="checkbox" class="custom-control-input" id="customSwitch" name="customSwitch">
-                    <label class="custom-control-label" for="customSwitch"></label>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td></td>
-            <input type="hidden" name="userId" value="@Model.Employee.Id"/>
-            <td><input asp-page-handler="GroupLeader" type="submit" value="Registrer" /></td>
-        </tr>
+    <h3>Gruppeleder</h3>
 
-    </table>
+    <div class="mb-3">
+        <div class="custom-control custom-switch">
+            <input asp-for="@Model.Employee.IsGroupLeader" type="checkbox" class="custom-control-input" id="customSwitch" name="customSwitch">
+            <label class="custom-control-label" for="customSwitch">Er gruppeleder?</label>
+        </div>
+
+    </div>
+
+    <input type="hidden" name="userId" value="@Model.Employee.Id" />
+    <input asp-page-handler="GroupLeader" type="submit" value="Gem" class="btn btn-primary" />
+
 </form>
 
-<hr/>
+<hr />
 
 <form method="post">
-    <table>
-        <tr>
-            <td>Opsparing:</td>
-        </tr>
-        <tr>
-            <td>
-                <td>
-                    <select asp-for="Employee.Savings" name="savings">
-                        <option value="@Employee.EmployeeSavings.ZeroPercent">0 procent opsparet</option>
-                        <option value="@Employee.EmployeeSavings.TwentyPercent">20 procent opsparet</option>
-                        <option value="@Employee.EmployeeSavings.FortyPercent">40 procent opsparet</option>
-                        <option value="@Employee.EmployeeSavings.SixtyPercent">60 procent opsparet</option>
-                        <option value="@Employee.EmployeeSavings.EightyPercent">80 procent opsparet</option>
-                        <option value="@Employee.EmployeeSavings.HundredPercent">100 procent opsparet</option>
-                    </select>
-                </td>
-            </td>
-        </tr>
-        <tr>
-            <td></td>
-            <input type="hidden" name="userId" value="@Model.Employee.Id" />
-            <td><input asp-page-handler="Savings" type="submit" value="Registrer" /></td>
-        </tr>
-    </table>
+
+    <h3>Opsparing</h3>
+
+    <div class="form-group">
+        <select asp-for="Employee.Savings" name="savings" class="form-control mb-1">
+            <option value="@Employee.EmployeeSavings.ZeroPercent">0 procent opsparet</option>
+            <option value="@Employee.EmployeeSavings.TwentyPercent">20 procent opsparet</option>
+            <option value="@Employee.EmployeeSavings.FortyPercent">40 procent opsparet</option>
+            <option value="@Employee.EmployeeSavings.SixtyPercent">60 procent opsparet</option>
+            <option value="@Employee.EmployeeSavings.EightyPercent">80 procent opsparet</option>
+            <option value="@Employee.EmployeeSavings.HundredPercent">100 procent opsparet</option>
+        </select>
+    </div>
+
+    <input type="hidden" name="userId" value="@Model.Employee.Id" />
+    <input asp-page-handler="Savings" type="submit" value="Gem" class="btn btn-primary" />
+
 </form>
 
 <hr />
@@ -120,45 +106,67 @@
         }
 
 
-    <hr />
+    </div>
+
+    <div class="justify-content-between">
+        <hr class="w-75" />
+    </div>
+
+    <div class="form-group">
+
+        <h3>Nyt frikøb</h3>
+
+        <h5>Start dato:</h5>
+        <input class="form-control mb-1" name="startDate" type="date" />
+
+        <h5>Slut dato:</h5>
+        <input class="form-control mb-1" name="endDate" type="date" /> Slut dato
+
+        <h5>Frikøbte timer</h5>
+        <input class="form-control mb-1" name="hours" pattern="[0-9]+" />
+
+        <h5>Frikøbte minutter</h5>
+        <input class="form-control mb-1" name="minutes" pattern="([1-5][0-9]|[1-9])" />
+
+        <input type="hidden" name="userId" value="@Model.Employee.Id" />
+        <input asp-page-handler="Redeem" type="submit" value="Tilføj frikøb" class="btn btn-primary" />
+
+    </div>
+
+</form>
+
+<hr />
+
 }
 
 <form method="post">
-    <table>
-        <tr>
-            <td>Gæld/Overskud</td>
-        </tr>
-        <tr>
-            <td></td>
-            <td>Nuværende gæld/overskud:</td>
-            <td>@Model.ConvertMinutesToHours(Model.Employee.Balance)</td>
-        </tr>
-        <tr>
-            <td></td>
-            <td>Gæld/OverSkud for nyt semester:</td>
-            <td>@Model.ConvertMinutesToHours(Model.Employee.CalculateNewMinuteBalance(Model.BaseSettings))</td>
-        </tr>
-        <tr>
-            <td></td>
-            <input type="hidden"  name="userId" value="@Model.Employee.Id" />
-            <td><input asp-page-handler="AutoBalance" type="submit" value="Registrer" /></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td>Manuelt indstil timer</td>
-            <td><input name="hours" pattern="[0-9]+" /></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td>Manuelt indstil minutter</td>
-            <td><input name="minutes" pattern="([1-5][0-9]|[1-9])"/></td>
-        </tr>
-        <tr>
-            <td></td>
-            <input type="hidden" name="userId" value="@Model.Employee.Id" />
-            <td><input asp-page-handler="ManualBalance" type="submit" value="Registrer" /></td>
-        </tr>
-    </table>
+
+    <h3>Gæld & Overskud</h3>
+
+    <div class="form-group">
+
+        <h5 class="mb-1">Nuværende gæld/overskud: <span class="font-weight-normal">@Model.ConvertMinutesToHours(Model.Employee.Balance)</span></h5>
+        <h5 class="mb-1">Gæld/OverSkud for nyt semester: <span class="font-weight-normal">@Model.ConvertMinutesToHours(Model.Employee.CalculateNewMinuteBalance(Model.BaseSettings))</span></h5>
+        <input type="hidden" name="userId" value="@Model.Employee.Id" />
+        <input asp-page-handler="AutoBalance" type="submit" value="Gem" class="btn btn-primary" />
+
+    </div>
+
+    <div class="form-group">
+
+        <h5 class="mb-1">Manuelt indstil timer</h5>
+        <input class="mb-1" name="hours" pattern="[0-9]+" />
+
+        <h5 class="mb-1">Manuelt indstil minutter</h5>
+        <input class="mb-1" name="minutes" pattern="([1-5][0-9]|[1-9])" />
+
+        <h5></h5>
+
+        <input type="hidden" name="userId" value="@Model.Employee.Id" />
+        <input asp-page-handler="ManualBalance" type="submit" value="Gem" class="btn btn-primary" />
+
+    </div>    
+        
 </form>
 
     <table>
@@ -166,9 +174,6 @@
         <th>Underviser på:</th>
         </thead>
         @if (Model.Employee.EmployeeCourses.Any())
-{
-    <tbody>
-        @foreach (Course course in Model.Employee.EmployeeCourses.Select(ep => ep.Course))
         {
             <form method="post">
                 <tr>
@@ -208,7 +213,6 @@
                     </tr>
                 </form>
             }
-            </tbody>
         }
     </table>
 <hr/>
@@ -319,6 +323,7 @@
                     </form>
                 }
                 </tbody>
+
         }
     </table>
 <form method="post">
@@ -329,14 +334,14 @@
         </tr>
         <tr>
             <td></td>
-            <td><input pattern="[0-9]+" title="Skal være et nummer" name="rucId"/></td>
+            <td><input pattern="[0-9]+" title="Skal være et nummer" name="rucId" /></td>
         </tr>
         <tr>
             <td>Gruppestørreslse</td>
         </tr>
         <tr>
             <td></td>
-            <td><input pattern="[1-6]" title="Grupper kan maks være på 6" name="members"/></td>
+            <td><input pattern="[1-6]" title="Grupper kan maks være på 6" name="members" /></td>
         </tr>
         <tr>
             <td>Kandidat</td>
@@ -368,8 +373,8 @@
             <td><input pattern="[1-3]" title="Gruppefacilitering kan maks vare 3 dage" /></td>
         </tr>
         <tr>
-            <input type="hidden" value="@Model.Employee.Id" name="userId"/>
-            <td><input asp-page-handler="AddGroupFacilitation" type="submit" value="Gem"/></td>
+            <input type="hidden" value="@Model.Employee.Id" name="userId" />
+            <td><input asp-page-handler="AddGroupFacilitation" type="submit" value="Gem" /></td>
         </tr>
     </table>
 </form>
@@ -414,8 +419,8 @@
         </tr>
         <tr>
             <td></td>
-            <input type="hidden" value="@Model.Employee.Id" name="userId"/>
-            <td><input asp-page-handler="PhdSupervision" type="submit" value="Gem"/></td>
+            <input type="hidden" value="@Model.Employee.Id" name="userId" />
+            <td><input asp-page-handler="PhdSupervision" type="submit" value="Gem" /></td>
         </tr>
     </table>
 </form>
@@ -465,7 +470,7 @@
         <td>Antal Portfolie eksaminationer</td>
         <input type="hidden" name="userId" value="@Model.Employee.Id" />
         <td><input asp-for="Employee.PortfolioExaminations" type="number" name="portfolios" /></td>
-        <td><input type="submit" asp-page-handler="Portfolios" value="gem"/></td>
+        <td><input type="submit" asp-page-handler="Portfolios" value="gem" /></td>
     </table>
 </form>
 <form method="post">
@@ -473,7 +478,7 @@
         <td>Antal synopsis eksaminationer</td>
         <input type="hidden" name="userId" value="@Model.Employee.Id" />
         <td><input asp-for="Employee.SynopsisExaminations" type="number" name="synopses" /></td>
-        <td><input type="submit" asp-page-handler="Synopses" value="gem"/></td>
+        <td><input type="submit" asp-page-handler="Synopses" value="gem" /></td>
     </table>
 </form>
 
@@ -541,7 +546,6 @@
                     </tr>
                 </form>
             }
-
         }
                 </tbody>
             </table>
@@ -591,6 +595,7 @@
             <tbody>
                 @foreach (CustomCommittee cc in Model.CustomCommittees)
                 {
+
                     if (!Model.Employee.EmployeeCustomCommittees.Select(ecc => ecc.CustomCommitteeId).Contains(cc.Id))
                     {
                         <form method="post">
@@ -606,7 +611,6 @@
                         </form>
                     }
 
-
                 }
             </tbody>
         
@@ -619,6 +623,7 @@
             <th>Navn</th>
             </thead>
             <tbody>
+
                 @foreach (CustomCommittee cc in Model.CustomCommittees)
                 {
                     if (Model.Employee.EmployeeCustomCommittees.Select(ecc => ecc.CustomCommitteeId).Contains(cc.Id))
@@ -665,8 +670,8 @@
             <td><input pattern="([1-5][0-9]|[1-9])" name="minutes" /></td>
         </tr>
         <tr>
-            <input type="hidden" name="userId" value="@Model.Employee.Id"/>
-            <td><input asp-page-handler="CreateCustomCommittee" type="submit" value="Opret nyt bedømmelsesudvalg"/></td>
+            <input type="hidden" name="userId" value="@Model.Employee.Id" />
+            <td><input asp-page-handler="CreateCustomCommittee" type="submit" value="Opret nyt bedømmelsesudvalg" /></td>
         </tr>
     </table>
 </form>
@@ -739,8 +744,8 @@
             <td><input pattern="[1-9]+" name="amount" /></td>
         </tr>
         <tr>
-            <input name="userId" value="@Model.Employee.Id" type="hidden"/>
-            <td><input asp-page-handler="CreateHiringCommittee" type="submit" value="Opret nyt bedømmelsesudvalg"/></td>
+            <input name="userId" value="@Model.Employee.Id" type="hidden" />
+            <td><input asp-page-handler="CreateHiringCommittee" type="submit" value="Opret nyt bedømmelsesudvalg" /></td>
         </tr>
     </table>
 </form>
@@ -752,11 +757,11 @@
         </tr>
         <tr>
             <td></td>
-            <td><input pattern="[1-9]+" name="amount"/></td>
+            <td><input pattern="[1-9]+" name="amount" /></td>
         </tr>
         <tr>
-            <input name="userId" value="@Model.Employee.Id" type="hidden"/>
-            <td><input asp-page-handler="AddPromotionCommittee" type="submit" value="Tildel bedømmelsesudvalg"/></td>
+            <input name="userId" value="@Model.Employee.Id" type="hidden" />
+            <td><input asp-page-handler="AddPromotionCommittee" type="submit" value="Tildel bedømmelsesudvalg" /></td>
         </tr>
     </table>
 </form>
