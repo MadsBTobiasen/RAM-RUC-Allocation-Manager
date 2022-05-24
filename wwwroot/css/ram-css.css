@@ -21,6 +21,14 @@ img.ram-icon-bg {
     width: 25rem;   
 }
 
+.w-35 {
+    width: 35%;
+}
+
+.w-90 {
+    width: 90%;
+}
+
 .mw-0 {
     max-width: none !important;
 }

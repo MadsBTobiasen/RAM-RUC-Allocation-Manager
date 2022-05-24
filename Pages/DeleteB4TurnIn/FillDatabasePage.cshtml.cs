@@ -72,7 +72,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.DeleteB4TurnIn
                 await leaderDbService.AddObjectAsync(o);
             }
             //foreach (var o in FalkesMockdata.GetSynopses())
-            //{
+            //{     
             //    await synopsisDbService.AddObjectAsync(o);
             //}
             //foreach (var o in FalkesMockdata.GetCourses())
