@@ -286,16 +286,14 @@ namespace RAM___RUC_Allocation_Manager.Pages.EditEmployeePage
         }
         public async Task<IActionResult> OnPostRemovePhdEndEval(int userId, int amount)
         {
-            GetProperties(userId);
-            if (amount < Employee.PhdsTasks.Where(phd => phd.RoleOfEmployee == PhdTasks.EmployeeRole.EndEvaluator)
-                    .Select(phd => phd).Count())
+            var endEval = phdDbService.GetObjectsAsync().Result.ToList().Where(phd => phd.RoleOfEmployee == PhdTasks.EmployeeRole.EndEvaluator && phd.EmployeeId == userId).Select(phd => phd).ToList();
+            if (amount > endEval.Count())
             {
-                amount = Employee.PhdsTasks.Where(phd => phd.RoleOfEmployee == PhdTasks.EmployeeRole.EndEvaluator)
-                    .Select(phd => phd).Count();
+                amount = endEval.Count();
             }
             for (int i = 0; i < amount; i++)
             {
-                await phdDbService.DeleteObjectAsync(new PhdTasks { EmployeeId = userId, RoleOfEmployee = PhdTasks.EmployeeRole.EndEvaluator});
+                await phdDbService.DeleteObjectAsync(endEval[i]);
             }
             GetProperties(userId);
             return Page();
@@ -351,9 +349,10 @@ namespace RAM___RUC_Allocation_Manager.Pages.EditEmployeePage
 
         public async Task<IActionResult> OnPostPhdCommittees(int userId, int amount)
         {
-            GetProperties(userId);
+            Employee = (Employee)userService.GetUserByID(userId);
             Employee.PhdCommittees = amount;
             await userService.EditUser(Employee);
+            GetProperties(userId);
             return Page();
         }
 
