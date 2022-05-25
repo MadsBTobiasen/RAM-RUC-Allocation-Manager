@@ -33,11 +33,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.Test
         {
             this.userService = userService;
             FalkesMockdata falkesMockdata = new FalkesMockdata();
-            //falkesMockdata.CreateMockData();
-            Programmes = falkesMockdata.GetProgrammes();
             Leaders = falkesMockdata.GetLeaders();
-            EmployeeProgrammes = falkesMockdata.GetEmployeeProgrammes();
-            LeaderProgrammes = falkesMockdata.GetLeaderProgrammes();
             Console.WriteLine();
         }
 
