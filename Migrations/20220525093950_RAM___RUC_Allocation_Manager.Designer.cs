@@ -10,7 +10,7 @@ using RAM___RUC_Allocation_Manager.Models;
 namespace RAM___RUC_Allocation_Manager.Migrations
 {
     [DbContext(typeof(RamDbContext))]
-    [Migration("20220525063226_RAM___RUC_Allocation_Manager")]
+    [Migration("20220525093950_RAM___RUC_Allocation_Manager")]
     partial class RAM___RUC_Allocation_Manager
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -163,7 +163,7 @@ namespace RAM___RUC_Allocation_Manager.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("EmployeeId")
+                    b.Property<int>("EmployeeId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("EndDate")
@@ -483,7 +483,9 @@ namespace RAM___RUC_Allocation_Manager.Migrations
                 {
                     b.HasOne("RAM___RUC_Allocation_Manager.Models.Employee", "Employee")
                         .WithMany("Redemptions")
-                        .HasForeignKey("EmployeeId");
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Employee");
                 });

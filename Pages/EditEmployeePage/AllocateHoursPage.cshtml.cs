@@ -91,33 +91,33 @@ namespace RAM___RUC_Allocation_Manager.Pages.EditEmployeePage
 
         public async Task<IActionResult> OnPostSavings(int userId, Employee.EmployeeSavings savings)
         {
-            GetProperties(userId);
+            Employee = (Employee)userService.GetUserByID(userId);
             Employee.Savings = savings;
             await userService.EditUser(Employee);
+            GetProperties(userId);
             return Page();
         }
 
         public async Task<IActionResult> OnPostGroupLeader(int userId, bool customSwitch)
         {
-            GetProperties(userId);
+            Employee = (Employee)userService.GetUserByID(userId);
             Employee.IsGroupLeader = customSwitch;
             await userService.EditUser(Employee);
+            GetProperties(userId);
             return Page();
         }
 
         public async Task<IActionResult> OnPostRedeem(int userId, DateTime startDate, DateTime endDate, int hours, int minutes)
         {
+            await redemptionDbService.AddObjectAsync(new Redemption { StartDate = startDate, EndDate = endDate, RedeemedMinutes = hours * 60 + minutes, EmployeeId = userId});
             GetProperties(userId);
-            Employee.Redemptions.Add(new Redemption { StartDate = startDate, EndDate = endDate, RedeemedMinutes = hours * 60 + minutes, Employee = Employee });
-            await userService.EditUser(Employee);
             return Page();
         }
 
         public async Task<IActionResult> OnPostDeleteRedemption(int userId, int id)
         {
+            await redemptionDbService.DeleteObjectAsync(new Redemption{Id = id});
             GetProperties(userId);
-            await redemptionDbService.DeleteObjectAsync(Employee.Redemptions.Where(r => r.Id == id).Select(r => r).FirstOrDefault());
-            Employee.Redemptions.Remove(Employee.Redemptions.Where(r => r.Id == id).Select(r => r).FirstOrDefault());
             return Page();
         }
 
