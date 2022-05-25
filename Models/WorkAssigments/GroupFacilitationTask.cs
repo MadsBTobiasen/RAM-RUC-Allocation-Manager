@@ -12,6 +12,7 @@ namespace RAM___RUC_Allocation_Manager.Models.WorkAssigments
         #region Properties
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+        public int FacilitatorId { get; set; }
         public Employee Facilitator { get; set; }
         public int DaysSpan { get; set; }
         #endregion
