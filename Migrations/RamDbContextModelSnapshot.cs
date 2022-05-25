@@ -104,7 +104,7 @@ namespace RAM___RUC_Allocation_Manager.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("EmployeeId")
+                    b.Property<int>("EmployeeId")
                         .HasColumnType("int");
 
                     b.Property<int>("RoleOfEmployee")
@@ -320,7 +320,7 @@ namespace RAM___RUC_Allocation_Manager.Migrations
                     b.Property<int>("DaysSpan")
                         .HasColumnType("int");
 
-                    b.Property<int?>("FacilitatorId")
+                    b.Property<int>("FacilitatorId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -470,7 +470,9 @@ namespace RAM___RUC_Allocation_Manager.Migrations
                 {
                     b.HasOne("RAM___RUC_Allocation_Manager.Models.Employee", "Employee")
                         .WithMany("PhdsTasks")
-                        .HasForeignKey("EmployeeId");
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Employee");
                 });
@@ -527,7 +529,9 @@ namespace RAM___RUC_Allocation_Manager.Migrations
                 {
                     b.HasOne("RAM___RUC_Allocation_Manager.Models.Employee", "Facilitator")
                         .WithMany("GroupFacilitationTasks")
-                        .HasForeignKey("FacilitatorId");
+                        .HasForeignKey("FacilitatorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Facilitator");
                 });

@@ -246,7 +246,7 @@ namespace RAM___RUC_Allocation_Manager.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FacilitatorId = table.Column<int>(type: "int", nullable: true),
+                    FacilitatorId = table.Column<int>(type: "int", nullable: false),
                     DaysSpan = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -257,7 +257,7 @@ namespace RAM___RUC_Allocation_Manager.Migrations
                         column: x => x.FacilitatorId,
                         principalTable: "Employees",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -266,7 +266,7 @@ namespace RAM___RUC_Allocation_Manager.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    EmployeeId = table.Column<int>(type: "int", nullable: true),
+                    EmployeeId = table.Column<int>(type: "int", nullable: false),
                     RoleOfEmployee = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -277,7 +277,7 @@ namespace RAM___RUC_Allocation_Manager.Migrations
                         column: x => x.EmployeeId,
                         principalTable: "Employees",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(

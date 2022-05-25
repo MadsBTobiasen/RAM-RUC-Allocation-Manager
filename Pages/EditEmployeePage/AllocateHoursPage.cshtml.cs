@@ -142,47 +142,44 @@ namespace RAM___RUC_Allocation_Manager.Pages.EditEmployeePage
             Course.CourseType type)
         {
             await courseService.CreateCourse(new Course
-                {EmployeeId = coordinatorId, Name = name, LectureAmount = lectures, Type = type});
+                { EmployeeId = coordinatorId, Name = name, LectureAmount = lectures, Type = type });
             GetProperties(userId);
             return Page();
         }
 
         public async Task<IActionResult> OnPostRemoveCourse(int userId, int removeId)
         {
+            await ecDbService.DeleteObjectAsync(new EmployeeCourse { EmployeeId = userId, CourseId = removeId });
             GetProperties(userId);
-            await ecDbService.DeleteObjectAsync(Employee.EmployeeCourses.Where(ec => ec.CourseId == removeId).Select(ec => ec).FirstOrDefault());
-            Employee.EmployeeCourses.Remove(Employee.EmployeeCourses.Where(ec => ec.CourseId == removeId).Select(ec => ec).FirstOrDefault());
             return Page();
         }
 
         public async Task<IActionResult> OnPostAddCourse(int userId, int addId, int relativeLectureAmount)
         {
-            GetProperties(userId);
-            Employee.EmployeeCourses.Add(new EmployeeCourse
+            await ecDbService.AddObjectAsync(new EmployeeCourse
             {
-                Employee = Employee, RelativeLectureAmount = relativeLectureAmount,
-                Course = Courses.Where(c => c.Id == addId).Select(c => c).FirstOrDefault()
+                EmployeeId = userId,
+                RelativeLectureAmount = relativeLectureAmount,
+                CourseId = addId
             });
-            await userService.EditUser(Employee);
+            GetProperties(userId);
             return Page();
         }
         public async Task<IActionResult> OnPostRemoveGroup(int userId, int removeId)
         {
+            await egDbService.DeleteObjectAsync(new EmployeeGroup { EmployeeId = userId, GroupId = removeId });
             GetProperties(userId);
-            await egDbService.DeleteObjectAsync(Employee.EmployeeGroups.Where(eg => eg.GroupId == removeId).Select(eg => eg).FirstOrDefault());
-            Employee.EmployeeGroups.Remove(Employee.EmployeeGroups.Where(eg => eg.GroupId == removeId).Select(eg => eg).FirstOrDefault());
             return Page();
         }
 
         public async Task<IActionResult> OnPostAddGroup(int userId, int addId)
         {
-            EmployeeGroup ep = new EmployeeGroup
+            await egDbService.AddObjectAsync(new EmployeeGroup
             {
                 EmployeeId = userId,
-                GroupId = addId,
-                RoleOfEmployee = EmployeeGroup.EmployeeRole.Supervisor
-            };
-            await egDbService.AddObjectAsync(ep);
+                RoleOfEmployee = EmployeeGroup.EmployeeRole.Supervisor,
+                GroupId = addId
+            });
             GetProperties(userId);
             return Page();
         }
@@ -197,37 +194,37 @@ namespace RAM___RUC_Allocation_Manager.Pages.EditEmployeePage
 
         public async Task<IActionResult> OnPostAddGroupFacilitation(int userId, int daySpan)
         {
+            await gftDbService.AddObjectAsync(new GroupFacilitationTask
+            {
+                FacilitatorId = userId,
+                DaysSpan = daySpan
+            });
             GetProperties(userId);
-            Employee.GroupFacilitationTasks.Add(new GroupFacilitationTask{DaysSpan = daySpan, Facilitator = Employee});
-            await userService.EditUser(Employee);
             return Page();
         }
 
         public async Task<IActionResult> OnPostRemoveGroupFacilitation(int userId, int gftId)
         {
+            await gftDbService.DeleteObjectAsync(new GroupFacilitationTask { Id = gftId});
             GetProperties(userId);
-            await gftDbService.DeleteObjectAsync(Employee.GroupFacilitationTasks.Where(gft => gft.Id == gftId)
-                .Select(gft => gft).FirstOrDefault());
-            Employee.GroupFacilitationTasks.Remove(Employee.GroupFacilitationTasks.Where(gft => gft.Id == gftId)
-                .Select(gft => gft).FirstOrDefault());
             return Page();
         }
 
         public async Task<IActionResult> OnPostPhdSupervision(int userId, PhdTasks.EmployeeRole employeeRole)
         {
+            await phdDbService.AddObjectAsync(new PhdTasks
+            {
+                EmployeeId = userId,
+                RoleOfEmployee = employeeRole
+            });
             GetProperties(userId);
-            Employee.PhdsTasks.Add(new PhdTasks{Employee = Employee, RoleOfEmployee = employeeRole});
-            await userService.EditUser(Employee);
             return Page();
         }
 
         public async Task<IActionResult> OnPostRemovePhdSupervision(int userId, int phdId)
         {
+            await phdDbService.DeleteObjectAsync(new PhdTasks { Id = phdId });
             GetProperties(userId);
-            await phdDbService.DeleteObjectAsync(Employee.PhdsTasks.Where(phd => phd.Id == phdId)
-                .Select(phd => phd).FirstOrDefault());
-            Employee.PhdsTasks.Remove(Employee.PhdsTasks.Where(phd => phd.Id == phdId)
-                .Select(phd => phd).FirstOrDefault());
             return Page();
         }
 
@@ -256,21 +253,19 @@ namespace RAM___RUC_Allocation_Manager.Pages.EditEmployeePage
 
         public async Task<IActionResult> OnPostRemoveInternalCensor(int userId, int removeId)
         {
+            await egDbService.DeleteObjectAsync(new EmployeeGroup { EmployeeId = userId, GroupId = removeId });
             GetProperties(userId);
-            await egDbService.DeleteObjectAsync(Employee.EmployeeGroups.Where(eg => eg.GroupId == removeId).Select(eg => eg).FirstOrDefault());
-            Employee.EmployeeGroups.Remove(Employee.EmployeeGroups.Where(eg => eg.GroupId == removeId).Select(eg => eg).FirstOrDefault());
             return Page();
         }
 
         public async Task<IActionResult> OnPostAddInternalCensor(int userId, int addId)
         {
-            EmployeeGroup ep = new EmployeeGroup
+            await egDbService.AddObjectAsync(new EmployeeGroup
             {
                 EmployeeId = userId,
-                GroupId = addId,
-                RoleOfEmployee = EmployeeGroup.EmployeeRole.InternalCensor
-            };
-            await egDbService.AddObjectAsync(ep);
+                RoleOfEmployee = EmployeeGroup.EmployeeRole.InternalCensor,
+                GroupId = addId
+            });
             GetProperties(userId);
             return Page();
         }
@@ -280,9 +275,13 @@ namespace RAM___RUC_Allocation_Manager.Pages.EditEmployeePage
             GetProperties(userId);
             for (int i = 0; i < amount; i++)
             {
-                Employee.PhdsTasks.Add(new PhdTasks { Employee = Employee, RoleOfEmployee = PhdTasks.EmployeeRole.EndEvaluator });
+                await phdDbService.AddObjectAsync(new PhdTasks
+                {
+                    EmployeeId = userId,
+                    RoleOfEmployee = PhdTasks.EmployeeRole.EndEvaluator
+                });
             }
-            await userService.EditUser(Employee);
+            GetProperties(userId);
             return Page();
         }
         public async Task<IActionResult> OnPostRemovePhdEndEval(int userId, int amount)
@@ -296,29 +295,27 @@ namespace RAM___RUC_Allocation_Manager.Pages.EditEmployeePage
             }
             for (int i = 0; i < amount; i++)
             {
-                Employee.PhdsTasks.Remove(Employee.PhdsTasks.Where(phd=>phd.RoleOfEmployee == PhdTasks.EmployeeRole.EndEvaluator).Select(phd=>phd).FirstOrDefault());
+                await phdDbService.DeleteObjectAsync(new PhdTasks { EmployeeId = userId, RoleOfEmployee = PhdTasks.EmployeeRole.EndEvaluator});
             }
-            await userService.EditUser(Employee);
+            GetProperties(userId);
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAddCustomCommittee(int userId, int ccId, string test)
+        public async Task<IActionResult> OnPostAddCustomCommittee(int userId, int ccId)
         {
-            EmployeeCustomCommittee ecc = new EmployeeCustomCommittee
+            await eccDbService.AddObjectAsync(new EmployeeCustomCommittee
             {
-                CustomCommitteeId = ccId,
-                EmployeeId = userId
-            };
-            await eccDbService.AddObjectAsync(ecc);
+                EmployeeId = userId,
+                CustomCommitteeId = ccId
+            });
             GetProperties(userId);
             return Page();
         }
 
         public async Task<IActionResult> OnPostRemoveCustomCommittee(int userId, int ccId)
         {
+            await eccDbService.DeleteObjectAsync(new EmployeeCustomCommittee { EmployeeId = userId, CustomCommitteeId = ccId });
             GetProperties(userId);
-            await eccDbService.DeleteObjectAsync(Employee.EmployeeCustomCommittees.Where(ecc => ecc.CustomCommitteeId == ccId).Select(ecc => ecc).FirstOrDefault());
-            Employee.EmployeeCustomCommittees.Remove(Employee.EmployeeCustomCommittees.Where(ecc => ecc.CustomCommitteeId == ccId).Select(ecc => ecc).FirstOrDefault());
             return Page();
         }
 
@@ -332,17 +329,15 @@ namespace RAM___RUC_Allocation_Manager.Pages.EditEmployeePage
 
         public async Task<IActionResult> OnPostAddHiringCommittee(int userId, int hcId)
         {
+            await ehcDbService.AddObjectAsync(new EmployeeHiringCommittee { EmployeeId = userId, HiringCommitteeId = hcId });
             GetProperties(userId);
-            Employee.EmployeeHiringCommittees.Add(new EmployeeHiringCommittee { HiringCommittee = HiringCommittees.Where(hc => hc.Id == hcId).Select(hc => hc).FirstOrDefault(), Employee = Employee });
-            await userService.EditUser(Employee);
             return Page();
         }
 
         public async Task<IActionResult> OnPostRemoveHiringCommittee(int userId, int hcId)
         {
+            await ehcDbService.DeleteObjectAsync(new EmployeeHiringCommittee { EmployeeId = userId, HiringCommitteeId = hcId });
             GetProperties(userId);
-            await ehcDbService.DeleteObjectAsync(Employee.EmployeeHiringCommittees.Where(ehc => ehc.HiringCommitteeId == hcId).Select(ehc => ehc).FirstOrDefault());
-            Employee.EmployeeHiringCommittees.Remove(Employee.EmployeeHiringCommittees.Where(ehc => ehc.HiringCommitteeId == hcId).Select(ehc => ehc).FirstOrDefault());
             return Page();
         }
 
@@ -371,11 +366,8 @@ namespace RAM___RUC_Allocation_Manager.Pages.EditEmployeePage
 
         public async Task<IActionResult> OnPostRemovePromotionCommittee(int userId, int pcId)
         {
+            await pctDbService.DeleteObjectAsync(new PromotionCommitteeTask { EmployeeId = userId, Id = pcId });
             GetProperties(userId);
-            await pctDbService.DeleteObjectAsync(Employee.PromotionCommittees.Where(pc => pc.Id == pcId)
-                .Select(pc => pc).FirstOrDefault());
-            Employee.PromotionCommittees.Remove(Employee.PromotionCommittees.Where(pc => pc.Id == pcId)
-                .Select(pc => pc).FirstOrDefault());
             return Page();
         }
 
