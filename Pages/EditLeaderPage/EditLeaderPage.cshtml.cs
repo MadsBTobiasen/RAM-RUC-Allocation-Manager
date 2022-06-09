@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -12,6 +13,9 @@ using static RAM___RUC_Allocation_Manager.Models.User;
 
 namespace RAM___RUC_Allocation_Manager.Pages.EditLeaderPage
 {
+    
+    [Authorize(Roles = "Adminstrator")]
+
     public class EditLeaderPageModel : PageModel
     {
         #region Fields

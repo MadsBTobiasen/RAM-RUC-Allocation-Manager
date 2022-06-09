@@ -1,0 +1,33 @@
+﻿@page
+@model RAM___RUC_Allocation_Manager.Pages.Account.AccessDeniedModel
+@{
+}
+@section Scripts
+{
+    <script>
+
+        //JQuery function to "click" the anchor tag for the pageSection.
+        $(document).ready(function () {
+
+            clickLinkWithAlert("indexLink", "Du har ikke tilladelse til at denne side. Tryk OK, for at returnere til forsiden.");
+
+        });
+
+    </script>
+}
+
+<div class="row">
+    <div class="col-1"></div>
+    <div class="col-10">
+        <div class="container" style="display: flex; justify-content: center;">
+            <img src="~/assets/ram-full-icon-bg.png" class="ram-icon-bg">
+        </div>
+    </div>
+    <div class="col-1">
+
+    </div>
+</div>
+
+<div hidden="@true">
+    <a id="indexLink" asp-page="/Index"></a>
+</div>

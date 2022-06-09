@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.SignalR;
@@ -15,6 +16,9 @@ using RAM___RUC_Allocation_Manager.Services.DbServices;
 
 namespace RAM___RUC_Allocation_Manager.Pages.EditEmployeePage
 {
+
+    [Authorize(Roles = "Adminstrator")]
+
     public class AllocateHoursPageModel : PageModel
     {
         private UserService userService;

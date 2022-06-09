@@ -9,6 +9,9 @@ using RAM___RUC_Allocation_Manager.Services;
 
 namespace RAM___RUC_Allocation_Manager.Pages.EditUser
 {
+
+    [Authorize(Roles = "Adminstrator")]
+
     public class DeleteUserModel : PageModel
     {
         #region Fields
