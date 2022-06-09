@@ -28,6 +28,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.TotalExaminationHoursPage
         public int TotalSynopsisMinutes { get; set; }
         public int TotalPorfolioMinutes { get; set; }
         public string TotalProjectAssesmentHours { get; set; }
+        public int RequestedID { get; set; }
         public int LoggedInUserId
         {
             get
@@ -52,6 +53,9 @@ namespace RAM___RUC_Allocation_Manager.Pages.TotalExaminationHoursPage
         #region Methods
         public IActionResult OnGet(int id)
         {
+
+            RequestedID = id;
+
             loginService.HttpContext = HttpContext;
             if (!loginService.AssessUser(id, LoggedInUserId))
             {

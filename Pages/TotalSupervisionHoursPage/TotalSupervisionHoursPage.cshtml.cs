@@ -25,6 +25,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.TotalSupervisionHoursPage
         public string GroupFacilitationHours { get; set; }
         public string PhdSupervisionHours { get; set; }
         public string AssistantProfessorSupervison { get; set; }
+        public int RequestedID { get; set; }
         public int LoggedInUserId
         {
             get
@@ -49,6 +50,9 @@ namespace RAM___RUC_Allocation_Manager.Pages.TotalSupervisionHoursPage
         #region Methods
         public IActionResult OnGet(int id)
         {
+
+            RequestedID = id;
+
             loginService.HttpContext = HttpContext;
             if (!loginService.AssessUser(id, LoggedInUserId))
             {

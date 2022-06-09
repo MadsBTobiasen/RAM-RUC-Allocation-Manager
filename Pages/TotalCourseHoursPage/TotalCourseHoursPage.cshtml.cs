@@ -25,6 +25,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.TotalCourseHoursPage
         public BaseSettings BaseSettings { get; set; }
         public string CoordinationHours;
         public string TeachingHours;
+        public int RequestedID { get; set; }
         public int LoggedInUserId
         {
             get
@@ -49,6 +50,9 @@ namespace RAM___RUC_Allocation_Manager.Pages.TotalCourseHoursPage
         #region Methods
         public IActionResult OnGet(int id)
         {
+
+            RequestedID = id;
+
             loginService.HttpContext = HttpContext;
             if (!loginService.AssessUser(id, LoggedInUserId))
             {

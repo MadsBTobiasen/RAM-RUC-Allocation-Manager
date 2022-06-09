@@ -26,6 +26,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.TotalMiscHoursPage
         public int TotalPromotionCommitteeMinutes { get; set; }
         public int TotalCustomCommitteeMinutes { get; set; }
         public int TotalCommittees { get; set; }
+        public int RequestedID { get; set; }
         public int LoggedInUserId
         {
             get
@@ -50,6 +51,8 @@ namespace RAM___RUC_Allocation_Manager.Pages.TotalMiscHoursPage
         #region Methods
         public IActionResult OnGet(int id)
         {
+
+            RequestedID = id;
 
             loginService.HttpContext = HttpContext;
 

@@ -32,6 +32,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.TotalAllocatedHoursPage
                 return Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
             }
         }
+        public int RequestedID { get; set; }
         #endregion
 
         #region Constructor
@@ -49,6 +50,9 @@ namespace RAM___RUC_Allocation_Manager.Pages.TotalAllocatedHoursPage
         #region Methods
         public IActionResult OnGet(int id)
         {
+
+            RequestedID = id;
+
             loginService.HttpContext = HttpContext;
             if (!loginService.AssessUser(id, LoggedInUserId))
             {
