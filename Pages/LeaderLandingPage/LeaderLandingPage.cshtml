@@ -235,7 +235,7 @@
                             <td class="text-left">@((Model.PaginatedEmployees[i] as Models.Employee).Name)</td>
                             <td class="text-left">@((Model.PaginatedEmployees[i] as Models.Employee).Title)</td>
                             <td style="width:10%" class="text-center"><a data-toggle="tooltip" title="Se Professor" asp-route-id="@(Model.PaginatedEmployees[i].Id)" asp-page="/EmployeeLandingPage/EmployeeLandingPage"><i class="fa-solid fa-circle-info"></i></a></td>
-                            <td style="width:10%" class="text-center"><a data-toggle="tooltip" title="Redigér Proffessor" asp-route-id="@(Model.PaginatedEmployees[i].Id)" asp-page=""><i class="fa-solid fa-pen"></i></a></td>
+                            <td style="width:10%" class="text-center"><a data-toggle="tooltip" title="Redigér Proffessor" asp-route-id="@(Model.PaginatedEmployees[i].Id)" asp-page="/EditEmployeePage/EditEmployeePage"><i class="fa-solid fa-pen"></i></a></td>
                             <td style="width:10%" class="text-center"><a data-toggle="tooltip" title="Slet Leder" asp-route-id="@(Model.PaginatedEmployees[i].Id)" asp-page="/DeleteUserPage/DeleteUser"><i class="fa-solid fa-trash-can"></i></a></td>
 
                         </tr>

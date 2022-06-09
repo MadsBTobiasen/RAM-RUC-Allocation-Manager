@@ -64,3 +64,10 @@ function submitForm(formToSubmit) {
 function splitSelectValue(elementFired, splitChar, index) {
     return document.getElementById(elementFired).value.split(splitChar)[index];
 }
+
+function clickLinkWithAlert(elementToBeClicked, message) {
+
+    alert(message);
+    document.getElementById(elementToBeClicked).click();
+
+}

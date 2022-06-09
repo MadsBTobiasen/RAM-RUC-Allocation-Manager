@@ -58,7 +58,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.TotalMiscHoursPage
 
             if (!loginService.AssessUser(id, LoggedInUserId))
             {
-                return Redirect("/Index");
+                return Redirect("/AccessDeniedPage/ADRequestedUserPage");
             }
 
             if (id == -1) id = LoggedInUserId;

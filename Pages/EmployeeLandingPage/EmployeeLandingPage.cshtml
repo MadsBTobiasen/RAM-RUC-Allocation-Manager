@@ -3,8 +3,18 @@
 @{
 }
 
-<h2 class="pb-3">Velkommen @Model.Employee.Name</h2>
-
+@if (HttpContext.User.HasClaim(System.Security.Claims.ClaimTypes.Role, Models.User.UserType.Leader.ToString()))
+{
+    <h2>Oversigt for: @Model.Employee.Name</h2>
+    <div class="row">
+        <div class="col-3 pl-0"><a class="btn btn-primary" asp-route-id="-1" asp-page="/LeaderLandingPage/LeaderLandingPage">Gå Tilbage</a></div>
+        <div class="col-9"></div>
+    </div>
+}
+else
+{
+    <h2>Velkommen @Model.Employee.Name</h2>
+}
 <hr />
 
 <div class="row">

@@ -28,6 +28,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.EmployeeLandingPage
                 return Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
             } 
         }
+        public User LoggedInUser => userService.GetUserWithNavPropById(Employee.Id).Result;
         #endregion
 
         #region Constructor
@@ -55,7 +56,7 @@ namespace RAM___RUC_Allocation_Manager.Pages.EmployeeLandingPage
 
             if(!loginService.AssessUser(id, LoggedInUserId))
             {
-                return Redirect("/Index");
+                return Redirect("/AccessDeniedPage/ADRequestedUserPage");
             } else
             {
                 if (id == -1) id = LoggedInUserId;
